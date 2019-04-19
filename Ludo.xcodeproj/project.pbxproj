@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7E59E3AB226A620600CC9AB1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3AA226A620600CC9AB1 /* main.c */; };
+		7E59E3B3226A64CC00CC9AB1 /* Jogador.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3B2226A64CC00CC9AB1 /* Jogador.c */; };
+		7E59E3B6226A670000CC9AB1 /* Casa.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3B5226A670000CC9AB1 /* Casa.c */; };
+		7E59E3B9226A780700CC9AB1 /* Tabuleiro.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3B8226A780700CC9AB1 /* Tabuleiro.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,12 @@
 /* Begin PBXFileReference section */
 		7E59E3A7226A620600CC9AB1 /* Ludo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ludo; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E59E3AA226A620600CC9AB1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		7E59E3B1226A64CC00CC9AB1 /* Jogador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Jogador.h; sourceTree = "<group>"; };
+		7E59E3B2226A64CC00CC9AB1 /* Jogador.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Jogador.c; sourceTree = "<group>"; };
+		7E59E3B4226A670000CC9AB1 /* Casa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Casa.h; sourceTree = "<group>"; };
+		7E59E3B5226A670000CC9AB1 /* Casa.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Casa.c; sourceTree = "<group>"; };
+		7E59E3B7226A780700CC9AB1 /* Tabuleiro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tabuleiro.h; sourceTree = "<group>"; };
+		7E59E3B8226A780700CC9AB1 /* Tabuleiro.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Tabuleiro.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +67,12 @@
 			isa = PBXGroup;
 			children = (
 				7E59E3AA226A620600CC9AB1 /* main.c */,
+				7E59E3B1226A64CC00CC9AB1 /* Jogador.h */,
+				7E59E3B2226A64CC00CC9AB1 /* Jogador.c */,
+				7E59E3B4226A670000CC9AB1 /* Casa.h */,
+				7E59E3B5226A670000CC9AB1 /* Casa.c */,
+				7E59E3B7226A780700CC9AB1 /* Tabuleiro.h */,
+				7E59E3B8226A780700CC9AB1 /* Tabuleiro.c */,
 			);
 			path = Ludo;
 			sourceTree = "<group>";
@@ -117,7 +132,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E59E3B3226A64CC00CC9AB1 /* Jogador.c in Sources */,
+				7E59E3B6226A670000CC9AB1 /* Casa.c in Sources */,
 				7E59E3AB226A620600CC9AB1 /* main.c in Sources */,
+				7E59E3B9226A780700CC9AB1 /* Tabuleiro.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
