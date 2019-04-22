@@ -8,10 +8,11 @@
 
 
 #include <stdio.h>
+#include "Cor.h"
 
 typedef struct Jogador Jogador;
 
-Jogador * JOG_Cria(void);
+Jogador * JOG_Cria(Cor);
 void JOG_Deleta(Jogador *);
 
 void JOG_MovePeca(Jogador *, int);

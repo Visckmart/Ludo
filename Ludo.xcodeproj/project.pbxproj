@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E12271B226E7D1D00F1ECB0 /* Cor.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E12271A226E7D1D00F1ECB0 /* Cor.c */; };
 		7E59E3AB226A620600CC9AB1 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3AA226A620600CC9AB1 /* main.c */; };
 		7E59E3B3226A64CC00CC9AB1 /* Jogador.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3B2226A64CC00CC9AB1 /* Jogador.c */; };
 		7E59E3B6226A670000CC9AB1 /* Casa.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E59E3B5226A670000CC9AB1 /* Casa.c */; };
@@ -26,6 +27,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7E122719226E7D1D00F1ECB0 /* Cor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cor.h; sourceTree = "<group>"; };
+		7E12271A226E7D1D00F1ECB0 /* Cor.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Cor.c; sourceTree = "<group>"; };
 		7E59E3A7226A620600CC9AB1 /* Ludo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ludo; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E59E3AA226A620600CC9AB1 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		7E59E3B1226A64CC00CC9AB1 /* Jogador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Jogador.h; sourceTree = "<group>"; };
@@ -69,6 +72,8 @@
 				7E59E3AA226A620600CC9AB1 /* main.c */,
 				7E59E3B1226A64CC00CC9AB1 /* Jogador.h */,
 				7E59E3B2226A64CC00CC9AB1 /* Jogador.c */,
+				7E122719226E7D1D00F1ECB0 /* Cor.h */,
+				7E12271A226E7D1D00F1ECB0 /* Cor.c */,
 				7E59E3B4226A670000CC9AB1 /* Casa.h */,
 				7E59E3B5226A670000CC9AB1 /* Casa.c */,
 				7E59E3B7226A780700CC9AB1 /* Tabuleiro.h */,
@@ -133,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E59E3B3226A64CC00CC9AB1 /* Jogador.c in Sources */,
+				7E12271B226E7D1D00F1ECB0 /* Cor.c in Sources */,
 				7E59E3B6226A670000CC9AB1 /* Casa.c in Sources */,
 				7E59E3AB226A620600CC9AB1 /* main.c in Sources */,
 				7E59E3B9226A780700CC9AB1 /* Tabuleiro.c in Sources */,
