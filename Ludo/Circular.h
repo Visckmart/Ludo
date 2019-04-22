@@ -57,7 +57,7 @@ Função: RemoveElemento
 Remove um elemento da lista circular.
 
 ***************************************/
-CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista);
+void CIR_RemoveElemento(CIR_lstCircular *pLista);
 
 /**************************************
 
