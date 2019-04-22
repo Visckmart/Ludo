@@ -9,11 +9,11 @@
 Tipo de dados: Elemento da lista Circualar
 
 ***************************************/
-struct circular{
+typedef struct circular{
 	void *pCont;
-	CIR_lstCircular *proximo;
-	CIR_lstCircular *anterior;
-}
+	struct circular *proximo;
+	struct circular *anterior;
+}CIR_lstCircular;
 
 CIR_lstCircular *CIR_CriaLista(void *pCont) //Cria uma nova lista composta de um elemento que aponta para sí mesmo
 {
@@ -24,7 +24,7 @@ CIR_lstCircular *CIR_CriaLista(void *pCont) //Cria uma nova lista composta de um
 	circ ->pCont = pCont;
 	return circ;
 }
-void CIR_DestroiLista(CIR_lstCircular *pCircular);
+void CIR_DestroiLista(CIR_lstCircular *pCircular)
 {
 	CIR_lstCircular *proximo;
 	pCircular->anterior->proximo = NULL; //Define o final da lista circular
@@ -48,7 +48,7 @@ CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 	
 	return novo;
 }
-void *CIR_RemoveElemento(CIR_lstCircular *pLista)
+void CIR_RemoveElemento(CIR_lstCircular *pLista)
 {
 	pLista->anterior->proximo = pLista->proximo;
 	pLista->proximo->anterior = pLista->anterior;
@@ -71,10 +71,10 @@ CIR_lstCircular *CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	CIR_lstCircular *corrente = pLista;
 	
-	while(corrente->prox!=pLista) //Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.
+	while(corrente->proximo!=pLista) //Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.
 	{
 		if(corrente->pCont==pCont) return corrente; //Se encontrar no caminho para e retorna o endereço.
-		corrente = corrente->prox;
+		corrente = corrente->proximo;
 	}
 	return NULL; //Fazer um tipo enumerado com erros?
 }
