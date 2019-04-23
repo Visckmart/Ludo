@@ -104,4 +104,5 @@ Busca e retorna o endereço do elemento da lista circular com conteudo "pCont".
 
 ***************************************/
 CIR_lstCircular *CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont);
+
 #endif /* Circular_h */

@@ -76,9 +76,9 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 
 CIR_lstCircular *CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
-	CIR_lstCircular *corrente = pLista;
+	CIR_lstCircular *corrente = pLista->proximo;
 	
-	while(corrente->proximo!=pLista) //Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.
+	while(corrente!=pLista) //Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.
 	{
 		if(corrente->pCont==pCont) return corrente; //Se encontrar no caminho para e retorna o endereço.
 		corrente = corrente->proximo;
