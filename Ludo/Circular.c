@@ -3,17 +3,18 @@
 //  Ludo
 //
 #include <stdlib.h>
+#include "Circular.h"
 
 /**************************************
 
 Tipo de dados: Elemento da lista Circualar
 
 ***************************************/
-typedef struct circular{
+struct circular{
 	void *pCont;
 	struct circular *proximo;
 	struct circular *anterior;
-}CIR_lstCircular;
+};
 
 CIR_lstCircular *CIR_CriaLista(void *pCont) //Cria uma nova lista composta de um elemento que aponta para sí mesmo
 {
@@ -36,23 +37,29 @@ void CIR_DestroiLista(CIR_lstCircular *pCircular)
 }
 CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 {
-	CIR_lstCircular *novo;
+	CIR_lstCircular *novo,*prox = CIR_ProximoElemento(pLista);
 	
 	novo = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));//Maloca e insere um elemento ajustando os 
 	if(novo==NULL) return NULL;
 	
 	novo->pCont = pCont;
 	novo->anterior = pLista;
-	novo->proximo = pLista -> proximo;
+	novo->proximo = prox;
 	pLista->proximo = novo;
+	prox->anterior = novo;
 	
 	return novo;
 }
-void CIR_RemoveElemento(CIR_lstCircular *pLista)
+
+CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista)
 {
+	CIR_lstCircular *ret = CIR_PrecedenteElemento(pLista);
+	if(ret == pLista) ret = NULL;
+	
 	pLista->anterior->proximo = pLista->proximo;
 	pLista->proximo->anterior = pLista->anterior;
 	free(pLista);
+	return ret;
 }
 CIR_lstCircular *CIR_ProximoElemento(CIR_lstCircular *pLista)
 {
