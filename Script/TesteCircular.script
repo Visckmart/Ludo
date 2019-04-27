@@ -1,0 +1,57 @@
+//Testa o modulo Circular.h
+
+==Declarando Parametros
+=declararparm   str0    string  "abcdefg"
+=declararparm   str1    string  "qwerty"
+=declararparm   str2    string  "xxx"
+=declararparm   str3    string  "xpto"
+=declararparm	pNulo	int		0
+=declararparm	pNaoNulo	int	1
+
+==Cria lista 0
+=crialista str0 0
+
+==Cria lista 1
+=crialista str3 1
+
+==Cria lista 2
+=crialista str2 2
+
+==Teste com lista com um elemento
+=proximo 0
+
+=precedente 0
+
+=conteudo 0 str0
+
+=procura str0 0 pNaoNulo
+
+=procura str3 0 pNulo
+
+==Teste com lista de varios elementos
+=insere str2 1
+
+=insere str0 1
+
+=precedente 1
+
+=conteudo 1 str2
+
+=proximo 1
+
+=conteudo 1 str0
+
+=proximo 1
+
+=conteudo 1 str3
+
+=remove 1
+
+=conteudo 1 str0
+
+=precedente 1 str2
+
+=procura str0 1 pNaoNulo
+
+
+

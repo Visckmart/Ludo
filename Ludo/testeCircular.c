@@ -25,7 +25,17 @@ static char REMOVE[] = "=remove";
 static char PROCURA[] = "=procura";
 
 
-
+/***********************
+Comandos disponíveis:
+=reseta
+=crialista		StringDados		indLista
+=insere 		StringDados		indLista
+=proximo	 	indLista
+=precedente		indLista
+=conteudo		indLista		StringDados
+=remove			indLista
+=procura		StringDados		indLista	ValorEsperado
+***********************/
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
 	int i,indLista=-1,NumLidos=-1,ValorEsperado=-1;
@@ -110,7 +120,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	else if(strcmp(ComandoTeste,PROCURA)==0)
 	{
 		NumLidos = LER_LerParametros("sii",StringDados,&indLista,&ValorEsperado);
-		if(!ValidaLista(indLista)||NumLidos!=2) return TST_CondRetParm;
+		if(!ValidaLista(indLista)||NumLidos!=3) return TST_CondRetParm;
 		pDado = CIR_ProcuraElemento(Listas[indLista],StringDados);
 		if(ValorEsperado == 0)
 		{

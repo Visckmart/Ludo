@@ -1,0 +1,6 @@
+Instrucoes:
+
+1) Copiar o vsvars32.bat da sua instalacao do visual studio para a pasta /Batches
+2) Abrir o terminal na pasta /Batches
+3) Rodar vsvars32.bat
+4) Rodar Tudo.bat
