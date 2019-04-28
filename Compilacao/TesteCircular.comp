@@ -1,0 +1,24 @@
+# Teste do módulo árvore usando a biblioteca contendo o arcabouço
+
+[Diretorios]
+
+Nome        =  TesteCircular
+PathDefault =  ..\Ludo
+err         =  ..\Produto
+obj         =  ..\Objetos
+c           =  ..\Ludo
+h           =  ..\Ludo
+
+[Modulos]
+Circular
+testeCircular
+
+[BuildInicio]
+/OUT:..\Produto\TesteCircular.exe
+/INCREMENTAL:NO
+/MACHINE:IX86
+
+[BuildFim]
+ArcaboucoTeste.lib
+
+[Fim]
