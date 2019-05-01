@@ -37,3 +37,20 @@ Jogador * JOG_Cria(Cor corDasPecas) {
 char JOG_TemPecas(Jogador * j) {
     return j->pecas != NULL;
 }
+
+//int * JOG_PosicoesDasPecas(Jogador * jogador) {
+//    int tot = 0;
+//    CIR_lstCircular * l = jogador->pecas;
+//    while (l != NULL) {
+//        tot ++;
+//        l = CIR_ProximoElemento(l);
+//    }
+//    if (tot == 0) return NULL;
+//
+//    int * posicoes = (int *)malloc(sizeof(int)*tot);
+//    l = jogador->pecas;
+//    for (int i = 0; i < tot; i++) {
+//        posicoes[i] = ((Casa*)CIR_Conteudo(l));
+//        l = CIR_ProximoElemento(l);
+//    }
+//}
