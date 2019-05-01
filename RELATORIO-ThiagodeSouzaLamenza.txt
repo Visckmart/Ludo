@@ -1,0 +1,13 @@
+Data      Horas Trabalhadas    Tipo Tarefa                                          Descrição da Tarefa Realizada
+
+18/04     2h                   codificar módulo                                     Inicio da codificação do módulo Lisca Circular
+19/04     1h                   codificar módulo                                     Fim da codificação inicial do módulo Lista Circular
+19/04     0.5h                 estudar                                              Analisar exemplos do arcabouço
+19/04     0.5h                 estudar                                              Redigir exemplo de módulo de controle de testes para auxiliar no entendimento
+20/04     1.5h                 codificar módulo                                     Inicio do módulo de controle de testes para Lista Circular
+20/04     0.5h                 redigir script de teste                              Script de teste inicial para Lista Circular
+21/04     1h                   revisar código do módulo                             Revisão do módulo Lista Circular
+21/04     1h                   codificar módulo                                     Finalização do módulo de controle de testes para Lista Circular
+21/04     0.5h                 revisar script de teste                              Abrangir mais casos no script de teste
+23/04     1h                   diagnosticar e corrigir os problemas encontrados     Correções no Módulo Lista Circular
+23/04     1h                   revisar código do módulo                             Implementação de assertivas no módulo Lista Circular

@@ -1,12 +1,36 @@
-//
-//  Circular.h
-//  Ludo
-//
+#if ! defined( LISTA_ )
+    #define LISTA_
+/***************************************************************************
+*
+*  $MCD Módulo de definição: LIS  Lista duplamente encadeada
+*
+*  Arquivo gerado:              Circular.h
+*  Letras identificadoras:      CIR
+*
+*
+*  Projeto: INF 1301 / Ludo
+*  Autores: Thiago de Souza Lamenza
+*
+*  $HA Histórico de evolução:
+*     Versão  Autor             Data        Observações
+*     1       Thiago Lamenza   18/abr/2019  Desenvolvimento inicial
+*     
+*
+*  $ED Descrição do módulo
+*     Implementa listas genericas circulares. 
+*
+*     Cada lista é homogênea quanto ao tipo dos dados que armazena.
+*     Cada elemento da lista referencia o valor que contém.
+*
+*     Os ponteiros para os dados são copiados para elementos da lista.
+*     Não é copiado o valor apontado por estes ponteiros.
+*
+*     Toda lista é identificada por um ponteiro pra um elemento dela.
+*     Todo elemento da lista identifica ela igualmente.
+*     Basta saber o ponteiro para um elemento da lista para executar qualquer operação nela.
+***************************************************************************/
 
-#ifndef Circular_h
-#define Circular_h
 
-#include <stdio.h>
 /**************************************
 
 Tipo de dados: Lista Circular
@@ -14,95 +38,146 @@ Tipo de dados: Lista Circular
 ***************************************/
 typedef struct circular CIR_lstCircular;
 
-/**************************************
 
-Função: CriaLista
-
-Cria uma lista circular com um elemento.
-
-Parâmetro: pCont -> Ponteiro para o conteudo do elemento da lista.
-
-Retorno: Endereço da lista criada ou NULL caso ocorra erro de memoria.
-
-***************************************/
+/***********************************************************************
+*
+*  $FC Função: CIR  &Crialista
+*
+*  $ED Descrição da função
+*     Cria uma lista genérica circular contendo um elemento.
+*     Os possíveis tipos são desconhecidos a priori.
+*     A tipagem deles é implicita.
+*
+*  $EP Parâmetros
+*     *pCont  - ponteiro para o elemento a ser contido na lista.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna o ponteiro para a lista.
+*
+*     Esse ponteiro será usado para todas as outras funções do módulo.
+*
+***********************************************************************/
 CIR_lstCircular *CIR_CriaLista(void *pCont);
 
-/**************************************
+/***********************************************************************
+*
+*  $FC Função: CIR  &DestroiLista
+*
+*  $ED Descrição da função
+*     Percorre e libera todos os elementos de uma lista. 
+*
+*     A liberação dos ponteiros que a lista contém fica a cargo 
+*     do cliente.
+*
+*
+*  $EP Parâmetros
+*     *pLista  - ponteiro para um elemento da lista a ser destruida.
+*     *RemoveDado - Ponteiro para uma função encarregada de liberar o dado contido no elemento.
+*  $FV Valor retornado
+*     A função não retorna nenhum valor.
+*
+***********************************************************************/
+void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
-Função: DestroiLista
-
-Percorre e destroi toda uma lista circular
-
-Parâmetro: pCircular -> Ponteiro para uma lista circular.
-
-***************************************/
-void CIR_DestroiLista(CIR_lstCircular *pCircular);
-
-/**************************************
-
-Função: Conteudo
-
-Retorna o conteudo de um elemento de uma lista circular.
-
-Parâmetro: pLista -> Ponteiro pra uma lista circular.
-
-Retorno: Conteúdo do elemento da lista circular.
-
-***************************************/
+/***********************************************************************
+*
+*  $FC Função: CIR  &Conteudo
+*
+*  $ED Descrição da função
+*     Retorna o conteúdo na forma de ponteiro do elemento passado como parâmetro.
+*
+*  $EP Parâmetros
+*     *pLista  - Ponteiro para o elemento com o conteúdo desejado.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna o ponteiro para a lista.
+*
+*     Esse ponteiro será usado para todas as outras funções do módulo.
+*
+***********************************************************************/
 void *CIR_Conteudo(CIR_lstCircular *pLista);
 
-/**************************************
-
-Função: InsereElemento
-
-Insere um elemento apos o escolhido.
-
-Parâmetros: pLista-> Ponteiro pra um elemento de uma lista, depois do qual será inserido o novo.
-			pCont-> Ponteiro para o conteudo do novo elemento
-
-Retorno: Endereço do novo elemento.
-
-***************************************/
+/***********************************************************************
+*
+*  $FC Função: CIR  &InsereElemento
+*
+*  $ED Descrição da função
+*     Insere um elemento na lista circular depois do elemento passsado como parâmetro.
+*
+*  $EP Parâmetros
+*     *pLista  - Ponteiro para o elemento depois do qual deve ser inserido o novo.
+      *pCont   - Ponteiro para o conteúdo do elemento a ser inserido.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna o ponteiro para o novo elemento da lista.
+*
+***********************************************************************/
 CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 
-/**************************************
+/***********************************************************************
+*
+*  $FC Função: CIR  &RemoveElemento
+*
+*  $ED Descrição da função
+*     Remove um elemento da lista circular liberando-o e o dado contido nele.
+*
+*  $EP Parâmetros
+*     *pCont  - Ponteiro para o elemento a ser contido na lista.
+*     *RemoveDado - Ponteiro para a função encarregada de liberar o dado contido no elemento.
+*  $FV Valor retornado
+*     Retorna o ponteiro para o elemento anterior ao removido, caso o removido seja o último retorna NULL.
+*
+***********************************************************************/
+CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
-Função: RemoveElemento
-
-Remove um elemento da lista circular.
-
-Parâmetro: pLista -> Ponteiro para um elemento da lista circular a ser removido.
-
-Retorno: Elemento anterior ao removido ou NULL caso seja o ultimo ou ocorra erro de memoria.
-
-***************************************/
-CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista);
-
-/**************************************
-
-Função: ProximoElemento
-
-Retorna o endereço do elemento seguinte ao passado como parâmetro.
-
-***************************************/
+/***********************************************************************
+*
+*  $FC Função: CIR  &ProximoElemento
+*
+*  $ED Descrição da função
+*     Avança para o proximo elemento da lista circular.
+*
+*  $EP Parâmetros
+*     *pLista  - Ponteiro para o elemento anterior ao desejado.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna o ponteiro para o proximo elemento da lista.
+*
+***********************************************************************/
 CIR_lstCircular *CIR_ProximoElemento(CIR_lstCircular *pLista);
 
-/**************************************
-
-Função: PrecedenteElemento
-
-Retorna o endereço do elemento anterior ao passaco como parâmetro.
-
-***************************************/
+/***********************************************************************
+*
+*  $FC Função: CIR  &PrecedenteElemento
+*
+*  $ED Descrição da função
+*     Retorna para o elemento anterior da lista circular.
+*
+*  $EP Parâmetros
+*     *pLista  - Ponteiro para o elemento posterior ao desejado.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna o ponteiro para o elemento anterior da lista.
+*
+***********************************************************************/
 CIR_lstCircular *CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 
-/**************************************
-
-Função: ProcuraElemento
-
-Busca e retorna o endereço do elemento da lista circular com conteudo "pCont".
-
-***************************************/
+/***********************************************************************
+*
+*  $FC Função: CIR  &ProcuraElemento
+*
+*  $ED Descrição da função
+*     Procura um elemento na lista circular contendo um dado passado como parâmetro.
+*     Caso dois elementos possuam o mesmo conteúdo o retornado será um dos dois.
+*
+*  $EP Parâmetros
+*     *pLista  - Ponteiro para o elemento anterior ao desejado.
+*     *pCont  - Ponteiro com o dado a ser procurado.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna o ponteiro para o elemento encontrado.
+*
+***********************************************************************/
 CIR_lstCircular *CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont);
 
-#endif /* Circular_h */
+#endif

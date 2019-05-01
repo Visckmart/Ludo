@@ -5,14 +5,19 @@
 #include "Circular.h"
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #define DIM_VT_LISTA 5
 #define DIM_BUFFER 20
-// Ponteiro para as listas atuais e funcao de validacao de indice
+/*Vetor com as listas atuais*/
 CIR_lstCircular *Listas[DIM_VT_LISTA];
+
+/*Função de validação de indice do vetor de listas*/
 static int ValidaLista(int ind);
 
+/*Função dummy de liberação*/
+/*Como as strings são compartilhadas entre as listas elas não podem ser liberadas ao remover elementos*/
+static void LiberaDado(void *pDado);
+    
 
 // Funções aceitas para testar
 static char RESETA[] = "=reseta";
@@ -47,7 +52,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	{
 		for(i=0;i<DIM_VT_LISTA;i++)
 		{
-			if(ValidaLista(i)) CIR_DestroiLista(Listas[i]);
+			if(ValidaLista(i)) CIR_DestroiLista(Listas[i],LiberaDado);
 			Listas[i] = NULL;
 		}
 		return TST_CondRetOK;
@@ -111,7 +116,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	NumLidos = LER_LerParametros("i",&indLista);
 	if(!ValidaLista(indLista)||NumLidos!=1) return TST_CondRetParm;
 	
-	Listas[indLista] = CIR_RemoveElemento(Listas[indLista]);
+	Listas[indLista] = CIR_RemoveElemento(Listas[indLista],LiberaDado);
 	printf("%c",CIR_Conteudo(Listas[indLista]));
 	return TST_CondRetOK;
 	}
@@ -143,4 +148,9 @@ int ValidaLista(int ind)
 {
 	if(ind>DIM_VT_LISTA || Listas[ind]==NULL) return 0;
 	else return 1;
+}
+
+void LiberaDado(void *pDado)
+{
+    return;
 }
