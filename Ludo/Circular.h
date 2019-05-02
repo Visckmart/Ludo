@@ -56,6 +56,8 @@ typedef struct circular CIR_lstCircular;
 *
 *     Esse ponteiro será usado para todas as outras funções do módulo.
 *
+*   Assertivas:
+*       pCont não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 CIR_lstCircular *CIR_CriaLista(void *pCont);
 
@@ -66,8 +68,7 @@ CIR_lstCircular *CIR_CriaLista(void *pCont);
 *  $ED Descrição da função
 *     Percorre e libera todos os elementos de uma lista. 
 *
-*     A liberação dos ponteiros que a lista contém fica a cargo 
-*     do cliente.
+*     A liberação dos ponteiros que a lista contém serão feitas pela função fornecida pelo cliente.
 *
 *
 *  $EP Parâmetros
@@ -76,6 +77,8 @@ CIR_lstCircular *CIR_CriaLista(void *pCont);
 *  $FV Valor retornado
 *     A função não retorna nenhum valor.
 *
+*   Assertivas:
+*       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
@@ -94,6 +97,8 @@ void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 *
 *     Esse ponteiro será usado para todas as outras funções do módulo.
 *
+*   Assertivas:
+*       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 void *CIR_Conteudo(CIR_lstCircular *pLista);
 
@@ -111,6 +116,8 @@ void *CIR_Conteudo(CIR_lstCircular *pLista);
 *  $FV Valor retornado
 *     Se executou corretamente retorna o ponteiro para o novo elemento da lista.
 *
+*   Assertivas:
+*       pLista e pCont não podem ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 
@@ -120,6 +127,8 @@ CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 *
 *  $ED Descrição da função
 *     Remove um elemento da lista circular liberando-o e o dado contido nele.
+*     O dado contido pelo elemento a ser removido será liberado utilizando a função fornecida pelo cliente.
+*       
 *
 *  $EP Parâmetros
 *     *pCont  - Ponteiro para o elemento a ser contido na lista.
@@ -127,6 +136,8 @@ CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 *  $FV Valor retornado
 *     Retorna o ponteiro para o elemento anterior ao removido, caso o removido seja o último retorna NULL.
 *
+*   Assertivas:
+*       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
@@ -143,6 +154,8 @@ CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(v
 *  $FV Valor retornado
 *     Se executou corretamente retorna o ponteiro para o proximo elemento da lista.
 *
+*   Assertivas:
+*       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 CIR_lstCircular *CIR_ProximoElemento(CIR_lstCircular *pLista);
 
@@ -159,6 +172,8 @@ CIR_lstCircular *CIR_ProximoElemento(CIR_lstCircular *pLista);
 *  $FV Valor retornado
 *     Se executou corretamente retorna o ponteiro para o elemento anterior da lista.
 *
+*   Assertivas:
+*       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 CIR_lstCircular *CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 
@@ -177,6 +192,8 @@ CIR_lstCircular *CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 *  $FV Valor retornado
 *     Se executou corretamente retorna o ponteiro para o elemento encontrado.
 *
+*   Assertivas:
+*       pLista e pCont não podem ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
 CIR_lstCircular *CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont);
 

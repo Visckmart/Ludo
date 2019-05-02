@@ -11,5 +11,5 @@ Data      Horas Trabalhadas    Tipo Tarefa                                      
 21/04     0.5h                 revisar script de teste                              Abrangir mais casos no script de teste
 23/04     1h                   diagnosticar e corrigir os problemas encontrados     Correções no Módulo Lista Circular
 23/04     1h                   revisar código do módulo                             Implementação de assertivas no módulo Lista Circular
-
+01/05     2h                   revisar código do módulo                             Modificação e documentação do módulo Lista Circular
 01/05     0.5h                 estudar                                              Estudo das regras de documentação
