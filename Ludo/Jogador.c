@@ -5,17 +5,52 @@
 
 #include "Jogador.h"
 #include <stdlib.h>
+#include "Casa.h"
+#include "Circular.h"
 
 struct Jogador {
-    int a;
+    CIR_lstCircular * pecas;
+    Cor cor;
 };
 
-Jogador * JOG_Cria() {
+Jogador * JOG_Cria(Cor corDasPecas) {
+    // Aloca um espaço para o jogador
     Jogador * j = (Jogador *)malloc(sizeof(Jogador));
-    j->a = 10;
+    
+    // Cria a primeira peça
+    Casa * c = CAS_Cria();
+    j->pecas = CIR_CriaLista(c);
+    // Cria as peças adicionais
+    for (int i = 1; i < 4; i++) {
+        Casa * c = CAS_Cria();
+        CIR_lstCircular * l = CIR_CriaLista(c);
+        CIR_InsereElemento(l, j->pecas);
+    }
+    
+    // Guarda a cor do jogador
+    j->cor = corDasPecas;
+    
+    // Retorna o jogador criado
     return j;
 }
 
 char JOG_TemPecas(Jogador * j) {
-    return j->a;
+    return j->pecas != NULL;
 }
+
+//int * JOG_PosicoesDasPecas(Jogador * jogador) {
+//    int tot = 0;
+//    CIR_lstCircular * l = jogador->pecas;
+//    while (l != NULL) {
+//        tot ++;
+//        l = CIR_ProximoElemento(l);
+//    }
+//    if (tot == 0) return NULL;
+//
+//    int * posicoes = (int *)malloc(sizeof(int)*tot);
+//    l = jogador->pecas;
+//    for (int i = 0; i < tot; i++) {
+//        posicoes[i] = ((Casa*)CIR_Conteudo(l));
+//        l = CIR_ProximoElemento(l);
+//    }
+//}

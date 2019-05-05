@@ -4,23 +4,34 @@
 //
 #include <stdlib.h>
 #include "Tabuleiro.h"
+#include <stdlib.h>
 #include "Jogador.h"
 #include "Circular.h"
 #include "LISTA.H"
+
 typedef struct casa {
     JOG_tpPeca pecas[2];
     LIS_tppLista Bifurcacao;
     TAB_Cor Cor;
 }TAB_tpCasa;
 
+
 typedef struct tabuleiro {
     Jogador * jogadores;
 }Tabuleiro;
 
-Tabuleiro * TAB_IniciaTabuleiro(void) {
-    return NULL;
+Tabuleiro * TAB_IniciaTabuleiro() {
+    Tabuleiro * tab = (Tabuleiro *)malloc(sizeof(Tabuleiro));
+    if (tab == NULL) {
+        /* Fazer algo que indique que ocorreu um problema */
+        return NULL;
+    }
+    //Jogador ** jogadores, int numJogadores
+//    for (int i = 0; i < numJogadores; i++) {
+//        jogadores[i]
+//    }
+    return tab;
 }
-
 
 TAB_tpCasa TAB_CriaCasa(CIR_lstCircular bif,TAB_Cor cor)
 {
@@ -67,7 +78,7 @@ void TAB_AvancaPecaLDupla(LIS_tppLista Lista,int peca,int ncasas)
     temp = CasaCorr->pecas[peca];
     CasaCorr->pecas[peca] = NULL;
 
-    while(ncasas>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente possível*/
+    while(ncasas>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente possï¿½vel*/
     {
     	ncasas--;
     }
@@ -106,6 +117,4 @@ void TAB_AvancaPecaCircular(CIR_lstCircular *Lista,TAB_tpCasa casa,int peca,int 
     TAB_InserePeca(CasaCorr,temp);
     JOG_MovePeca(temp,CasaCorr);
 }
-
-
 
