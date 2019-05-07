@@ -61,12 +61,12 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Testar a funcao CriarLista
 	else if(strcmp(ComandoTeste,CRIALISTA)==0) 
 	{
-		NumLidos = LER_LerParametros( "si" , StringDados , &indLista ) ;
-		if(ValidaLista(indLista) || NumLidos!=2) return TST_CondRetParm;
-		Listas[indLista] = CIR_CriaLista(StringDados);
+		NumLidos = LER_LerParametros( "i" , &indLista ) ;
+		if(ValidaLista(indLista) || NumLidos!=1) return TST_CondRetParm;
+		Listas[indLista] = CIR_CriaLista();
 		if(Listas[indLista] == NULL) return TST_CondRetMemoria;
 		
-		return TST_CompararString(CIR_Conteudo(Listas[indLista]),StringDados,"Conteudo do elemento incorreto.");
+		return TST_CondRetOK;
 	}
 	
 	//Testar a funcao InsereElemento
@@ -75,10 +75,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		NumLidos = LER_LerParametros("si",StringDados, &indLista);
 		if(!ValidaLista(indLista) || NumLidos!=2) return TST_CondRetParm;
 		
-		Listas[indLista] = CIR_InsereElemento(Listas[indLista],StringDados);
-		if(Listas[indLista]==NULL) return TST_CondRetMemoria;
-		
-		return TST_CompararString(CIR_Conteudo(Listas[indLista]),StringDados,"Elemento inserido incorretamente");
+		CIR_InsereElemento(Listas[indLista],StringDados);
+		return TST_CompararString((char*)CIR_Conteudo(Listas[indLista]),StringDados,"Elemento inserido incorretamente");
 	}
 	
 	//Testar a funcao ProximoElemento
@@ -86,8 +84,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	{
 		NumLidos = LER_LerParametros("i",&indLista);
 		if(!ValidaLista(indLista)||NumLidos!=1) return TST_CondRetParm;
-		
-		Listas[indLista] = CIR_ProximoElemento(Listas[indLista]);
+		CIR_ProximoElemento(Listas[indLista]);
 		return TST_CondRetOK;
 	}
 	
@@ -97,7 +94,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		NumLidos = LER_LerParametros("i",&indLista);
 		if(!ValidaLista(indLista)||NumLidos!=1) return TST_CondRetParm;
 		
-		Listas[indLista] = CIR_ProximoElemento(Listas[indLista]);
+		CIR_PrecedenteElemento(Listas[indLista]);
 		return TST_CondRetOK;
 	}
 	
@@ -106,7 +103,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	{
 	NumLidos = LER_LerParametros("is",&indLista,StringDados);
 	if(!ValidaLista(indLista)||NumLidos!=2) return TST_CondRetParm;	
-	
 	return TST_CompararString(CIR_Conteudo(Listas[indLista]),StringDados,"Conteudo do elemento incorreto");
 	}
 	
@@ -116,8 +112,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	NumLidos = LER_LerParametros("i",&indLista);
 	if(!ValidaLista(indLista)||NumLidos!=1) return TST_CondRetParm;
 	
-	Listas[indLista] = CIR_RemoveElemento(Listas[indLista],LiberaDado);
-	printf("%c",CIR_Conteudo(Listas[indLista]));
+	CIR_RemoveElemento(Listas[indLista],LiberaDado);
 	return TST_CondRetOK;
 	}
 	
@@ -126,16 +121,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	{
 		NumLidos = LER_LerParametros("sii",StringDados,&indLista,&ValorEsperado);
 		if(!ValidaLista(indLista)||NumLidos!=3) return TST_CondRetParm;
-		pDado = CIR_ProcuraElemento(Listas[indLista],StringDados);
-		if(ValorEsperado == 0)
-		{
-			return TST_CompararPonteiroNulo(ValorEsperado,pDado,"Valor nao deveria existir");
-		}
-		else if(pDado==NULL)
-		{
-			return TST_CondRetErro;
-		}
-		return TST_CompararPonteiro(CIR_Conteudo(pDado),StringDados,"Elemento achado nao e o procurado.");
+		CIR_ProcuraElemento(Listas[indLista],StringDados);
+		TST_CompararString(CIR_Conteudo(Listas[indLista]),StringDados,"Elemento achado nao e o procurado.");
 	}
 	return 0;
 }

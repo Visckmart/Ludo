@@ -21,17 +21,17 @@ Módulos do construto: TesteCircular.comp
 Estatísticas do construto
 
    Estatísticas do arquivo: circular.c
-      Total linhas:             172
-      Linhas de código:          93
+      Total linhas:             179
+      Linhas de código:          99
       Linhas de comentário:      62
-      Linhas em branco:          23
+      Linhas em branco:          24
    Arquivos de inclusão de que necessita
       circular.h
 
    Estatísticas do arquivo: circular.h
-      Total linhas:             183
+      Total linhas:             200
       Linhas de código:          12
-      Linhas de comentário:     159
+      Linhas de comentário:     176
       Linhas em branco:          12
    Arquivos em que é incluído
       circular.c
@@ -56,10 +56,10 @@ Estatísticas do construto
       testecircular.c
 
    Estatísticas do arquivo: testecircular.c
-      Total linhas:             156
-      Linhas de código:         102
+      Total linhas:             143
+      Linhas de código:          92
       Linhas de comentário:      28
-      Linhas em branco:          26
+      Linhas em branco:          23
    Arquivos de inclusão de que necessita
       circular.h
       generico.h
@@ -78,9 +78,9 @@ Estatísticas do construto
 Totais por tipo de arquivo
 
   Tipo: h        Path: ..\Ludo
-         Total linhas do tipo:      1554
+         Total linhas do tipo:      1571
          Linhas de código:           124
-         Linhas de comentário:      1269
+         Linhas de comentário:      1286
          Linhas em branco:           161
          Arquivos deste tipo:          4
 
@@ -106,17 +106,17 @@ Totais por tipo de arquivo
          Arquivos deste tipo:          0
 
   Tipo: c        Path: ..\Ludo
-         Total linhas do tipo:       328
-         Linhas de código:           195
+         Total linhas do tipo:       322
+         Linhas de código:           191
          Linhas de comentário:        90
-         Linhas em branco:            49
+         Linhas em branco:            47
          Arquivos deste tipo:          2
 
 Totais para todo o construto TesteCircular
 
-   Total linhas:              1882
-   Linhas de código:           319
-   Linhas de comentário:      1359
-   Linhas em branco:           210
+   Total linhas:              1893
+   Linhas de código:           315
+   Linhas de comentário:      1376
+   Linhas em branco:           208
    Arquivos processados:         6
 

@@ -15,32 +15,34 @@
 
 /**************************************
 
-$TC Tipo de dados: Elemento da lista Circualar
+$TC Tipo de dados: Elemento da lista Circular
 
 ***************************************/
-struct circular{
-	void *pCont;
-	struct circular *proximo;
-	struct circular *anterior;
-};
 
+typedef struct no{
+	void *pCont;
+	struct no *proximo;
+	struct no *anterior;
+}No;
+
+struct circular{
+	No *NoCorrente;
+};
 
 /***************************************************
 *
-*  Função: CIR  &CriaLista
+*  Funcao: CIR  &CriaLista
 *
 *  *************************************************/
-CIR_lstCircular *CIR_CriaLista(void *pCont) //Cria uma nova lista composta de um elemento que aponta para sí mesmo
+CIR_lstCircular *CIR_CriaLista() //Cria uma nova lista composta de um elemento que aponta para si mesmo
 {
 	CIR_lstCircular *circ;
 	circ = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));
 	
-	if(circ==NULL || pCont==NULL) return NULL;
+	if(circ==NULL) return NULL;
 	
 	
-	circ ->proximo = circ;
-	circ ->anterior = circ;
-	circ ->pCont = pCont;
+	circ->NoCorrente = NULL;
 	return circ;
 }
 
@@ -51,16 +53,21 @@ CIR_lstCircular *CIR_CriaLista(void *pCont) //Cria uma nova lista composta de um
 *  *************************************************/
 void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 {
-	CIR_lstCircular *proximo;
-    if(pLista==NULL) return NULL;
-    
-	pLista->anterior->proximo = NULL; //Define o final da lista circular
-	while(pLista->proximo!=NULL){ //Deleta tudo ate chegar nesse final
-		proximo = pLista->proximo;
-        RemoveDado(pLista->pCont);
-		free(pLista);
-		pLista = proximo;
+	No *corrente,*proximo;
+    if(pLista==NULL) return;
+    corrente = pLista->NoCorrente;
+    if(corrente != NULL)
+    {
+
+		corrente->anterior->proximo = NULL; //Define o final da lista circular
+		while(corrente->proximo!=NULL){ //Deleta tudo ate chegar nesse final
+			proximo = corrente->proximo;
+			RemoveDado(corrente->pCont);
+			free(corrente);
+			corrente = proximo;
+		}
 	}
+	free(pLista);
 }
 
 /***************************************************
@@ -68,24 +75,30 @@ void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 *  Função: CIR  &InsereElemento
 *
 *  *************************************************/
-CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
+void CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 {
-	CIR_lstCircular *novo,*prox;
-	novo = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));//Maloca e insere um elemento ajustando os ponteiros
+	No *novo,*prox;
+	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
 	
-	if(novo==NULL || pCont==NULL) return NULL;
-	prox = CIR_ProximoElemento(pLista);
-    
+	if(novo==NULL || pCont==NULL) return;
+
 	novo->pCont = pCont;
-	novo->anterior = pLista;
-	novo->proximo = prox;
-	pLista->proximo = novo;
-	prox->anterior = novo;
-	
-	#ifdef _DEBUG
-	assert(novo->anterior->proximo == novo && novo->proximo->anterior == novo);
-	#endif
-	return novo;
+
+	if(pLista->NoCorrente!=NULL)
+	{
+		prox = pLista->NoCorrente->proximo;
+		novo->anterior = pLista->NoCorrente;
+		novo->proximo = prox;
+		pLista->NoCorrente->proximo = novo;
+		prox->anterior = novo;
+	}
+	else
+	{
+		novo->proximo = novo;
+		novo->anterior = novo;
+	}
+	pLista->NoCorrente = novo;
+	return;
 }
 
 /***************************************************
@@ -93,21 +106,18 @@ CIR_lstCircular *CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 *  Função: CIR  &RemoveElemento
 *
 *  *************************************************/
-CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
+void CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 {
-	CIR_lstCircular *ret;
-    if(pLista==NULL) return NULL;
+	No *Corr;
+    if(pLista==NULL) return;
+    Corr = pLista->NoCorrente;
+
+	Corr->anterior->proximo = Corr->proximo;
+	Corr->proximo->anterior = Corr->anterior;
+    RemoveDado(Corr->pCont);
     
-	if(ret == pLista) ret = NULL;
-    else ret = CIR_PrecedenteElemento(pLista);
-	
-	
-	pLista->anterior->proximo = pLista->proximo;
-	pLista->proximo->anterior = pLista->anterior;
-    RemoveDado(pLista->pCont);
-	free(pLista);
-	
-	return ret;
+    CIR_PrecedenteElemento(pLista);
+	free(Corr);
 }
 
 /***************************************************
@@ -115,11 +125,10 @@ CIR_lstCircular *CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(v
 *  Função: CIR  &ProximoElemento
 *
 *  *************************************************/
-CIR_lstCircular *CIR_ProximoElemento(CIR_lstCircular *pLista)
+void CIR_ProximoElemento(CIR_lstCircular *pLista)
 {
-	if(pLista==NULL) return NULL;
-	
-	return pLista->proximo;
+	if(pLista==NULL||pLista->NoCorrente==NULL) return;
+	pLista->NoCorrente = pLista->NoCorrente->proximo;
 }
 
 /***************************************************
@@ -127,11 +136,11 @@ CIR_lstCircular *CIR_ProximoElemento(CIR_lstCircular *pLista)
 *  Função: CIR  &PrecedenteElemento
 *
 *  *************************************************/
-CIR_lstCircular *CIR_PrecedenteElemento(CIR_lstCircular *pLista)
+void CIR_PrecedenteElemento(CIR_lstCircular *pLista)
 {
-	if(pLista==NULL) return NULL;
+	if(pLista==NULL) return;
 	
-	return pLista->anterior;
+	pLista->NoCorrente = pLista->NoCorrente->anterior;
 }
 
 /***************************************************
@@ -143,7 +152,7 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 {
 	if(pLista==NULL) return NULL;
 	
-	return pLista->pCont;
+	return pLista->NoCorrente->pCont;
 }
 
 /***************************************************
@@ -151,17 +160,20 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 *  Função: CIR  &ProcuraElemento
 *
 *  *************************************************/
-CIR_lstCircular *CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
+void CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
-	CIR_lstCircular *corrente;
+	No *proc;
     
-	if(pLista==NULL || pCont==NULL) return NULL;
-    corrente = pLista->proximo;
+	if(pLista==NULL || pCont==NULL) return;
+    proc = pLista->NoCorrente->proximo;
 	
-	while(corrente!=pLista) /*Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.*/
+	while(proc!=pLista->NoCorrente) /*Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.*/
 	{
-		if(corrente->pCont==pCont) return corrente; /*Se encontrar no caminho para e retorna o endereço.*/
-		corrente = corrente->proximo;
+		if(proc->pCont==pCont)
+		{
+			pLista->NoCorrente=proc; /*Se encontrar no caminho para e retorna o endereço.*/
+			break;
+		}
+		proc = proc->proximo;
 	}
-	return NULL;
 }

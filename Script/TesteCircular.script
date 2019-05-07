@@ -9,20 +9,22 @@
 =declararparm	pNaoNulo	int	1
 
 ==Cria lista 0
-=crialista str0 0
+=crialista 0
 
 ==Cria lista 1
-=crialista str3 1
+=crialista 1
 
 ==Cria lista 2
-=crialista str2 2
+=crialista 2
 
 ==Teste com lista com um elemento
+=insere str1 0
+
 =proximo 0
 
 =precedente 0
 
-=conteudo 0 str0
+=conteudo 0 str1
 
 =procura str0 0 pNaoNulo
 

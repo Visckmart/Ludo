@@ -66,9 +66,9 @@ TAB_tpCasa TAB_DestroiCasa(TAB_tpCasa casa)
 
 /****************************************************************
 
-Funco: TAB  &Avanca Peca Lista Dupla
+Função: TAB  &Avanca Peca Lista Dupla
 
-CUIDADO: Pressupoe que o elemento atual da lista contÃ©m a peca desejada.
+CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 
 ****************************************************************/
 void TAB_AvancaPecaLDupla(LIS_tppLista Lista,int peca,int ncasas)
@@ -78,7 +78,7 @@ void TAB_AvancaPecaLDupla(LIS_tppLista Lista,int peca,int ncasas)
     temp = CasaCorr->pecas[peca];
     CasaCorr->pecas[peca] = NULL;
 
-    while(ncasas>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente possï¿½vel*/
+    while(ncasas>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente possível*/
     {
     	ncasas--;
     }
@@ -87,23 +87,29 @@ void TAB_AvancaPecaLDupla(LIS_tppLista Lista,int peca,int ncasas)
     InserePeca(CasaCorr,temp);
 }
 
-void TAB_AvancaPecaCircular(CIR_lstCircular *Lista,TAB_tpCasa casa,int peca,int ncasas)
+/****************************************************************
+
+Função: TAB  &Avanca Peca Lista Circular
+
+CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
+
+****************************************************************/
+void TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int peca,int ncasas)
 {
     TAB_Cor CorPeca;
     JOG_tpPeca *temp;
-    TAB_tpCasa *CasaCorr;
+    TAB_tpCasa *CasaCorr = CIR_Conteudo(Lista);
     
-    temp = casa->pecas[peca];
-    casa->pecas[peca] = NULL;
+    temp = CasaCorr->pecas[peca];
+    CasaCorr->pecas[peca] = NULL;
     CorPeca = JOG_Cor(temp);
     
-    Lista = (CIR_ProcuraElemento(Lista,casa));
     while(ncasas>0)
     {
         ncasas--;
         
         CasaCorr = CIR_Conteudo(Lista);
-        if(TAB_Cor(CasaCorr)) == CorPeca) /*Se a casa tem cor igual a peÃ§a sendo movida ela Ã© uma bifurcacao para ela, encaminha para a funÃ§Ã£o apropriada*/
+        if(TAB_Cor(CasaCorr)) == CorPeca) /*Se a casa tem cor igual a peça sendo movida ela é uma bifurcacao para ela, encaminha para a função apropriada*/
         {
             LIS_IrInicioLista(CasaCorr->Bifurcacao);
             CasaCorr = LIS_ObterValor(CasaCorr->Bifurcacao);
