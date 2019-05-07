@@ -39,6 +39,10 @@ Tipo de dados: Lista Circular
 typedef struct circular CIR_lstCircular;
 
 
+
+typedef enum CIR_condErro { CIR_condOk , CIR_condMemoria, CIR_condParametro} CIR_condErro;
+
+
 /***********************************************************************
 *
 *  $FC Função: CIR  &Crialista

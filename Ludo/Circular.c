@@ -51,10 +51,10 @@ CIR_lstCircular *CIR_CriaLista() //Cria uma nova lista composta de um elemento q
 *  Função: CIR  &DestroiLista
 *
 *  *************************************************/
-void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
+CIR_condErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 {
 	No *corrente,*proximo;
-    if(pLista==NULL) return;
+    if(pLista==NULL) return CIR_condParametro;
     corrente = pLista->NoCorrente;
     if(corrente != NULL)
     {
@@ -68,6 +68,7 @@ void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 		}
 	}
 	free(pLista);
+	return CIR_condOk;
 }
 
 /***************************************************
@@ -75,12 +76,14 @@ void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 *  Função: CIR  &InsereElemento
 *
 *  *************************************************/
-void CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
+CIR_condErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	No *novo,*prox;
 	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
 	
-	if(novo==NULL || pCont==NULL) return;
+	if (pCont== NULL) return CIR_condParametro;
+
+	if (novo == NULL) return CIR_condMemoria;
 
 	novo->pCont = pCont;
 
@@ -98,7 +101,7 @@ void CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 		novo->anterior = novo;
 	}
 	pLista->NoCorrente = novo;
-	return;
+	return CIR_condOk;
 }
 
 /***************************************************
