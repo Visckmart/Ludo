@@ -51,10 +51,10 @@ CIR_lstCircular *CIR_CriaLista() //Cria uma nova lista composta de um elemento q
 *  Função: CIR  &DestroiLista
 *
 *  *************************************************/
-CIR_condErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
+CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 {
 	No *corrente,*proximo;
-    if(pLista==NULL) return CIR_condParametro;
+    if(pLista==NULL) return CIR_CondRetParametro;
     corrente = pLista->NoCorrente;
     if(corrente != NULL)
     {
@@ -68,7 +68,7 @@ CIR_condErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 		}
 	}
 	free(pLista);
-	return CIR_condOk;
+	return CIR_CondRetOk;
 }
 
 /***************************************************
@@ -76,14 +76,14 @@ CIR_condErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 *  Função: CIR  &InsereElemento
 *
 *  *************************************************/
-CIR_condErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
+CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	No *novo,*prox;
 	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
 	
-	if (pCont== NULL) return CIR_condParametro;
+	if (pCont== NULL) return CIR_CondRetParametro;
 
-	if (novo == NULL) return CIR_condMemoria;
+	if (novo == NULL) return CIR_CondRetMemoria;
 
 	novo->pCont = pCont;
 
@@ -101,7 +101,7 @@ CIR_condErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 		novo->anterior = novo;
 	}
 	pLista->NoCorrente = novo;
-	return CIR_condOk;
+	return CIR_CondRetOk;
 }
 
 /***************************************************
@@ -109,10 +109,10 @@ CIR_condErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 *  Função: CIR  &RemoveElemento
 *
 *  *************************************************/
-void CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
+CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 {
 	No *Corr;
-    if(pLista==NULL) return;
+    if(pLista==NULL) return CIR_CondRetParametro;
     Corr = pLista->NoCorrente;
 
 	Corr->anterior->proximo = Corr->proximo;
@@ -128,9 +128,10 @@ void CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 *  Função: CIR  &ProximoElemento
 *
 *  *************************************************/
-void CIR_ProximoElemento(CIR_lstCircular *pLista)
+CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista)
 {
-	if(pLista==NULL||pLista->NoCorrente==NULL) return;
+	if (pLista == NULL) return CIR_CondRetParametro;
+	if (pLista->NoCorrente==NULL) return CIR_CondRetListaVazia;
 	pLista->NoCorrente = pLista->NoCorrente->proximo;
 }
 
@@ -139,10 +140,10 @@ void CIR_ProximoElemento(CIR_lstCircular *pLista)
 *  Função: CIR  &PrecedenteElemento
 *
 *  *************************************************/
-void CIR_PrecedenteElemento(CIR_lstCircular *pLista)
+CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista)
 {
-	if(pLista==NULL) return;
-	
+	if(pLista==NULL) return CIR_CondRetParametro;
+	if (pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
 	pLista->NoCorrente = pLista->NoCorrente->anterior;
 }
 
@@ -163,11 +164,11 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 *  Função: CIR  &ProcuraElemento
 *
 *  *************************************************/
-void CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
+CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	No *proc;
     
-	if(pLista==NULL || pCont==NULL) return;
+	if(pLista==NULL || pCont==NULL) return CIR_CondRetParametro;
     proc = pLista->NoCorrente->proximo;
 	
 	while(proc!=pLista->NoCorrente) /*Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.*/
@@ -175,8 +176,9 @@ void CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 		if(proc->pCont==pCont)
 		{
 			pLista->NoCorrente=proc; /*Se encontrar no caminho para e retorna o endereço.*/
-			break;
+			return CIR_CondRetOk;
 		}
 		proc = proc->proximo;
 	}
+	return CIR_CondRetNaoAchou;
 }

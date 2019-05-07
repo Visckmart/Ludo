@@ -38,9 +38,35 @@ Tipo de dados: Lista Circular
 ***************************************/
 typedef struct circular CIR_lstCircular;
 
+/***********************************************************************
+*
+*  $TC Tipo de dados: CIR Condições de retorno
+*
+*
+*  $ED Descrição do tipo
+*     Condições de retorno das funções de Lista Circular
+*
+***********************************************************************/
 
 
-typedef enum CIR_condErro { CIR_condOk , CIR_condMemoria, CIR_condParametro} CIR_condErro;
+typedef enum { 
+
+	CIR_CondRetOk,
+	/* Concluiu corretamente */
+
+	CIR_CondRetMemoria,
+	/* Faltou memória ao tentar criar um elemento de lista */
+
+	CIR_CondRetParametro,
+	/* Parâmetro nulo*/
+
+	CIR_CondRetListaVazia,
+	/* A lista não contém elementos */
+
+	CIR_CondRetNaoAchou
+	/* Não encontrou o elemento procurado */
+
+} CIR_CondRetErro;
 
 
 /***********************************************************************
