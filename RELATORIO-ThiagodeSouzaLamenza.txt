@@ -15,3 +15,4 @@
 01/05     0.5h                 estudar                                              Estudo das regras de documentação
 03/05     1h                   codificar módulo                                     Início da codificação do módulo Tabuleiro
 04/05     3h		           codificar módulo                                     Avanço na codificação do módulo Tabuleiro
+06/05 	  2.5h                 revisar código do módulo                             Reestrututar o módulo lista circular	
