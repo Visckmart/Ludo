@@ -7,6 +7,12 @@
 =declararparm   str3    string  "xpto"
 =declararparm	pNulo	int		0
 =declararparm	pNaoNulo	int	1
+=declararparm   CondRetOK int 0
+=declararparm   CondRetMemoria int 1
+=declararparm   CondRetParametro int 2
+=declararparm   CondRetListaVazia int 3
+=declararparm   CondRetNaoAchou int 4
+
 
 ==Cria lista 0
 =crialista 0
@@ -18,42 +24,48 @@
 =crialista 2
 
 ==Teste com lista com um elemento
+=proximo 0 CondRetListaVazia
+
+=precedente 0 CondRetListaVazia
+
+=conteudo 0 "" pNulo
+
 =insere str1 0
 
-=proximo 0
+=proximo 0 CondRetOK
 
-=precedente 0
+=precedente 0 CondRetOK
 
-=conteudo 0 str1
+=conteudo 0 str1 pNaoNulo
 
-=procura str0 0 pNaoNulo
+=procura str1 0 CondRetOK
 
-=procura str3 0 pNulo
+=procura str1 0 CondRetOK
 
 ==Teste com lista de varios elementos
 =insere str2 1
 
 =insere str0 1
 
-=precedente 1
+=precedente 1 CondRetOK
 
-=conteudo 1 str2
+=conteudo 1  str2 pNaoNulo
 
-=proximo 1
+=proximo 1 CondRetOK
 
-=conteudo 1 str0
+=conteudo 1 str0 pNaoNulo
 
-=proximo 1
+=proximo 1 CondRetOK
 
-=conteudo 1 str3
+=conteudo 1 str2 pNaoNulo
 
 =remove 1
 
-=conteudo 1 str0
+=conteudo 1 str0 pNaoNulo
 
-=precedente 1 str2
+=precedente 1 CondRetOK
 
-=procura str0 1 pNaoNulo
+=procura str0 1 CondRetOK
 
 
 

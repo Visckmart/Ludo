@@ -110,7 +110,7 @@ CIR_lstCircular *CIR_CriaLista();
 *   Assertivas:
 *       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
-void CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
+CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
 /***********************************************************************
 *
@@ -149,7 +149,7 @@ void *CIR_Conteudo(CIR_lstCircular *pLista);
 *   Assertivas:
 *       pLista e pCont não podem ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
-void CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
+CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 
 /***********************************************************************
 *
@@ -169,7 +169,7 @@ void CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 *   Assertivas:
 *       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
-void CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
+CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
 /***********************************************************************
 *
@@ -187,7 +187,7 @@ void CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 *   Assertivas:
 *       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
-void CIR_ProximoElemento(CIR_lstCircular *pLista);
+CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista);
 
 /***********************************************************************
 *
@@ -205,7 +205,7 @@ void CIR_ProximoElemento(CIR_lstCircular *pLista);
 *   Assertivas:
 *       pLista não pode ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
-void CIR_PrecedenteElemento(CIR_lstCircular *pLista);
+CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 
 /***********************************************************************
 *
@@ -225,6 +225,6 @@ void CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 *   Assertivas:
 *       pLista e pCont não podem ser NULL, caso seja a função retorna NULLL.
 ***********************************************************************/
-void CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont);
+CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont);
 
 #endif

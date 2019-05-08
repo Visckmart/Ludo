@@ -1,5 +1,5 @@
 /***************************************************************************
-*  $MCI Módulo de implementação: LIS  Lista Circular
+*  $MCI MÃ³dulo de implementaÃ§Ã£o: LIS  Lista Circular
 *
 *  Arquivo gerado:              Circular.c
 *  Letras identificadoras:      CIR
@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "Circular.h"
-
+#include <stdio.h>
 /**************************************
 
 $TC Tipo de dados: Elemento da lista Circular
@@ -48,7 +48,7 @@ CIR_lstCircular *CIR_CriaLista() //Cria uma nova lista composta de um elemento q
 
 /***************************************************
 *
-*  Função: CIR  &DestroiLista
+*  FunÃ§Ã£o: CIR  &DestroiLista
 *
 *  *************************************************/
 CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
@@ -73,7 +73,7 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
 
 /***************************************************
 *
-*  Função: CIR  &InsereElemento
+*  FunÃ§Ã£o: CIR  &InsereElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
@@ -106,7 +106,7 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 
 /***************************************************
 *
-*  Função: CIR  &RemoveElemento
+*  FunÃ§Ã£o: CIR  &RemoveElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
@@ -121,11 +121,12 @@ CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(vo
     
     CIR_PrecedenteElemento(pLista);
 	free(Corr);
+	return CIR_CondRetOk;
 }
 
 /***************************************************
 *
-*  Função: CIR  &ProximoElemento
+*  FunÃ§Ã£o: CIR  &ProximoElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista)
@@ -133,11 +134,12 @@ CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista)
 	if (pLista == NULL) return CIR_CondRetParametro;
 	if (pLista->NoCorrente==NULL) return CIR_CondRetListaVazia;
 	pLista->NoCorrente = pLista->NoCorrente->proximo;
+	return CIR_CondRetOk;
 }
 
 /***************************************************
 *
-*  Função: CIR  &PrecedenteElemento
+*  FunÃ§Ã£o: CIR  &PrecedenteElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista)
@@ -145,23 +147,24 @@ CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista)
 	if(pLista==NULL) return CIR_CondRetParametro;
 	if (pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
 	pLista->NoCorrente = pLista->NoCorrente->anterior;
+	return CIR_CondRetOk;
 }
 
 /***************************************************
 *
-*  Função: CIR  &Conteudo
+*  FunÃ§Ã£o: CIR  &Conteudo
 *
 *  *************************************************/
 void *CIR_Conteudo(CIR_lstCircular *pLista)
 {
-	if(pLista==NULL) return NULL;
+	if(pLista->NoCorrente==NULL) return NULL;
 	
 	return pLista->NoCorrente->pCont;
 }
 
 /***************************************************
 *
-*  Função: CIR  &ProcuraElemento
+*  FunÃ§Ã£o: CIR  &ProcuraElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
@@ -169,9 +172,11 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 	No *proc;
     
 	if(pLista==NULL || pCont==NULL) return CIR_CondRetParametro;
-    proc = pLista->NoCorrente->proximo;
+	if(pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
+
+    proc = pLista->NoCorrente;
 	
-	while(proc!=pLista->NoCorrente) /*Marca o primeiro elemento e avança na lista circular ate encontrar ele novamente.*/
+	do
 	{
 		if(proc->pCont==pCont)
 		{
@@ -179,6 +184,6 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 			return CIR_CondRetOk;
 		}
 		proc = proc->proximo;
-	}
+	}while(proc!=pLista->NoCorrente->anterior);
 	return CIR_CondRetNaoAchou;
 }

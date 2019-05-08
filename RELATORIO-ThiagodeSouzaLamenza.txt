@@ -16,3 +16,6 @@
 03/05     1h                   codificar módulo                                     Início da codificação do módulo Tabuleiro
 04/05     3h		           codificar módulo                                     Avanço na codificação do módulo Tabuleiro
 06/05 	  2.5h                 revisar código do módulo                             Reestrututar o módulo lista circular	
+07/05     2h                   revisar código do módulo								Revisar o módulo de teste de lista circular
+07/05     0.5h                 redigir script de teste                              Revisão dos scripts de teste para Circular
+07/05     1h                   diagnosticar e corrigir os problemas encontrados     Correção do módulo circular                 
