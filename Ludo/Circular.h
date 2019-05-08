@@ -25,9 +25,9 @@
 *     Os ponteiros para os dados são copiados para elementos da lista.
 *     Não é copiado o valor apontado por estes ponteiros.
 *
-*     Toda lista é identificada por um ponteiro pra um elemento dela.
-*     Todo elemento da lista identifica ela igualmente.
-*     Basta saber o ponteiro para um elemento da lista para executar qualquer operação nela.
+*     Toda lista é identificada por um ponteiro que representa sua cabeça.
+*     Todo elemento da lista pode ser acessado por essa cabeça, um elemento é denominado como corrente.
+*     Esse ponteiro é usado para todas as operações da lista.
 ***************************************************************************/
 
 
@@ -74,20 +74,19 @@ typedef enum {
 *  $FC Função: CIR  &Crialista
 *
 *  $ED Descrição da função
-*     Cria uma lista genérica circular contendo um elemento.
+*     Cria uma lista genérica circular vazia.
 *     Os possíveis tipos são desconhecidos a priori.
 *     A tipagem deles é implicita.
 *
 *  $EP Parâmetros
-*     *pCont  - ponteiro para o elemento a ser contido na lista.
 *
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para a lista.
+*     Se executou corretamente retorna o ponteiro para a cabeça da lista.
 *
 *     Esse ponteiro será usado para todas as outras funções do módulo.
 *
 *   Assertivas:
-*       pCont não pode ser NULL, caso seja a função retorna NULLL.
+*       Retorna NULL caso haja um erro na alocação de memória.
 ***********************************************************************/
 CIR_lstCircular *CIR_CriaLista();
 
@@ -98,17 +97,17 @@ CIR_lstCircular *CIR_CriaLista();
 *  $ED Descrição da função
 *     Percorre e libera todos os elementos de uma lista. 
 *
-*     A liberação dos ponteiros que a lista contém serão feitas pela função fornecida pelo cliente.
+*     A liberação dos dados contidos pela lista serão feitas pela função fornecida pelo cliente.
 *
 *
 *  $EP Parâmetros
-*     *pLista  - ponteiro para um elemento da lista a ser destruida.
+*     *pLista  - ponteiro para a lista.
 *     *RemoveDado - Ponteiro para uma função encarregada de liberar o dado contido no elemento.
 *  $FV Valor retornado
-*     A função não retorna nenhum valor.
+*     A função retorna CondRetOk em caso de sucesso
 *
 *   Assertivas:
-*       pLista não pode ser NULL, caso seja a função retorna NULLL.
+*       pLista não pode ser NULL, caso seja a função retorna CondRetParametro.
 ***********************************************************************/
 CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
@@ -117,18 +116,18 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
 *  $FC Função: CIR  &Conteudo
 *
 *  $ED Descrição da função
-*     Retorna o conteúdo na forma de ponteiro do elemento passado como parâmetro.
+*     Retorna o dado contido pelo elemento corrente da lista.
 *
 *  $EP Parâmetros
-*     *pLista  - Ponteiro para o elemento com o conteúdo desejado.
+*     *pLista  - Ponteiro para a lista.
 *
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para a lista.
+*     Se executou corretamente retorna o ponteiro para o dado contido no elemento corrente.
 *
-*     Esse ponteiro será usado para todas as outras funções do módulo.
 *
 *   Assertivas:
-*       pLista não pode ser NULL, caso seja a função retorna NULLL.
+*       pLista não pode ser NULL, caso seja a função retorna NULL.
+*       pLista não pode ser vazia, caso seja retorna NULL.
 ***********************************************************************/
 void *CIR_Conteudo(CIR_lstCircular *pLista);
 
@@ -138,16 +137,17 @@ void *CIR_Conteudo(CIR_lstCircular *pLista);
 *
 *  $ED Descrição da função
 *     Insere um elemento na lista circular depois do elemento passsado como parâmetro.
+*     O elemento corrente passa a ser o inserido.
 *
 *  $EP Parâmetros
-*     *pLista  - Ponteiro para o elemento depois do qual deve ser inserido o novo.
-      *pCont   - Ponteiro para o conteúdo do elemento a ser inserido.
+*     *pLista  - Ponteiro para a lista.
+      *pCont   - Ponteiro para o dado a ser contido no novo elemento.
 *
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para o novo elemento da lista.
+*     Se executou corretamente retorna CondRetOk.
 *
 *   Assertivas:
-*       pLista e pCont não podem ser NULL, caso seja a função retorna NULLL.
+*       pLista e pCont não podem ser NULL, caso seja a função CondRetParametro.
 ***********************************************************************/
 CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 
@@ -156,18 +156,19 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont);
 *  $FC Função: CIR  &RemoveElemento
 *
 *  $ED Descrição da função
-*     Remove um elemento da lista circular liberando-o e o dado contido nele.
+*     Remove o elemento corrente da lista circular liberando-o e o dado contido nele.
 *     O dado contido pelo elemento a ser removido será liberado utilizando a função fornecida pelo cliente.
 *       
 *
 *  $EP Parâmetros
-*     *pCont  - Ponteiro para o elemento a ser contido na lista.
+*     *pCont  - Ponteiro para a lista.
 *     *RemoveDado - Ponteiro para a função encarregada de liberar o dado contido no elemento.
 *  $FV Valor retornado
-*     Retorna o ponteiro para o elemento anterior ao removido, caso o removido seja o último retorna NULL.
+*     Retorna CondRetOk em caso de sucesso.
 *
 *   Assertivas:
-*       pLista não pode ser NULL, caso seja a função retorna NULLL.
+*       pLista não pode ser NULL, caso seja a função retorna CondRetParametro.
+*       A lista não pode ser vazia, caso seja retorna CondRetListaVazia.
 ***********************************************************************/
 CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*));
 
@@ -176,16 +177,17 @@ CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(vo
 *  $FC Função: CIR  &ProximoElemento
 *
 *  $ED Descrição da função
-*     Avança para o proximo elemento da lista circular.
+*     Avança para o elemento corrente para o proximo elemento da lista circular.
 *
 *  $EP Parâmetros
-*     *pLista  - Ponteiro para o elemento anterior ao desejado.
+*     *pLista  - Ponteiro para a lista.
 *
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para o proximo elemento da lista.
+*     Se executou corretamente retorna CondRetOk.
 *
 *   Assertivas:
-*       pLista não pode ser NULL, caso seja a função retorna NULLL.
+*       pLista não pode ser NULL, caso seja a função retorna CondRetParametro.
+*       A lista não pode ser vazia, caso seja a função retorna CondRetListaVazia.
 ***********************************************************************/
 CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista);
 
@@ -194,16 +196,17 @@ CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista);
 *  $FC Função: CIR  &PrecedenteElemento
 *
 *  $ED Descrição da função
-*     Retorna para o elemento anterior da lista circular.
+*     Retorna o elemento corrente para seu precessor.
 *
 *  $EP Parâmetros
-*     *pLista  - Ponteiro para o elemento posterior ao desejado.
+*     *pLista  - Ponteiro para a lista.
 *
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para o elemento anterior da lista.
+*     Se executou corretamente retorna CondRetOk.
 *
 *   Assertivas:
-*       pLista não pode ser NULL, caso seja a função retorna NULLL.
+*       pLista não pode ser NULL, caso seja a função retorna CondRetParametro.
+*       A lista não pode ser vazia, caso seja a função retorna CondRetListaVazia.
 ***********************************************************************/
 CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 
@@ -214,16 +217,18 @@ CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista);
 *  $ED Descrição da função
 *     Procura um elemento na lista circular contendo um dado passado como parâmetro.
 *     Caso dois elementos possuam o mesmo conteúdo o retornado será um dos dois.
+*     Avança o elemento corrente para o elemento encontrado.
 *
 *  $EP Parâmetros
-*     *pLista  - Ponteiro para o elemento anterior ao desejado.
+*     *pLista  - Ponteiro para a lista.
 *     *pCont  - Ponteiro com o dado a ser procurado.
 *
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para o elemento encontrado.
+*     Se encontrou corretamente retorna CondRetOk, caso contrário retorna CondRetNaoAchou.
 *
 *   Assertivas:
-*       pLista e pCont não podem ser NULL, caso seja a função retorna NULLL.
+*       pLista e pCont não podem ser NULL, caso seja a função retorna CondRetParametro.
+*       pLista não pode ser vazia, caso seja retorna CondRetListaVazia
 ***********************************************************************/
 CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont);
 

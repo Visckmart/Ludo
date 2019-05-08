@@ -113,6 +113,8 @@ CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(vo
 {
 	No *Corr;
     if(pLista==NULL) return CIR_CondRetParametro;
+    if(pLista->NoCorrente==NULL) return CIR_CondRetListaVazia;
+
     Corr = pLista->NoCorrente;
 
 	Corr->anterior->proximo = Corr->proximo;
