@@ -184,6 +184,6 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 			return CIR_CondRetOk;
 		}
 		proc = proc->proximo;
-	}while(proc!=pLista->NoCorrente->anterior);
+	}while(proc!=pLista->NoCorrente);
 	return CIR_CondRetNaoAchou;
 }
