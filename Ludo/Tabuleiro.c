@@ -17,19 +17,30 @@ typedef struct casa {
 
 
 typedef struct tabuleiro {
-    CIR_lstCircular
+    CIR_lstCircular *CampoPrincipal;
+	LIS_tppLista *RetaFinal[4];
 }Tabuleiro;
 
 Tabuleiro * TAB_IniciaTabuleiro() {
+	int i,a;
     Tabuleiro * tab = (Tabuleiro *)malloc(sizeof(Tabuleiro));
     if (tab == NULL) {
         return NULL;
+    }
+    for(i=0;i<4;i++)
+    {
+		tab->RetaFinal[i] = LIS_CriarLista();
+		for(a=0;a<5;a++)
+		{
+			TAB_CriaCasa(NULL,)
+		}
+
     }
 
     return tab;
 }
 
-TAB_tpCasa TAB_CriaCasa(CIR_lstCircular bif,TAB_Cor cor)
+TAB_tpCasa TAB_CriaCasa(LIS_tppLista bif,TAB_Cor cor)
 {
     TAB_tpCasa *nova;
     nova = (TAB_tpCasa) malloc(sizeof(TAB_tpCasa));

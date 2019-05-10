@@ -19,3 +19,7 @@
 07/05     2h                   revisar código do módulo								Revisar o módulo de teste de lista circular
 07/05     0.5h                 redigir script de teste                              Revisão dos scripts de teste para Circular
 07/05     1h                   diagnosticar e corrigir os problemas encontrados     Correção do módulo circular                 
+08/05	  0.5h                 codificar módulo                                     Continuação da codificação do módulo tabuleiro
+09/05     2h                   revisar código do módulo                             Revisão do módulo de testes para lista circular
+10/05     2h                   revisar código do módulo                             Correção de bugs no módulo de testes para lista circular
+10/05     0.5h                 diagnosticar e corrigir os problemas encontrados     Correções no módulo Lista Circular
