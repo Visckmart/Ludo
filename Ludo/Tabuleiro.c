@@ -17,19 +17,15 @@ typedef struct casa {
 
 
 typedef struct tabuleiro {
-    Jogador * jogadores;
+    CIR_lstCircular
 }Tabuleiro;
 
 Tabuleiro * TAB_IniciaTabuleiro() {
     Tabuleiro * tab = (Tabuleiro *)malloc(sizeof(Tabuleiro));
     if (tab == NULL) {
-        /* Fazer algo que indique que ocorreu um problema */
         return NULL;
     }
-    //Jogador ** jogadores, int numJogadores
-//    for (int i = 0; i < numJogadores; i++) {
-//        jogadores[i]
-//    }
+
     return tab;
 }
 
@@ -47,11 +43,12 @@ TAB_tpCasa TAB_CriaCasa(CIR_lstCircular bif,TAB_Cor cor)
     return bif;
 }
 
-void TAB_InserePeca(JOG_tpPeca *peca,TAB_tpCasa casa)
+TAB_CondRet TAB_InserePeca(JOG_tpPeca *peca,TAB_tpCasa casa)
 {
-    if(casa->pecas[0]==NULL) casa->Pecas[0] = peca;
-    else if(casa->pecas[1]==NULL) casa->Pecas[1] = peca;
-    else return; /************************ADICIONAR CONDICAO DE ERRO**************************/
+    if(casa->pecas[0]==NULL) casa->pecas[0] = peca;
+    else if(casa->pecas[1]==NULL) casa->pecas[1] = peca;
+    else return TAB_CondRetSemEspaco;
+    return TAB_CondRetOk;
 }
 
 int TAB_Cor(TAB_tpCasa casa)
@@ -79,71 +76,86 @@ int TAB_NumPecas(TAB_tpCasa casa)
 
 Fun��o: TAB  &Avanca Peca Lista Dupla
 
-CUIDADO: Pressupoe que o elemento atual da lista cont�m a peca desejada.
+CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 
 ****************************************************************/
-void TAB_AvancaPecaLDupla(LIS_tppLista Lista,int peca,int ncasas)
+TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int peca,int ncasas)
 {
+	int res = ncasas;
     TAB_tpCasa *CasaCorr = LIS_ObterValor(Lista);
     JOG_tpPeca *temp;
     temp = CasaCorr->pecas[peca];
     CasaCorr->pecas[peca] = NULL;
 
-    while(ncasas>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente poss�vel*/
+    while(res>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente possível*/
     {
-    	ncasas--;
+    	res--;
+    	CasaCorr = LIS_ObterValor(Lista);
+    	if(TAB_NumPecas(CasaCorr)==2)  /*Se encontrar obstrução volta uma casa e termina a jogada*/
+    	{
+    		if(res==ncasas-1) return TAB_CondRetNaoAndou; /*Se a obstrução está na primeira casa andada então a jogada é inválida*/
+    		res = 0;
+    		LISAvancarElementoCorrente(Lista,-1);
+    		break;
+    	}
     }
-    LISAvancarElementoCorrente(Lista,-ncasas);/*Volta o restante*/
+    LISAvancarElementoCorrente(Lista,-res);/*Volta o restante*/
     CasaCorr = LIS_ObterValor(Lista);
     InserePeca(temp,CasaCorr);
+
+    return TAB_CondRetOk;
 }
 
 /****************************************************************
 
 Fun��o: TAB  &Avanca Peca Lista Circular
 
-CUIDADO: Pressupoe que o elemento atual da lista cont�m a peca desejada.
+CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 
 ****************************************************************/
-void TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int peca,int ncasas)
+TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int peca,int ncasas)
 {
+	int res=ncasas;
     TAB_Cor CorPeca;
     JOG_tpPeca *temp;
-    TAB_tpCasa *CasaCorr = CIR_Conteudo(Lista);
+    TAB_tpCasa *CasaCorr = CIR_Conteudo(Lista),*Proximo;
     
     temp = CasaCorr->pecas[peca];
     CasaCorr->pecas[peca] = NULL;
     CorPeca = JOG_Cor(temp);
     
-    while(ncasas>0)
-    {
-        ncasas--;
-        
-        if(TAB_NumCasas(CasaCorr)==2 && ncasas != 0)
-        {
 
-			CIR_PrecedenteElemento(Lista);
-			CasaCorr = CIR_Conteudo(Lista);
-			break;
+
+    while(res>0)
+    {
+        res--;
+        CIR_ProximoElemento(Lista);
+        Proximo = CIR_Conteudo(Lista);
+        
+        if(TAB_NumPecas(Proximo)==2 && res != 0)
+        {
+        	if(res == ncasas-1) return TAB_CondRetNaoAndou;
+        	break;
         }
 
         if(TAB_Cor(CasaCorr) == CorPeca) /*Se a casa tem cor igual a pe�a sendo movida ela � uma bifurcacao para ela, encaminha para a função apropriada*/
         {
             LIS_IrInicioLista(CasaCorr->Bifurcacao);
-            CasaCorr = LIS_ObterValor(CasaCorr->Bifurcacao);
-            TAB_InserePeca(CasaCorr,temp);
-            TAB_AvancaPecaLDupla(CasaCorr->Bifurcacao,ncasas);
-            return;
+            if(TAB_NumPecas(LIS_ObterValor(CasaCorr->Bifurcacao))==2) break; /*Se a primeira casa da lista está obstruida pare a peça onde está*/
+
+			Proximo = LIS_ObterValor(CasaCorr->Bifurcacao);
+			if(TAB_AvancaPecaLDupla(CasaCorr,TAB_NumPecas(CasaCorr)-1,res==TAB_CondRetOk) return TAB_CondRetOk;
+
         }
 
-        else
-        {
-        	CIR_ProximoElemento(Lista);
-            CasaCorr = CIR_Conteudo(Lista);
-        }
+
+		CIR_ProximoElemento(Lista);
+		CasaCorr = CIR_Conteudo(Lista);
+
     }
     if(TAB_NumCasas==1 && JOG_Cor(CasaCorr->pecas[1])!=CorPeca) TAB_ComePecas(CasaCorr);
     TAB_InserePeca(CasaCorr,temp);
     JOG_MovePeca(temp,CasaCorr);
+    return CondRetOk;
 }
 

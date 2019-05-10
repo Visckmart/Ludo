@@ -11,9 +11,14 @@
 #include "Casa.h"
 #include "Jogador.h"
 
-typedef enum {TAB_Neutra,TAB_Verde,TAB_Amarelo,TAB_Vermelho,TAB_Azul}TAB_Cor;
+typedef enum{
+	TAB_CondRetNaoAndou,
 
-typedef struct Tabuleiro Tabuleiro;
+	TAB_CondRetOk,
+
+	TAB_CondRetSemEspaco
+
+}TAB_CondRet;
 
 Tabuleiro * TAB_IniciaTabuleiro(void);
 void TAB_ResetaTabuleiro(Tabuleiro *);
