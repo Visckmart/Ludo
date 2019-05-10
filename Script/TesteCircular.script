@@ -1,71 +1,131 @@
 //Testa o modulo Circular.h
 
 ==Declarando Parametros
-=declararparm   str0    string  "abcdefg"
+=declararparm   str0    string	"abcdefg"
 =declararparm   str1    string  "qwerty"
 =declararparm   str2    string  "xxx"
 =declararparm   str3    string  "xpto"
 =declararparm	pNulo	int		0
 =declararparm	pNaoNulo	int	1
-=declararparm   CondRetOK int 0
-=declararparm   CondRetMemoria int 1
-=declararparm   CondRetParametro int 2
-=declararparm   CondRetListaVazia int 3
-=declararparm   CondRetNaoAchou int 4
+=declararparm   CondRetOK	int 0
+=declararparm   CondRetMemoria	int 1
+=declararparm   CondRetParametro	int 2
+=declararparm   CondRetListaVazia	int 3
+=declararparm   CondRetNaoAchou		int 4
 
 
 ==Cria lista 0
-=crialista 0
+=crialista		0
 
 ==Cria lista 1
-=crialista 1
+=crialista		1
 
 ==Cria lista 2
-=crialista 2
+=crialista		2
 
 ==Teste com lista com um elemento
-=proximo 0 CondRetListaVazia
+=proximo		0	CondRetListaVazia
 
-=precedente 0 CondRetListaVazia
+=precedente		0	CondRetListaVazia
 
-=conteudo 0 "" pNulo
+=conteudo		0	""	pNulo
 
-=insere str1 0
+=insere			str1	0
 
-=proximo 0 CondRetOK
+=proximo		0	CondRetOK
 
-=precedente 0 CondRetOK
+=precedente 	0	CondRetOK
 
-=conteudo 0 str1 pNaoNulo
+=conteudo		0 	str1	pNaoNulo
 
-=procura str1 0 CondRetOK
+=procura		str1	0	CondRetOK
 
-=procura str1 0 CondRetOK
+=procura		str1	0	CondRetOK
+
+==Teste com lista de dois elementos
+=insere			str2	1
+
+=insere			str0	1
+
+=precedente		1	CondRetOK
+
+=conteudo		1 	str2	pNaoNulo
+
+=proximo		1 	CondRetOK
+
+=conteudo		1	str0	pNaoNulo
+
+=proximo		1	CondRetOK
+
+=conteudo		1	str2	pNaoNulo
+
+=remove			1
+
+=conteudo		1	str0	pNaoNulo
+
+=precedente		1	CondRetOK
+
+=procura 		str0	1	CondRetOK
 
 ==Teste com lista de varios elementos
-=insere str2 1
+=insere 		str0	2
 
-=insere str0 1
+=insere 		str1	2
 
-=precedente 1 CondRetOK
+=insere 		str2	2
 
-=conteudo 1  str2 pNaoNulo
+=insere 		str3	2
 
-=proximo 1 CondRetOK
+=precedente 	2	CondRetOk
 
-=conteudo 1 str0 pNaoNulo
+=conteudo		2	str2	pNaoNulo
 
-=proximo 1 CondRetOK
+=precedente 	2	CondRetOk
 
-=conteudo 1 str2 pNaoNulo
+=conteudo		2	str1	pNaoNulo
 
-=remove 1
+=precedente 	2	CondRetOk
 
-=conteudo 1 str0 pNaoNulo
+=conteudo		2	str0	pNaoNulo
 
-=precedente 1 CondRetOK
+=precedente 	2	CondRetOk
 
-=procura str0 1 CondRetOK
+=conteudo		2	str3	pNaoNulo
 
+=precedente 	2	CondRetOk
+
+=conteudo		2	str2	pNaoNulo
+
+=proximo 		2	CondRetOk
+
+=conteudo		2	str3	pNaoNulo
+
+=precedente 	2	CondRetOk
+
+=conteudo		2	str0	pNaoNulo
+
+=procura 		str0	2	CondRetOK
+
+=procura 		str1	2	CondRetOK
+
+=procura 		str2	2	CondRetOK
+
+=procura 		str3	2	CondRetOK
+
+=remove			2
+
+=procura		str0	2	CondRetNaoAchou
+
+=remove			2
+
+=remove			2
+
+=remove			2
+
+=proximo		2	CondRetListaVazia
+
+=precedente		2	CondRetListaVazia
+
+=conteudo		2	""	pNulo
 
 
