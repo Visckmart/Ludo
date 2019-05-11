@@ -30,6 +30,8 @@ typedef enum{
 
 }TAB_CondRet;
 
+typedef struct tabuleiro TAB_tpTabuleiro;
+
 Tabuleiro * TAB_IniciaTabuleiro(void);
 void TAB_ResetaTabuleiro(Tabuleiro *);
 char TAB_ValidaJogada(void);
