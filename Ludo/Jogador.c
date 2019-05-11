@@ -63,10 +63,10 @@ JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
  * * * * * * * * * */
 
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
-	if (jog == NULL) { return JOG_CondRetParametro; }
+    if (jog == NULL) { return JOG_CondRetParametro; }
     LIS_DestruirLista(jog->pecas);
     free(jog);
-	return JOG_CondRetOk
+    return JOG_CondRetOk;
 }
 
 /* * * * * * * * * *
@@ -75,12 +75,12 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
  *
  * * * * * * * * * */
 JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, int IDPeca, void * novaCasa) {
-	if (jog == NULL || IDPeca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
+    if (jog == NULL || IDPeca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
     IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
     for (int i = 0; i < IDPeca; i++) {
         LIS_AvancarElementoCorrente(jog->pecas);
-        if (jog->pecas == NULL) {
+        if (LIS_ObterValor(jog->pecas) == NULL) {
             return JOG_CondRetFaltamPecas;
         }
     }
@@ -127,7 +127,7 @@ Cor JOG_CorPeca(JOG_tpPeca * IDPeca) {
 void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     int tot = 0;
     IrInicioLista(jog->pecas);
-    while (l != NULL) {
+    while (LIS_ObterValor(jog->pecas) != NULL) {
         tot ++;
         LIS_AvancarElementoCorrente(l);
     }
