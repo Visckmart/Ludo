@@ -27,6 +27,8 @@ struct Jogador {
     Cor cor;
 };
 
+
+
 /* * * * * * * * * *
  *
  *  Função: JOG Criar jogador

@@ -9,17 +9,17 @@
 #include "Circular.h"
 #include "LISTA.H"
 
-typedef struct casa {
+struct casa {
     JOG_tpPeca pecas[2];
     LIS_tppLista Bifurcacao;
     JOG_tpCor Cor;
-}TAB_tpCasa;
+}
 
 
-typedef struct tabuleiro {
+struct tabuleiro {
     CIR_lstCircular *campoPrincipal;
 	LIS_tppLista *retaFinal[4];
-}TAB_tpTabuleiro;
+}
 
 
 /**********************************************
@@ -34,7 +34,7 @@ static TAB_tpTabuleiro *Tabuleiro = NULL;
  * Protótipo das funções estáticas encapsuladas pelo módulo
  *
  ********************************************/
-static TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,TAB_Cor cor);
+static TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor);
 static TAB_CondRet TAB_InserePeca(TAB_tpCasa casa,JOG_tpPeca *peca);
 static TAB_CondRet TAB_RemovePeca(TAB_tpCasa casa,int peca);
 static void TAB_DestroiCasa(TAB_tpCasa casa);
@@ -51,7 +51,7 @@ Fun��o: TAB  &CriaCasa
 
 ****************************************************************/
 
-TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,TAB_Cor cor)
+TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor)
 {
     TAB_tpCasa *nova;
     nova = (TAB_tpCasa) malloc(sizeof(TAB_tpCasa));
@@ -74,7 +74,7 @@ Fun��o: TAB  &IniciaTabuleiro
 TAB_CondRet TAB_IniciaTabuleiro() {
 	int i,a;
     TAB_tpTabuleiro * tab;
-    JOG_Cores Cores[4] = {Amarelo,Verde,Vermelho,Azul};
+    JOG_tpCor Cores[4] = {Amarelo,Verde,Vermelho,Azul};
     TAB_tpCasa *casa;
 
     if(Tabuleiro!=NULL) TAB_DestroiTabuleiro();
@@ -89,7 +89,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
 		tab->retaFinal[i] = LIS_CriarLista(TAB_DestroiCasa);
 		for(a=0;a<5;a++)
 		{
-			casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
+			casa = TAB_CriaCasa(NULL,Nenhuma);
 			if(casa==NULL) return TAB_CondRetMemoria;
 
 			LIS_InserirElementoApos(tab->retaFinal[i],casa);
@@ -108,7 +108,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     	}
     	else
     	{
-    		casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
+    		casa = TAB_CriaCasa(NULL,Nenhuma);
     	}
     	if(casa==NULL) return TAB_CondRetMemoria;
     	CIR_InsereElemento(tab->campoPrincipal,casa);
@@ -276,7 +276,7 @@ CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas)
 {
 	int res=numCasas;
-    TAB_Cor CorPeca;
+    JOG_tpCor CorPeca;
     JOG_tpPeca *temp;
     TAB_tpCasa *casaInicial,*casaCorr;
 
@@ -305,7 +305,7 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
             if(TAB_NumPecas(LIS_ObterValor(casaCorr->Bifurcacao))==2) break; /*Se a primeira casa da lista está obstruida pare a peça onde está*/
 
 			Proximo = LIS_ObterValor(casaCorr->Bifurcacao);
-			if(TAB_AvancaPecaLDupla(casaCorr,TAB_NumPecas(casaCorr)-1,res==TAB_CondRetOk) return TAB_CondRetOk;
+			if(TAB_AvancaPecaLDupla(casaCorr,TAB_NumPecas(casaCorr)-1,res==TAB_CondRetOk)) return TAB_CondRetOk;
 
         }
 
