@@ -132,7 +132,6 @@ CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(vo
     if(Precursor == Corrente) pLista->NoCorrente = NULL; /*Se o elemento retirado foi o último o elemento corrente vira NULL */
     else {
     		pLista->NoCorrente = Precursor;
-    		printf("%s",CIR_Conteudo(pLista));
     }
 
 	free(Corrente);
@@ -175,7 +174,6 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 {
 	if(pLista == NULL || pLista->NoCorrente==NULL) return NULL;
 	
-	//printf("-     %s\n",pLista->NoCorrente->pCont);
 	return pLista->NoCorrente->pCont;
 }
 
@@ -186,20 +184,19 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 *  *************************************************/
 CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
-	//int i=0;
-	No *inicio;
+	No *noCorrente,*inicio;
     
 	if(pLista==NULL || pCont==NULL) return CIR_CondRetParametro;
 	if(pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
 
+	noCorrente = pLista->NoCorrente;
     inicio = pLista->NoCorrente;
 
 	do
 	{
-		//i++;
-		if(CIR_Conteudo(pLista) == pCont) return CIR_CondRetOk;/*Se encontrar no caminho para e retorna o endereço.*/
+		if(noCorrente->pCont == pCont) return CIR_CondRetOk;/*Se encontrar no caminho para e retorna o endereço.*/
 
-		CIR_ProximoElemento(pLista);
-	}while(CIR_Conteudo(pLista)!=inicio);
+		noCorrente = noCorrente->proximo;
+	}while(noCorrente!=inicio);
 	return CIR_CondRetNaoAchou;
 }

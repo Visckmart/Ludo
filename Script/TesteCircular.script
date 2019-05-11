@@ -39,6 +39,7 @@
 
 =insere			str2	1
 =insere			str0	1
+
 =precedente		1	CondRetOk
 =conteudo		1 	str2	pNaoNulo
 =proximo		1 	CondRetOk
@@ -77,9 +78,6 @@
 =remove			2		CondRetOk
 =remove			2		CondRetOk
 =remove			2		CondRetListaVazia
-
-=proximo		2	CondRetListaVazia
-=precedente		2	CondRetListaVazia
 =conteudo		2	""	pNulo
 
 =reseta

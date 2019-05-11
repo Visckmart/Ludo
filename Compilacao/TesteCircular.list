@@ -21,9 +21,9 @@ Módulos do construto: TesteCircular.comp
 Estatísticas do construto
 
    Estatísticas do arquivo: circular.c
-      Total linhas:             205
+      Total linhas:             202
       Linhas de código:         111
-      Linhas de comentário:      69
+      Linhas de comentário:      67
       Linhas em branco:          30
    Arquivos de inclusão de que necessita
       circular.h
@@ -106,17 +106,17 @@ Totais por tipo de arquivo
          Arquivos deste tipo:          0
 
   Tipo: c        Path: ..\Ludo
-         Total linhas do tipo:       371
+         Total linhas do tipo:       368
          Linhas de código:           212
-         Linhas de comentário:        97
+         Linhas de comentário:        95
          Linhas em branco:            67
          Arquivos deste tipo:          2
 
 Totais para todo o construto TesteCircular
 
-   Total linhas:              1977
+   Total linhas:              1974
    Linhas de código:           343
-   Linhas de comentário:      1402
+   Linhas de comentário:      1400
    Linhas em branco:           237
    Arquivos processados:         6
 
