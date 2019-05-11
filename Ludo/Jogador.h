@@ -8,7 +8,15 @@
 
 
 #include <stdio.h>
-#include "Cor.h"
+
+/***********************************************************************
+*
+*  $TC Tipo de dados: Cor
+*
+***********************************************************************/
+typedef enum Cor {
+    Nenhuma, Vermelho, Azul, Verde, Amarelo
+}JOG_tpCor;
 
 typedef struct Jogador JOG_tpJogador;
 typedef struct Peca JOG_tpPeca;
@@ -25,6 +33,7 @@ typedef enum {
     /* Acabaram as pe�as a serem movidas */
     
     
+
 } JOG_CondRetErro;
 
 JOG_tpJogador * JOG_Cria(Cor);

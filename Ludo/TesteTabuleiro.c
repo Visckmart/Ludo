@@ -1,48 +1,34 @@
-//Teste do Modulo Circular.h utilizando o arcabouco de testes
+//Teste do Modulo Tabuleiro.h utilizando o arcabouco de testes
 
 #include "GENERICO.h"
 #include "TST_ESPC.H"
 #include "LERPARM.h"
-#include "Circular.h"
+#include "Tabuleiro.h"
+#include "Jogador.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DIM_VT_LISTA 5
-#define DIM_BUFFER 20
-/*Vetor com as listas atuais*/
-CIR_lstCircular *Listas[DIM_VT_LISTA];
+#define DIM_VT_PECA 2
 
-/*Condições de retorno de circular*/
- CIR_CondRetErro CondRet;
+/*Condições de retorno de tabuleiro*/
+TAB_CondRet CondRet;
 
-/*Função de validação de indice do vetor de listas*/
-static int ValidaLista(int ind);
+/* Vetor de peças a serem usadas nos testes*/
+static *JOG_tpJogador[DIM_VT_JOGADORES] = {}
 
-/*Função de liberação*/
-
-static void LiberaDado(void *pDado);
-    
 
 // Funções aceitas para testar
 static char RESETA[] = "=reseta";
-static char CRIALISTA[] = "=crialista";
-static char INSERE[] = "=insere";
-static char PROXIMO[] = "=proximo";
-static char PRECEDENTE[] = "=precedente";
-static char CONTEUDO[] = "=conteudo";
-static char REMOVE[] = "=remove";
-
+static char INICIA[] = "=inicia";
+static char JOGADA[] = "=jogada";
+static char NOVAPECA[] = "=novapeca";
 
 /***********************
 Comandos disponíveis:
 =reseta
-=crialista		indLista
-=insere 		StringDados		indLista
-=proximo	 	indLista		ValorEsperado
-=precedente		indLista		ValorEsperado
-=conteudo		indLista		StringDados		ValorEsperado
-=remove			indLista		ValorEsperado
+=inicia
+=jogada
 ***********************/
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
@@ -56,31 +42,27 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
-		for(i=0;i<DIM_VT_LISTA;i++)
-		{
-			if(ValidaLista(i)) CIR_DestroiLista(Listas[i],LiberaDado);
-			Listas[i] = NULL;
-		}
+		TAB_DestroiTabuleiro()
 		return TST_CondRetOK;
 	}
 
 	//Testar a funcao CriarLista
-	else if(strcmp(ComandoTeste,CRIALISTA)==0) 
+	else if(strcmp(ComandoTeste,CRIALISTA)==0)
 	{
 		NumLidos = LER_LerParametros( "i" , &indLista ) ;
 		if(ValidaLista(indLista) || NumLidos!=1) return TST_CondRetParm;
 		Listas[indLista] = CIR_CriaLista();
 		if(Listas[indLista] == NULL) return TST_CondRetMemoria;
-		
+
 		return TST_CondRetOK;
 	}
-	
+
 	//Testar a funcao InsereElemento
 	else if(strcmp(ComandoTeste,INSERE)==0)
 	{
 		NumLidos = LER_LerParametros("si",StringDados, &indLista);
 		if(!ValidaLista(indLista) || NumLidos!=2) return TST_CondRetParm;
-		
+
 		pDado = malloc(strlen(StringDados)+1);
 
 		strcpy(pDado,StringDados);
@@ -89,7 +71,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		if(CondRet == CIR_CondRetMemoria) return TST_CondRetMemoria;
 		return TST_CompararString((char*)CIR_Conteudo(Listas[indLista]),StringDados,"Elemento inserido incorretamente");
 	}
-	
+
 	//Testar a funcao ProximoElemento
 	else if(strcmp(ComandoTeste,PROXIMO)==0)
 	{
@@ -98,17 +80,17 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		return TST_CompararInt(CIR_ProximoElemento(Listas[indLista]),ValorEsperado,"Resultado nao e o esperado");
 	}
-	
+
 	//Testar a funcao PrecedenteElemento
 	else if(strcmp(ComandoTeste,PRECEDENTE)==0)
 	{
 		NumLidos = LER_LerParametros("ii",&indLista,&ValorEsperado);
 		if(!ValidaLista(indLista)||NumLidos!=2) return TST_CondRetParm;
 
-		
+
 		return TST_CompararInt(CIR_PrecedenteElemento(Listas[indLista]),ValorEsperado,"Resultado nao e o esperado");
 	}
-	
+
 	//Testar a funcao Conteudo
 	else if(strcmp(ComandoTeste,CONTEUDO)==0)
 	{
@@ -127,7 +109,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CompararPonteiroNulo(0,pDado,"Nao achou ponteiro nulo quando deveria");
 
 	}
-	
+
 	//Testar a funcao RemoveElemento
 	else if(strcmp(ComandoTeste,REMOVE)==0)
 	{
@@ -136,7 +118,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		return TST_CompararInt(CIR_RemoveElemento(Listas[indLista],LiberaDado),ValorEsperado,"Resultado nao e o esperado.");
 	}
-	
+
 	return 0;
 }
 
