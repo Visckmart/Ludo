@@ -9,8 +9,8 @@
 
 =declararparm	pNulo	int		0
 =declararparm	pNaoNulo	int	1
-
 =declararparm   CondRetOk	int 0
+
 =declararparm   CondRetMemoria	int 1
 =declararparm   CondRetParametro	int 2
 =declararparm   CondRetListaVazia	int 3
