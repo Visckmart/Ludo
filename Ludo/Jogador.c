@@ -83,18 +83,8 @@ void JOG_Remove(void * possJog) {
  *  Função: JOG Atualizar posição de uma peça
  *
  * * * * * * * * * */
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, int IDPeca, void * novaCasa) {
-    if (jog == NULL || IDPeca < 0 || novaCasa == NULL) { return JOG_CondRetParametro; }
-    IrInicioLista(jog->pecas);
-    // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
-    for (int i = 0; i < IDPeca; i++) {
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
-        if (LIS_ObterValor(jog->pecas) == NULL) {
-            return JOG_CondRetFaltamPecas;
-        }
-    }
-    // Pega a peça que está guardada no elemento
-    JOG_tpPeca * p = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa) {
+    if (jog == NULL || peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
     // Atualiza a posição da peça
     p->pos = novaCasa;
     return JOG_CondRetOk;
