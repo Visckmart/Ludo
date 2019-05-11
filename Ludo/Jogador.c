@@ -17,9 +17,10 @@ struct Jogador {
     Cor cor;
 };
 
-Jogador * JOG_Cria(Cor corDasPecas) {
+JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
     // Aloca um espaço para o jogador
-    Jogador * jog = (Jogador *)malloc(sizeof(Jogador));
+    JOG_tpJogador * jog = (JOG_tpJogador *)malloc(sizeof(Jogador));
+    if (jog == NULL) return NULL;
     
     // Cria a primeira peça
     jog->pecas = LIS_CriarLista(JOG_Deleta);
@@ -27,9 +28,10 @@ Jogador * JOG_Cria(Cor corDasPecas) {
     // Cria elementos de uma lista encadeada que guarda peças
     for (int i = 1; i < 4; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
+        if (p == NULL) { JOG_Deleta(jog); return NULL; }
         p->pos = NULL;
         p->cor = corDasPecas;
-        jog->pecas = LIS_InserirElementoApos(j->pecas, p);
+        LIS_InserirElementoApos(j->pecas, p);
     }
     
     // Guarda a cor do jogador
@@ -39,16 +41,16 @@ Jogador * JOG_Cria(Cor corDasPecas) {
     return jog;
 }
 
-void JOG_Deleta(Jogador * jog) {
+void JOG_Deleta(JOG_tpJogador * jog) {
     LIS_DestruirLista(jog->pecas);
     free(jog);
 }
 
-void JOG_AtualizaPeca(Jogador * jog, int IDPeca, void * novaCasa) {
-    LIS_tppLista * pcs = jog->pecas;
+void JOG_AtualizaPeca(JOG_tpJogador * jog, int IDPeca, void * novaCasa) {
+    IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
     for (int i = 0; i < IDPeca; i++) {
-        pcs = LIS_AvancarElementoCorrente(pcs);
+        LIS_AvancarElementoCorrente(pcs);
         if (pcs == NULL) {
             printf("Erro");
             return;
@@ -60,28 +62,24 @@ void JOG_AtualizaPeca(Jogador * jog, int IDPeca, void * novaCasa) {
     jog->pos = novaCasa;
 }
 
-char JOG_TemPecas(Jogador * jog) {
+char JOG_TemPecas(JOG_tpJogador * jog) {
     return jog->pecas != NULL;
 }
 
-void * JOG_LocalPeca(Jogador * jog, int IDpeca) {
-    LIS_tppLista * pcs = jog->pecas;
-    // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
-    for (int i = 0; i < IDPeca; i++) {
-        pcs = LIS_AvancarElementoCorrente(pcs);
-        if (pcs == NULL) {
-            printf("Erro");
-            return NULL;
-        }
-    }
-    return LIS_ObterValor(pcs);
+void * JOG_LocalPeca(JOG_tpJogador * jog, JOG_tpPeca IDpeca) {
+    return IDPeca->pos;
 }
-void * JOG_PosicoesDasPecas(Jogador * jog, int * totalDePecas) {
+
+Cor JOG_CorPeca(JOG_tpJogador * jog, JOG_tpPeca IDPeca) {
+    return IDPeca->cor;
+}
+
+void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     int tot = 0;
-    LIS_tppLista * l = jog->pecas;
+    IrInicioLista(jog->pecas);
     while (l != NULL) {
         tot ++;
-        l = LIS_AvancarElementoCorrente(l);
+        LIS_AvancarElementoCorrente(l);
     }
     if (tot == 0) return NULL;
 
@@ -89,10 +87,10 @@ void * JOG_PosicoesDasPecas(Jogador * jog, int * totalDePecas) {
     void * posicoes = (int *)malloc(sizeof(char)*tot);
     if (posicoes == NULL) { return NULL; }
     
-    l = jog->pecas;
+    IrInicioLista(jog->pecas);
     for (int i = 0; i < tot; i++) {
         posicoes[i] = LIS_ObterValor(l);
-        l = LIS_AvancarElementoCorrente(l);
+        LIS_AvancarElementoCorrente(l);
     }
     return posicoes;
 }
