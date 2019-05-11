@@ -20,6 +20,7 @@ struct Jogador {
 JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
     // Aloca um espaço para o jogador
     JOG_tpJogador * jog = (JOG_tpJogador *)malloc(sizeof(Jogador));
+    if (jog == NULL) return NULL;
     
     // Cria a primeira peça
     jog->pecas = LIS_CriarLista(JOG_Deleta);
@@ -27,6 +28,7 @@ JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
     // Cria elementos de uma lista encadeada que guarda peças
     for (int i = 1; i < 4; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
+        if (p == NULL) { JOG_Deleta(jog); return NULL; }
         p->pos = NULL;
         p->cor = corDasPecas;
         LIS_InserirElementoApos(j->pecas, p);
