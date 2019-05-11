@@ -25,6 +25,13 @@ typedef struct no{
 	struct no *anterior;
 }No;
 
+
+/**************************************
+
+$TC Tipo de dados: Cabeça da lista Circular
+
+***************************************/
+
 struct circular{
 	No *NoCorrente;
 };
@@ -111,16 +118,24 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 *  *************************************************/
 CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
 {
-	No *Corr;
+	No *Corrente,*Precursor;
     if(pLista==NULL) return CIR_CondRetParametro;
-    Corr = pLista->NoCorrente;
+    if(pLista->NoCorrente==NULL) return CIR_CondRetListaVazia;
 
-	Corr->anterior->proximo = Corr->proximo;
-	Corr->proximo->anterior = Corr->anterior;
-    RemoveDado(Corr->pCont);
+    Corrente = pLista->NoCorrente;
+    Precursor = Corrente->anterior;
+
+	Precursor->proximo = Corrente->proximo;
+	Corrente->proximo->anterior = Precursor;
+    RemoveDado(Corrente->pCont);
     
-    CIR_PrecedenteElemento(pLista);
-	free(Corr);
+    if(Precursor == Corrente) pLista->NoCorrente = NULL; /*Se o elemento retirado foi o último o elemento corrente vira NULL */
+    else {
+    		pLista->NoCorrente = Precursor;
+    }
+
+	free(Corrente);
+
 	return CIR_CondRetOk;
 }
 
@@ -157,7 +172,7 @@ CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista)
 *  *************************************************/
 void *CIR_Conteudo(CIR_lstCircular *pLista)
 {
-	if(pLista->NoCorrente==NULL) return NULL;
+	if(pLista == NULL || pLista->NoCorrente==NULL) return NULL;
 	
 	return pLista->NoCorrente->pCont;
 }
@@ -169,21 +184,19 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 *  *************************************************/
 CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
-	No *proc;
+	No *noCorrente,*inicio;
     
 	if(pLista==NULL || pCont==NULL) return CIR_CondRetParametro;
 	if(pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
 
-    proc = pLista->NoCorrente;
-	
+	noCorrente = pLista->NoCorrente;
+    inicio = pLista->NoCorrente;
+
 	do
 	{
-		if(proc->pCont==pCont)
-		{
-			pLista->NoCorrente=proc; /*Se encontrar no caminho para e retorna o endereço.*/
-			return CIR_CondRetOk;
-		}
-		proc = proc->proximo;
-	}while(proc!=pLista->NoCorrente);
+		if(noCorrente->pCont == pCont) return CIR_CondRetOk;/*Se encontrar no caminho para e retorna o endereço.*/
+
+		noCorrente = noCorrente->proximo;
+	}while(noCorrente!=inicio);
 	return CIR_CondRetNaoAchou;
 }

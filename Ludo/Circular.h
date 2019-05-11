@@ -2,7 +2,7 @@
     #define LISTA_
 /***************************************************************************
 *
-*  $MCD Módulo de definição: LIS  Lista duplamente encadeada
+*  $MCD Módulo de definição: CIR  Lista Circular
 *
 *  Arquivo gerado:              Circular.h
 *  Letras identificadoras:      CIR
