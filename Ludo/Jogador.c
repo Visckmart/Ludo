@@ -24,7 +24,7 @@ JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
     
     // Cria a primeira peça
     jog->pecas = LIS_CriarLista(JOG_Deleta);
-    
+    if (jog->pecas == NULL) { free(jog); return NULL; }
     // Cria elementos de uma lista encadeada que guarda peças
     for (int i = 1; i < 4; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
