@@ -1,16 +1,47 @@
-//
-//  Tabuleiro.h
-//  Ludo
-//
-
-#ifndef Tabuleiro_h
-#define Tabuleiro_h
+#if ! defined( TABULEIRO_ )
+#define TABULEIRO_
+/***************************************************************************
+*
+*  $MCD Módulo de definição: TAB  Tabuleiro
+*
+*  Arquivo gerado:              Tabuleiro.h
+*  Letras identificadoras:      TAB
+*
+*
+*  Projeto: INF 1301 / Ludo
+*  Autores: Thiago de Souza Lamenza
+*
+*  $HA Histórico de evolução:
+*     Versão  Autor             Data        Observações
+*     1       Thiago Lamenza   03/mai/2019  Desenvolvimento inicial
+*
+*
+*  $ED Descrição do módulo
+*     Implementa o tabuleiro do jogo Ludo
+*
+*     O módulo cria e administra uma copia do tabuleiro.
+*     O módulo não é capaz de administrar mais de um tabuleiro.
+*
+*     O tabuleiro tem 52 casas no campo de jogo principal e 4 retas finais com 5 casas cada.
+*     Os jogadores não são armazenados em tabuleiro, apenas peças.
+*
+*     As funções do tabuleiro validam a jogada antes de faze-la e não executa se a jogada não for válida.
+***************************************************************************/
 
 
 #include <stdio.h>
-#include "Casa.h"
 #include "Jogador.h"
 
+
+/***********************************************************************
+*
+*  $TC Tipo de dados: TAB Condições de retorno
+*
+*
+*  $ED Descrição do tipo
+*     Condições de retorno das funções de Tabuleiro
+*
+***********************************************************************/
 typedef enum{
 
 	TAB_CondRetOk,
@@ -18,6 +49,9 @@ typedef enum{
 
 	TAB_CondRetParametro,
 	/*Erro nos parametros*/
+
+	TAB_CondRetMemoria,
+	/*Erro de memoria*/
 
 	TAB_CondRetNaoAndou,
 	/*Não executou a jogada e a peça permanece no mesmo lugar*/
@@ -30,14 +64,86 @@ typedef enum{
 
 }TAB_CondRet;
 
-typedef struct tabuleiro TAB_tpTabuleiro;
 
-Tabuleiro * TAB_IniciaTabuleiro(void);
-void TAB_ResetaTabuleiro(Tabuleiro *);
-char TAB_ValidaJogada(void);
-void TAB_FazJogada(void);
-//TAB_JogadasPossiveis()
-Casa * TAB_ListaPecas(Jogador *);
+/***********************************************************************
+*
+*  $FC Função: TAB  &IniciaTabuleiro
+*
+*  $ED Descrição da função
+*     Deve ser a primeira função executada no módulo.
+*     Inicia o tabuleiro de Ludo com todas suas casas.
+*     Caso já exista um ele será destruido.
+*
+*  $EP Parâmetros
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso haja erro de memódia retorna TAB_CondRetMemoria.
+***********************************************************************/
+TAB_CondRet TAB_IniciaTabuleiro();
+
+
+/***********************************************************************
+*
+*  $FC Função: TAB  &FazJogada
+*
+*  $ED Descrição da função
+*     Avalia e executa uma jogada, andando com uma peça e comendo peças inimigas se necessário.
+*     Caso a jogada não seja válida a peça permanece no mesmo lugar.
+*
+*  $EP Parâmetros
+*	  peca - Ponteiro para a peça a ser movida.
+*	  dado - Valor inteiro tirado no dado.
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso a jogada seja invalida retorna TAB_CondRetNaoAndou.
+*      Caso peca seja NULL ou dado seja menor que 1 retorna TAB_CondRetParametro.
+***********************************************************************/
+TAB_CondRet TAB_FazJogada(JOG_tpPeca *peca,int dado);
+
+
+/***********************************************************************
+*
+*  $FC Função: TAB  &PoePecaNoJogo
+*
+*  $ED Descrição da função
+*     Adiciona uma nova peca no tabuleiro.
+*     Pode acontecer de comer uma peca inimiga caso esteja no caminho.
+*     A peça não é inserida caso haja obstrução na casa de inserção.
+*
+*  $EP Parâmetros
+*	  peca - Ponteiro para a peça a ser inserida.
+*	  casa - Ponteiro para a casa onde a peça será inserida.
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso a casa de inserção esteja obstruida retorna TAB_CondRetSemEspaco.
+*      Caso peca ou casa sejam NULL retorna TAB_CondRetParametro.
+***********************************************************************/
+TAB_CondRet TAB_PoePecaNoJogo(JOG_tpPeca peca,TAB_tpCasa casa);
+
+/***********************************************************************
+*
+*  $FC Função: TAB  &DestroiTabuleiro
+*
+*  $ED Descrição da função
+*     Destroi completamente o tabuleiro.
+*     Não libera as peças contidas no tabuleiro, somente o tabuleiro em sí.
+*
+*  $EP Parâmetros
+
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso Tabuleiro não exista, somente retorna TAB_CondRetOk.
+***********************************************************************/
+TAB_CondRet TAB_DestroiTabuleiro();
 
 
 #endif /* Tabuleiro_h */

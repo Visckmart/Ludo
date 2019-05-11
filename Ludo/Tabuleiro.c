@@ -22,7 +22,6 @@ typedef struct tabuleiro {
 }TAB_tpTabuleiro;
 
 
-
 /**********************************************
  *
  * Variável estática que guarda o tabuleiro
@@ -38,8 +37,8 @@ static TAB_tpTabuleiro *Tabuleiro = NULL;
 static TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,TAB_Cor cor);
 static TAB_CondRet TAB_InserePeca(TAB_tpCasa casa,JOG_tpPeca *peca);
 static TAB_CondRet TAB_RemovePeca(TAB_tpCasa casa,int peca);
-static JOG_enumCor TAB_Cor(TAB_tpCasa casa);
-static TAB_tpCasa TAB_DestroiCasa(TAB_tpCasa casa);
+static void TAB_DestroiCasa(TAB_tpCasa casa);
+static void TAB_ComePecas(TAB_tpCasa casa);
 static int TAB_NumPecas(TAB_tpCasa casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
@@ -74,11 +73,16 @@ Fun��o: TAB  &IniciaTabuleiro
 
 TAB_CondRet TAB_IniciaTabuleiro() {
 	int i,a;
-    TAB_tpTabuleiro * tab = (Tabuleiro *)malloc(sizeof(Tabuleiro));
+    TAB_tpTabuleiro * tab;
     JOG_Cores Cores[4] = {Amarelo,Verde,Vermelho,Azul};
     TAB_tpCasa *casa;
+
+    if(Tabuleiro!=NULL) TAB_DestroiTabuleiro();
+
+    tab = (Tabuleiro *)malloc(sizeof(Tabuleiro));
+
     if (tab == NULL) {
-        return NULL;
+        return TAB_CondRetMemoria;
     }
     for(i=0;i<4;i++)
     {
@@ -86,6 +90,8 @@ TAB_CondRet TAB_IniciaTabuleiro() {
 		for(a=0;a<5;a++)
 		{
 			casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
+			if(casa==NULL) return TAB_CondRetMemoria;
+
 			LIS_InserirElementoApos(tab->retaFinal[i],casa);
 		}
     }
@@ -97,16 +103,19 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     	if(i%13==0)
     	{
     		casa = TAB_CriaCasa(tab->retaFinal[a],Cores[a]);
+
     		a++;
     	}
     	else
     	{
     		casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
     	}
+    	if(casa==NULL) return TAB_CondRetMemoria;
     	CIR_InsereElemento(tab->campoPrincipal,casa);
     }
 
     Tabuleiro = tab;
+    return TAB_CondRetOk;
 }
 
 
@@ -139,12 +148,16 @@ TAB_CondRet TAB_RemovePeca(TAB_tpCasa casa,int peca)
 	return condRetOk;
 }
 
-JOG_enumCor TAB_Cor(TAB_tpCasa casa)
+void TAB_ComePecas(TAB_tpCasa casa)
 {
-    return casa->Cor;
+	PAR_RetornaAbrigo(casa->pecas[0]);
+	casa->pecas[0]=NULL;
+	PAR_RetornaAbrigo(casa->pecas[1]);
+	casa->pecas[1]=NULL;
 }
 
-TAB_tpCasa TAB_DestroiCasa(TAB_tpCasa casa)
+
+void TAB_DestroiCasa(TAB_tpCasa casa)
 {
     free(casa);
 }
@@ -162,8 +175,17 @@ int TAB_NumPecas(TAB_tpCasa casa)
 
 TAB_CondRet TAB_FazJogada(JOG_tpPeca peca,int dado)
 {
-	void *casaImplicita = JOG_LocalPeca(peca);
+	void *casaImplicita;
 	int indPeca,i;
+
+	if(peca==NULL || dado<1) return TAB_CondRetParametro;
+
+	*casaImplicita = JOG_LocalPeca(peca)
+
+	if(casaImplicita == NULL)
+	{
+		if(dado == 6) TAB_InserePeca()
+	}
 	if(CIR_ProcuraElemento(Tabuleiro->campoPrincipal,casaImplicita)!=CIR_CondRetNaoAchou)
 	{
 		return TAB_AvancaPecaCircular(Tabuleiro->campoPrincipal, casaImplicita->pecas[0]==peca?0:1, dado);
@@ -176,6 +198,26 @@ TAB_CondRet TAB_FazJogada(JOG_tpPeca peca,int dado)
 			return TAB_AvancaPecaLDupla(Tabuleiro->retafinal[i],casaImplicita->pecas[0]==peca?0:1, dado);
 		}
 	}
+}
+
+
+TAB_CondRet TAB_PoePecaNoJogo(JOG_tpPeca peca,TAB_tpCasa casa)
+{
+	if(casa==NULL || peca==NULL) return TAB_CondRetParametro;
+	if(TAB_NumPecas(casa)>0 && JOG_CorPeca(casa->pecas[0])!= JOG_CorPeca(peca)) TAB_ComePecas(casa);
+	else if(TAB_NumPecas(casa)==2) return TAB_CondRetSemEspaco;
+
+	return TAB_InserePeca(casa,peca);
+}
+
+TAB_CondRet TAB_DestroiTabuleiro()
+{
+	if(Tabuleiro==NULL) return TAB_CondRetOk;
+	CIR_DestroiLista(Tabuleiro->campoPrincipal);
+	for(i=0;i<4;i++) LIS_DestruirLista(Tabuleiro->retaFinal[i]);
+
+	free(Tabuleiro);
+	return TAB_CondRetOk;
 }
 
 /****************************************************************
@@ -221,7 +263,6 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
     if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk) return TAB_CondRetNaoAndou;
 
     TAB_RemovePeca(casaInicial,indPeca);
-    JOG_MovePeca(temp,casaCorr);
     return TAB_CondRetOk;
 }
 
@@ -243,7 +284,7 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
     
     casaInicial = casaCorr = CIR_Conteudo(Lista),*Proximo;
     temp = casaCorr->pecas[indPeca];
-    CorPeca = JOG_Cor(temp);
+    CorPeca = JOG_CorPeca(temp);
 
 
     while(res>0)
@@ -258,7 +299,7 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
         	break;
         }
 
-        if(TAB_Cor(casaCorr) == CorPeca) /*Se a casa tem cor igual a pe�a sendo movida ela � uma bifurcacao para ela, encaminha para a função apropriada*/
+        if(casaCorr->Cor == CorPeca) /*Se a casa tem cor igual a pe�a sendo movida ela � uma bifurcacao para ela, encaminha para a função apropriada*/
         {
             LIS_IrInicioLista(casaCorr->Bifurcacao);
             if(TAB_NumPecas(LIS_ObterValor(casaCorr->Bifurcacao))==2) break; /*Se a primeira casa da lista está obstruida pare a peça onde está*/
@@ -273,11 +314,10 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
 		casaCorr = CIR_Conteudo(Lista);
 
     }
-    if(TAB_NumCasas>0 && JOG_Cor(casaCorr->pecas[0])!=CorPeca) TAB_ComePecas(casaCorr);
+    if(TAB_NumCasas>0 && JOG_CorPeca(casaCorr->pecas[0])!=CorPeca) TAB_ComePecas(casaCorr);
     if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk)return TAB_CondRetNaoAndou;
 
     TAB_RemovePeca(casaInicial,indPeca);
-    JOG_MovePeca(temp,casaCorr);
     return CondRetOk;
 }
 
