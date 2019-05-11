@@ -7,16 +7,31 @@
 #include <stdlib.h>
 #include "Circular.h"
 
+/***********************************************************************
+*
+*  $TC Tipo de dados: Peça do jogador
+*
+***********************************************************************/
 struct Peca {
     void * pos;
     Cor cor;
 }
 
+/***********************************************************************
+*
+*  $TC Tipo de dados: Jogador
+*
+***********************************************************************/
 struct Jogador {
     LIS_tppLista * pecas;
     Cor cor;
 };
 
+/* * * * * * * * * *
+ *
+ *  Função: JOG Criar jogador
+ *
+ * * * * * * * * * */
 JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
     // Aloca um espaço para o jogador
     JOG_tpJogador * jog = (JOG_tpJogador *)malloc(sizeof(Jogador));
@@ -41,11 +56,21 @@ JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
     return jog;
 }
 
+/* * * * * * * * * *
+ *
+ *  Função: JOG Deletar jogador
+ *
+ * * * * * * * * * */
 void JOG_Deleta(JOG_tpJogador * jog) {
     LIS_DestruirLista(jog->pecas);
     free(jog);
 }
 
+/* * * * * * * * * *
+ *
+ *  Função: JOG Atualizar posição de uma peça
+ *
+ * * * * * * * * * */
 void JOG_AtualizaPeca(JOG_tpJogador * jog, int IDPeca, void * novaCasa) {
     IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
@@ -62,18 +87,39 @@ void JOG_AtualizaPeca(JOG_tpJogador * jog, int IDPeca, void * novaCasa) {
     jog->pos = novaCasa;
 }
 
+/* * * * * * * * * *
+ *
+ *  Função: JOG Checar se o jogador tem peças
+ *
+ * * * * * * * * * */
 char JOG_TemPecas(JOG_tpJogador * jog) {
-    return jog->pecas != NULL;
+    IrInicioLista(jog->pecas);
+    return LIS_ObterValor(jog->pecas) != NULL;
 }
 
-void * JOG_LocalPeca(JOG_tpJogador * jog, JOG_tpPeca IDpeca) {
+/* * * * * * * * * *
+ *
+ *  Função: JOG Obter posicao de uma peca peca
+ *
+ * * * * * * * * * */
+void * JOG_LocalPeca(JOG_tpPeca * IDpeca) {
     return IDPeca->pos;
 }
 
-Cor JOG_CorPeca(JOG_tpJogador * jog, JOG_tpPeca IDPeca) {
+/* * * * * * * * * *
+ *
+ *  Função: JOG Obter cor da peca
+ *
+ * * * * * * * * * */
+Cor JOG_CorPeca(JOG_tpPeca * IDPeca) {
     return IDPeca->cor;
 }
 
+/* * * * * * * * * *
+ *
+ *  Função: JOG Retorna as posições das peças do jogador (se há alguma)
+ *
+ * * * * * * * * * */
 void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     int tot = 0;
     IrInicioLista(jog->pecas);
