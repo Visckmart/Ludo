@@ -12,7 +12,7 @@
 typedef struct casa {
     JOG_tpPeca pecas[2];
     LIS_tppLista Bifurcacao;
-    TAB_Cor Cor;
+    JOG_tpCor Cor;
 }TAB_tpCasa;
 
 
