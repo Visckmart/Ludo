@@ -17,8 +17,8 @@ typedef struct casa {
 
 
 typedef struct tabuleiro {
-    CIR_lstCircular *CampoPrincipal;
-	LIS_tppLista *RetaFinal[4];
+    CIR_lstCircular *campoPrincipal;
+	LIS_tppLista *retaFinal[4];
 }TAB_tpTabuleiro;
 
 
@@ -61,28 +61,28 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     }
     for(i=0;i<4;i++)
     {
-		tab->RetaFinal[i] = LIS_CriarLista();
+		tab->retaFinal[i] = LIS_CriarLista();
 		for(a=0;a<5;a++)
 		{
 			casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
-			LIS_InserirElementoApos(tab->RetaFinal[i],casa);
+			LIS_InserirElementoApos(tab->retaFinal[i],casa);
 		}
     }
 
-    tab->CampoPrincipal = CIR_CriaLista();
+    tab->campoPrincipal = CIR_CriaLista();
     a=0;
     for(i=0;i<52;i++)
     {
     	if(i%13==0)
     	{
-    		casa = TAB_CriaCasa(tab->RetaFinal[a],Cores[a]);
+    		casa = TAB_CriaCasa(tab->retaFinal[a],Cores[a]);
     		a++;
     	}
     	else
     	{
     		casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
     	}
-    	CIR_InsereElemento(tab->CampoPrincipal,casa);
+    	CIR_InsereElemento(tab->campoPrincipal,casa);
     }
 
     Tabuleiro = tab;
@@ -95,12 +95,27 @@ Fun��o: TAB  &InserePeca
 
 ****************************************************************/
 
-TAB_CondRet TAB_InserePeca(JOG_tpPeca *peca,TAB_tpCasa casa)
+TAB_CondRet TAB_InserePeca(TAB_tpCasa casa,JOG_tpPeca *peca)
 {
     if(casa->pecas[0]==NULL) casa->pecas[0] = peca;
     else if(casa->pecas[1]==NULL) casa->pecas[1] = peca;
     else return TAB_CondRetSemEspaco;
     return TAB_CondRetOk;
+}
+
+TAB_CondRet TAB_RemovePeca(TAB_tpCasa casa,int peca)
+{
+	if(casa->pecas[0]==NULL) return TAB_CondRetCasaVazia;
+	if(peca==0)
+	{
+		casa->pecas[0] = casa->pecas[1];
+		casa->pecas[1] = NULL;
+	}
+	else
+	{
+		casa->pecas[1] = NULL;
+	}
+	return condRetOk;
 }
 
 int TAB_Cor(TAB_tpCasa casa)
@@ -127,11 +142,18 @@ int TAB_NumPecas(TAB_tpCasa casa)
 TAB_CondRet TAB_FazJogada(JOG_tpPeca peca,int dado)
 {
 	void *casaImplicita = JOG_LocalPeca(peca);
-	int indPeca;
-	if(CIR_ProcuraElemento(Tabuleiro->CampoPrincipal,casaImplicita)!=CIR_CondRetNaoAchou)
+	int indPeca,i;
+	if(CIR_ProcuraElemento(Tabuleiro->campoPrincipal,casaImplicita)!=CIR_CondRetNaoAchou)
 	{
-/////////////////*******************************************************************************************************///////////////////////////////////////////////////////////////
-		TAB_AvancaPecaCircular(Tabuleiro->CampoPrincipal,,dado);
+		return TAB_AvancaPecaCircular(Tabuleiro->campoPrincipal, casaImplicita->pecas[0]==peca?0:1, dado);
+	}
+
+	for(i=0;i<4;i++)
+	{
+		if(LIS_ProcurarValor(Tabuleiro->retaFinal[i],casaImplicita) != LIS_CondRetNaoAchou)
+		{
+			return TAB_AvancaPecaLDupla(Tabuleiro->retafinal[i],casaImplicita->pecas[0]==peca?0:1, dado);
+		}
 	}
 }
 
@@ -145,10 +167,13 @@ CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
 {
 	int res = numCasas;
-    TAB_tpCasa *casaCorr = LIS_ObterValor(Lista);
+    TAB_tpCasa *casaCorr,*casaInicial;
     JOG_tpPeca *temp;
+
+    if(Lista==NULL || indPeca>1 || indPeca<0 || numCasas<0) return TAB_CondRetParametro;
+
+    casaInicial = casaCorr = LIS_ObterValor(Lista);
     temp = casaCorr->pecas[indPeca];
-    casaCorr->pecas[indPeca] = NULL;
 
     while(res>0 && LISAvancarElementoCorrente(Lista,1)!=LIS_CondRetFimLista) /*Avanca o maximo para frente possível*/
     {
@@ -172,8 +197,10 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
     	LISAvancarElementoCorrente(Lista,-res);/*Volta o restante*/
 
     casaCorr = LIS_ObterValor(Lista);
-    InserePeca(temp,casaCorr);
+    if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk) return TAB_CondRetNaoAndou;
 
+    TAB_RemovePeca(casaInicial,indPeca);
+    JOG_MovePeca(temp,casaCorr);
     return TAB_CondRetOk;
 }
 
@@ -189,12 +216,13 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
 	int res=numCasas;
     TAB_Cor CorPeca;
     JOG_tpPeca *temp;
-    TAB_tpCasa *casaCorr = CIR_Conteudo(Lista),*Proximo;
+    TAB_tpCasa *casaInicial,*casaCorr;
+
+    if(Lista==NULL || indPeca>1 || indPeca<0 || numCasas<0) return TAB_CondRetParametro;
     
+    casaInicial = casaCorr = CIR_Conteudo(Lista),*Proximo;
     temp = casaCorr->pecas[indPeca];
-    casaCorr->pecas[indPeca] = NULL;
     CorPeca = JOG_Cor(temp);
-    
 
 
     while(res>0)
@@ -224,8 +252,10 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
 		casaCorr = CIR_Conteudo(Lista);
 
     }
-    if(TAB_NumCasas==1 && JOG_Cor(casaCorr->pecas[1])!=CorPeca) TAB_ComePecas(casaCorr);
-    TAB_InserePeca(casaCorr,temp);
+    if(TAB_NumCasas>0 && JOG_Cor(casaCorr->pecas[0])!=CorPeca) TAB_ComePecas(casaCorr);
+    if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk)return TAB_CondRetNaoAndou;
+
+    TAB_RemovePeca(casaInicial,indPeca);
     JOG_MovePeca(temp,casaCorr);
     return CondRetOk;
 }

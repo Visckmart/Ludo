@@ -12,11 +12,16 @@
 #include "Jogador.h"
 
 typedef enum{
-	TAB_CondRetNaoAndou,
 
 	TAB_CondRetOk,
 
-	TAB_CondRetSemEspaco
+	TAB_CondRetParametro,
+
+	TAB_CondRetNaoAndou,
+
+	TAB_CondRetSemEspaco,
+
+	TAB_CondRetCasaVazia
 
 }TAB_CondRet;
 
