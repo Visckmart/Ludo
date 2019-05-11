@@ -11,6 +11,7 @@
 #include "Cor.h"
 
 typedef struct Jogador Jogador;
+typedef struct Peca JOG_tpPeca;
 
 Jogador * JOG_Cria(Cor);
 void JOG_Deleta(Jogador *);
