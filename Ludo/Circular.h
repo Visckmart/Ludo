@@ -58,7 +58,7 @@ typedef enum {
 	/* Faltou memória ao tentar criar um elemento de lista */
 
 	CIR_CondRetParametro,
-	/* Parâmetro nulo*/
+	/* Parâmetro nulo */
 
 	CIR_CondRetListaVazia,
 	/* A lista não contém elementos */
