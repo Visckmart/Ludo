@@ -5,7 +5,7 @@
 
 #include "Jogador.h"
 #include <stdlib.h>
-#include "Circular.h"
+#include "Lista.h"
 
 /***********************************************************************
 *
