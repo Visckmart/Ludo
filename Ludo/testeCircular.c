@@ -19,8 +19,8 @@ CIR_lstCircular *Listas[DIM_VT_LISTA];
 /*Função de validação de indice do vetor de listas*/
 static int ValidaLista(int ind);
 
-/*Função dummy de liberação*/
-/*Como as strings são compartilhadas entre as listas elas não podem ser liberadas ao remover elementos*/
+/*Função de liberação*/
+
 static void LiberaDado(void *pDado);
     
 
@@ -162,5 +162,5 @@ int ValidaLista(int ind)
 
 void LiberaDado(void *pDado)
 {
-    return;
+	free(pDado);
 }

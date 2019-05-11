@@ -23,15 +23,36 @@ typedef struct tabuleiro {
 
 
 
-
+/**********************************************
+ *
+ * Variável estática que guarda o tabuleiro
+ *
+ *********************************************/
 static TAB_tpTabuleiro *Tabuleiro = NULL;
+
+/*********************************************
+ *
+ * Protótipo das funções estáticas encapsuladas pelo módulo
+ *
+ ********************************************/
+static TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,TAB_Cor cor);
+static TAB_CondRet TAB_InserePeca(TAB_tpCasa casa,JOG_tpPeca *peca);
+static TAB_CondRet TAB_RemovePeca(TAB_tpCasa casa,int peca);
+static JOG_enumCor TAB_Cor(TAB_tpCasa casa);
+static TAB_tpCasa TAB_DestroiCasa(TAB_tpCasa casa);
+static int TAB_NumPecas(TAB_tpCasa casa);
+static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
+static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
+
+
+
 /****************************************************************
 
 Fun��o: TAB  &CriaCasa
 
 ****************************************************************/
 
-TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bif,TAB_Cor cor)
+TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,TAB_Cor cor)
 {
     TAB_tpCasa *nova;
     nova = (TAB_tpCasa) malloc(sizeof(TAB_tpCasa));
@@ -40,7 +61,7 @@ TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bif,TAB_Cor cor)
     nova->pecas[0] = NULL;
     nova->pecas[1] = NULL;
     nova->Cor = cor;
-    nova->Bifurcacao = bif;
+    nova->Bifurcacao = bifurcacao;
 
     return nova;
 }
@@ -61,7 +82,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     }
     for(i=0;i<4;i++)
     {
-		tab->retaFinal[i] = LIS_CriarLista();
+		tab->retaFinal[i] = LIS_CriarLista(TAB_DestroiCasa);
 		for(a=0;a<5;a++)
 		{
 			casa = TAB_CriaCasa(NULL,JOG_CorNeutra);
@@ -118,7 +139,7 @@ TAB_CondRet TAB_RemovePeca(TAB_tpCasa casa,int peca)
 	return condRetOk;
 }
 
-int TAB_Cor(TAB_tpCasa casa)
+JOG_enumCor TAB_Cor(TAB_tpCasa casa)
 {
     return casa->Cor;
 }
