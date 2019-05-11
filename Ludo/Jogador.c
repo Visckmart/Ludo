@@ -31,7 +31,7 @@ JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
         if (p == NULL) { JOG_Deleta(jog); return NULL; }
         p->pos = NULL;
         p->cor = corDasPecas;
-        LIS_InserirElementoApos(j->pecas, p);
+        LIS_InserirElementoApos(jog->pecas, p);
     }
     
     // Guarda a cor do jogador
