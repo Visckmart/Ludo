@@ -130,6 +130,21 @@ Cor JOG_CorPeca(JOG_tpPeca * IDPeca) {
 
 /* * * * * * * * * *
  *
+ *  Função: JOG Obter peca dado um índice
+ *
+ * * * * * * * * * */
+void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
+    IrInicioLista(jog->pecas);
+    // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
+    for (int i = 0; i < indexPeca; i++) {
+        LIS_AvancarElementoCorrente(jog->pecas, 1);
+        if (LIS_ObterValor(jog->pecas) == NULL) { return NULL; }
+    }
+    return LIS_ObterValor(jog->pecas);
+}
+
+/* * * * * * * * * *
+ *
  *  Função: JOG Retorna as posições das peças do jogador (se há alguma)
  *
  * * * * * * * * * */
