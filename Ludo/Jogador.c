@@ -9,10 +9,9 @@
 #include "Circular.h"
 
 struct Peca {
-    int pos;
+    Casa * pos;
     Cor cor;
 }
-typedef struct Peca Peca;
 
 struct Jogador {
     LIS_tppLista * pecas;
@@ -28,7 +27,7 @@ Jogador * JOG_Cria(Cor corDasPecas) {
     
     // Cria elementos de uma lista encadeada que guarda peças
     for (int i = 1; i < 4; i++) {
-        Peca * p = (Peca *)malloc(sizeof(Peca));
+        JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
         p->pos = -1;
         p->cor = corDasPecas;
         j->pecas = LIS_InserirElementoApos(j->pecas, p);
@@ -46,20 +45,20 @@ void JOG_Deleta(Jogador * j) {
     free(j);
 }
 
-void JOG_AtualizaPeca(Jogador * j, int IDPeca, int novaPosicao) {
-    CIR_lstCircular * pcs = j->pecas;
+void JOG_AtualizaPeca(Jogador * j, int IDPeca, Casa * novaCasa) {
+    LIS_tppLista * pcs = j->pecas;
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
     for (int i = 0; i < IDPeca; i++) {
-        pcs = CIR_ProximoElemento(pcs);
+        pcs = LIS_AvancarElementoCorrente(pcs);
         if (pcs == NULL) {
             printf("Erro");
             return;
         }
     }
     // Pega a peça que está guardada no elemento
-    Peca * p = (Peca *)CIR_Conteudo(pcs);
+    JOG_tpPeca * p = (JOG_tpPeca *)LIS_ObterValor(pcs);
     // Atualiza a posição da peça
-    p->pos = novaPosicao;
+    p->pos = novaCasa;
 }
 
 char JOG_TemPecas(Jogador * j) {
@@ -81,7 +80,7 @@ int * JOG_PosicoesDasPecas(Jogador * jogador, int * totalDePecas) {
     
     l = jogador->pecas;
     for (int i = 0; i < tot; i++) {
-        posicoes[i] = ((Peca *)LIS_ObterValor(l));
+        posicoes[i] = ((JOG_tpPeca *)LIS_ObterValor(l));
         l = LIS_AvancarElementoCorrente(l);
     }
     return posicoes;
