@@ -14,7 +14,7 @@
 ***********************************************************************/
 struct Peca {
     void * pos;
-    Cor cor;
+    JOG_tpCor cor;
 };
 
 /***********************************************************************
@@ -24,7 +24,7 @@ struct Peca {
 ***********************************************************************/
 struct Jogador {
     LIS_tppLista pecas;
-    Cor cor;
+    JOG_tpCor cor;
 };
 
 
@@ -34,7 +34,7 @@ struct Jogador {
  *  Função: JOG Criar jogador
  *
  * * * * * * * * * */
-JOG_tpJogador * JOG_Cria(Cor corDasPecas) {
+JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
     // Aloca um espaço para o jogador
     JOG_tpJogador * jog = (JOG_tpJogador *)malloc(sizeof(JOG_tpJogador));
     if (jog == NULL) return NULL;
@@ -86,7 +86,7 @@ void JOG_Remove(void * possJog) {
 JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa) {
     if (jog == NULL || peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
     // Atualiza a posição da peça
-    p->pos = novaCasa;
+    peca->pos = novaCasa;
     return JOG_CondRetOk;
 }
 
@@ -114,7 +114,7 @@ void * JOG_LocalPeca(JOG_tpPeca * IDPeca) {
  *  Função: JOG Obter cor da peca
  *
  * * * * * * * * * */
-Cor JOG_CorPeca(JOG_tpPeca * IDPeca) {
+JOG_tpCor JOG_CorPeca(JOG_tpPeca * IDPeca) {
     return IDPeca->cor;
 }
 
@@ -139,22 +139,5 @@ void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
  *
  * * * * * * * * * */
 void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
-    int tot = 0;
-    IrInicioLista(jog->pecas);
-    while (LIS_ObterValor(jog->pecas) != NULL) {
-        tot ++;
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
-    }
-    if (tot == 0) return NULL;
-
-    *totalDePecas = tot;
-    JOG_tpPeca ** posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
-    if (posicoes == NULL) { return NULL; }
-    
-    IrInicioLista(jog->pecas);
-    for (int i = 0; i < tot; i++) {
-        posicoes[i] = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
-    }
-    return posicoes;
+    return NULL;
 }
