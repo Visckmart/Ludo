@@ -14,9 +14,9 @@
 01/05     2h                   revisar código do módulo                             Modificação e documentação do módulo Lista Circular
 01/05     0.5h                 estudar                                              Estudo das regras de documentação
 03/05     1h                   codificar módulo                                     Início da codificação do módulo Tabuleiro
-04/05     3h		           codificar módulo                                     Avanço na codificação do módulo Tabuleiro
+04/05     3h		       codificar módulo                                     Avanço na codificação do módulo Tabuleiro
 06/05 	  2.5h                 revisar código do módulo                             Reestrututar o módulo lista circular	
-07/05     2h                   revisar código do módulo								Revisar o módulo de teste de lista circular
+07/05     2h                   revisar código do módulo				    Revisar o módulo de teste de lista circular
 07/05     0.5h                 redigir script de teste                              Revisão dos scripts de teste para Circular
 07/05     1h                   diagnosticar e corrigir os problemas encontrados     Correção do módulo circular                 
 08/05	  0.5h                 codificar módulo                                     Continuação da codificação do módulo tabuleiro
@@ -25,3 +25,6 @@
 10/05     0.5h                 diagnosticar e corrigir os problemas encontrados     Correções no módulo Lista Circular
 10/05	  2.5h                 codificar módulo                                     Avanços consideráveis no módulo Tabuleiro
 11/05     4h                   codificar módulo                                     Finalização do módulo tabuleiro e documentação
+11/05	  1h                   codificar módulo                                     Codificando módulo de teste para tabuleiro
+11/05     2h                   diagnosticar e corrigir os problemas encontrados     Concertando erros que impediam a compilação de tabuleiro
+12/05	  1h                   redigir script de teste                              Versão inicial do script de teste para tabuleiro

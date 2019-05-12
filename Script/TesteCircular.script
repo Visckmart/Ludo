@@ -1,4 +1,7 @@
-//Testa o modulo Circular.h
+//Propósito: Testa o modulo Circular.h
+//Script: TesteCircular.script
+//Autor: Thiago Lamenza e Guilherme Murad
+//Data: 10/05/2019
 
 ==Declarando Parametros
 =declararparm   str0    string	"abcdefg"

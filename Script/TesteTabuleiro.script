@@ -1,0 +1,27 @@
+//Propósito: Testa o modulo Tabuleiro.h
+//Script: TesteTabuleiro.script
+//Autor: Thiago Lamenza
+//Data: 12/05/2019
+
+==Declarando parametros
+=declararparm    CondRetOk            int    0
+=declararparm    CondRetParametro     int    1
+=declararparm    CondRetMemoria       int    2
+=declararparm    CondRetNaoAndou      int    3
+=declararparm    CondRetSemEspaco     int    4
+=declararparm    CondRetChegouFinal   int    5
+
+==Iniciando o tabuleiro
+=inicia
+
+==Testes com tabuleiro vazio
+=jogada    0    1    5    CondRetNaoAndou
+=jogada    1    3    4    CondRetNaoAndou
+
+==Inserindo pecas no tabuleiro
+=novapeca  0    0    CondRetOk
+=novapeca  1    0    CondRetOk
+=novapeca  0    1    CondRetOk
+
+==Inserindo em casa cheia
+=novapeca  0    2    CondRetSemEspaco

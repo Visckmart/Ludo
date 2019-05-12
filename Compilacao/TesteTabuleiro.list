@@ -1,0 +1,183 @@
+GERADOR DE SCRIPT DE DIRETIVAS PARA MAKE
+   LES / Informática / PUC-Rio    Versão 6.00 (c) 2005
+
+Composição do construto: TesteTabuleiro.comp
+
+   Nome do Construto:           TesteTabuleiro
+   Diretório base:              C:\Users\thlam\Documents\GitHub\Ludo\Compilacao
+
+   Arquivo composição:          TesteTabuleiro.comp
+   Arquivo plataforma:          gmake.parm
+
+   Arquivo diretivas MAKE:      TesteTabuleiro.make
+   Arquivo diretivas LINK:      TesteTabuleiro.build
+   Arquivo listagem:            TesteTabuleiro.list
+
+Módulos do construto: TesteTabuleiro.comp
+
+   tabuleiro.c
+   circular.c
+   lista.c
+   jogador.c
+   testetabuleiro.c
+
+Estatísticas do construto
+
+   Estatísticas do arquivo: circular.c
+      Total linhas:             206
+      Linhas de código:         111
+      Linhas de comentário:      71
+      Linhas em branco:          30
+   Arquivos de inclusão de que necessita
+      circular.h
+
+   Estatísticas do arquivo: circular.h
+      Total linhas:             230
+      Linhas de código:          19
+      Linhas de comentário:     190
+      Linhas em branco:          21
+   Arquivos em que é incluído
+      circular.c
+      tabuleiro.c
+
+   Estatísticas do arquivo: generico.h
+      Total linhas:             588
+      Linhas de código:          53
+      Linhas de comentário:     471
+      Linhas em branco:          64
+   Arquivos de inclusão de que necessita
+      tst_espc.h
+   Arquivos em que é incluído
+      testetabuleiro.c
+
+   Estatísticas do arquivo: jogador.c
+      Total linhas:             160
+      Linhas de código:          79
+      Linhas de comentário:      58
+      Linhas em branco:          20
+   Arquivos de inclusão de que necessita
+      jogador.h
+      lista.h
+
+   Estatísticas do arquivo: jogador.h
+      Total linhas:              49
+      Linhas de código:          22
+      Linhas de comentário:       9
+      Linhas em branco:          15
+   Arquivos em que é incluído
+      jogador.c
+      tabuleiro.c
+      testetabuleiro.c
+
+   Estatísticas do arquivo: lerparm.h
+      Total linhas:             463
+      Linhas de código:          36
+      Linhas de comentário:     362
+      Linhas em branco:          65
+   Arquivos em que é incluído
+      testetabuleiro.c
+
+   Estatísticas do arquivo: lista.c
+      Total linhas:             560
+      Linhas de código:         288
+      Linhas de comentário:     136
+      Linhas em branco:         154
+   Arquivos de inclusão de que necessita
+      lista.h
+
+   Estatísticas do arquivo: lista.h
+      Total linhas:             346
+      Linhas de código:          35
+      Linhas de comentário:     262
+      Linhas em branco:          49
+   Arquivos em que é incluído
+      jogador.c
+      lista.c
+      tabuleiro.c
+
+   Estatísticas do arquivo: tabuleiro.c
+      Total linhas:             410
+      Linhas de código:         242
+      Linhas de comentário:     105
+      Linhas em branco:          72
+   Arquivos de inclusão de que necessita
+      circular.h
+      jogador.h
+      lista.h
+      tabuleiro.h
+
+   Estatísticas do arquivo: tabuleiro.h
+      Total linhas:             161
+      Linhas de código:          18
+      Linhas de comentário:     124
+      Linhas em branco:          19
+   Arquivos em que é incluído
+      tabuleiro.c
+      testetabuleiro.c
+
+   Estatísticas do arquivo: testetabuleiro.c
+      Total linhas:              78
+      Linhas de código:          47
+      Linhas de comentário:      15
+      Linhas em branco:          16
+   Arquivos de inclusão de que necessita
+      generico.h
+      jogador.h
+      lerparm.h
+      tabuleiro.h
+      tst_espc.h
+
+   Estatísticas do arquivo: tst_espc.h
+      Total linhas:             320
+      Linhas de código:          23
+      Linhas de comentário:     277
+      Linhas em branco:          20
+   Arquivos em que é incluído
+      generico.h
+      testetabuleiro.c
+
+Totais por tipo de arquivo
+
+  Tipo: h        Path: ..\Ludo
+         Total linhas do tipo:      2157
+         Linhas de código:           206
+         Linhas de comentário:      1695
+         Linhas em branco:           253
+         Arquivos deste tipo:          7
+
+  Tipo: obj      Path: ..\Objetos
+         Total linhas do tipo:         0
+         Linhas de código:             0
+         Linhas de comentário:         0
+         Linhas em branco:             0
+         Arquivos deste tipo:          0
+
+  Tipo: err      Path: ..\Produto
+         Total linhas do tipo:         0
+         Linhas de código:             0
+         Linhas de comentário:         0
+         Linhas em branco:             0
+         Arquivos deste tipo:          0
+
+  Tipo: DEFAULT  Path: ..\Ludo
+         Total linhas do tipo:         0
+         Linhas de código:             0
+         Linhas de comentário:         0
+         Linhas em branco:             0
+         Arquivos deste tipo:          0
+
+  Tipo: c        Path: ..\Ludo
+         Total linhas do tipo:      1414
+         Linhas de código:           767
+         Linhas de comentário:       385
+         Linhas em branco:           292
+         Arquivos deste tipo:          5
+
+Totais para todo o construto TesteTabuleiro
+
+   Total linhas:              3571
+   Linhas de código:           973
+   Linhas de comentário:      2080
+   Linhas em branco:           545
+   Arquivos processados:        12
+

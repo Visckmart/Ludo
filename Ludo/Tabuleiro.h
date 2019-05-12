@@ -28,7 +28,6 @@
 *     As funções do tabuleiro validam a jogada antes de faze-la e não executa se a jogada não for válida.
 ***************************************************************************/
 
-
 /***********************************************************************
 *
 *  $TC Tipo de dados: TAB Condições de retorno
@@ -55,24 +54,12 @@ typedef enum{
 	TAB_CondRetSemEspaco,
 	/*Não tem espaço para inserção*/
 
-	TAB_CondRetCasaVazia
-	/*Não existe nada para remover*/
+	TAB_CondRetChegouFinal
+	/*Peca chegou ao final do tabuleiro*/
 
 }TAB_CondRet;
 
-/**************************************
-*
-* $TC Tipo de dados: TAB Casa
-*
-***************************************/
-typedef struct casa TAB_tpCasa;
 
-/**************************************
-*
-* $TC Tipo de dados: TAB Tabuleiro
-*
-***************************************/
-typedef struct tabuleiro TAB_tpTabuleiro;
 
 /***********************************************************************
 *
@@ -107,12 +94,13 @@ TAB_CondRet TAB_IniciaTabuleiro();
 *	  dado - Valor inteiro tirado no dado.
 *  $FV Valor retornado
 *     Se executou corretamente retorna TAB_CondRetOk.
+*     Se a peça chegou ao final do tabuleiro retorna TAB_CondRetChegouFinal.
 *
 *   Assertivas:
 *      Caso a jogada seja invalida retorna TAB_CondRetNaoAndou.
 *      Caso peca seja NULL ou dado seja menor que 1 retorna TAB_CondRetParametro.
 ***********************************************************************/
-TAB_CondRet TAB_FazJogada(JOG_tpPeca *peca,int dado);
+TAB_CondRet TAB_FazJogada(void *peca,int dado);
 
 
 /***********************************************************************
@@ -121,20 +109,21 @@ TAB_CondRet TAB_FazJogada(JOG_tpPeca *peca,int dado);
 *
 *  $ED Descrição da função
 *     Adiciona uma nova peca no tabuleiro.
+*     A peça é adicinado no local de inicio correspondente a sua cor.
 *     Pode acontecer de comer uma peca inimiga caso esteja no caminho.
 *     A peça não é inserida caso haja obstrução na casa de inserção.
 *
 *  $EP Parâmetros
 *	  peca - Ponteiro para a peça a ser inserida.
-*	  casa - Ponteiro para a casa onde a peça será inserida.
 *  $FV Valor retornado
 *     Se executou corretamente retorna TAB_CondRetOk.
 *
 *   Assertivas:
 *      Caso a casa de inserção esteja obstruida retorna TAB_CondRetSemEspaco.
-*      Caso peca ou casa sejam NULL retorna TAB_CondRetParametro.
+*      Caso peca seja NULL retorna TAB_CondRetParametro.
+*      Caso peca já esteja em jogo retorna TAB_CondRetParametro.
 ***********************************************************************/
-TAB_CondRet TAB_PoePecaNoJogo(JOG_tpPeca peca,TAB_tpCasa casa);
+TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 
 /***********************************************************************
 *

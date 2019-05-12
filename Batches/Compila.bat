@@ -6,6 +6,7 @@ pushd .
 cd ..\Compilacao\gmake
 gmake /b..\ /cTesteCircular
 gmake /b..\ /cTesteLista
+gmake /b..\ /cTesteTabuleiro
 popd
 
 REM Compila o programa baseado nas instrucoes dos arquivos make gerado
@@ -13,11 +14,13 @@ pushd .
 cd..\Compilacao
 nmake /FTesteCircular.make
 nmake /FTesteLista.make
+nmake /FTesteTabuleiro.make
 
 REM Abre os arquivos de erro gerados (feche para continuar)
 cd ..\Produto
 notepad TesteCircular.err
 notepad TesteLista.err
+notepad TesteTabuleiro.err
 popd
 
 

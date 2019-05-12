@@ -9,13 +9,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DIM_VT_PECA 2
+#define DIM_VT_JOGADORES 2
 
 /*Condições de retorno de tabuleiro*/
 TAB_CondRet CondRet;
 
 /* Vetor de peças a serem usadas nos testes*/
-static *JOG_tpJogador[DIM_VT_JOGADORES] = {}
+JOG_tpJogador *vJogadores[2];
+
 
 
 // Funções aceitas para testar
@@ -28,111 +29,64 @@ static char NOVAPECA[] = "=novapeca";
 Comandos disponíveis:
 =reseta
 =inicia
-=jogada
+=jogada		indJogador		indPeca		dado	ValorEsperado
+=novapeca	indJogador		indPeca		ValorEsperado
 ***********************/
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
-	int i,indLista=-1,NumLidos=-1,ValorEsperado=-1;
-	char StringDados[DIM_BUFFER];
-	char *pDado;
-	char teste1[DIM_BUFFER],teste2[DIM_BUFFER],teste3[DIM_BUFFER],teste4[DIM_BUFFER];
+	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1,CondRet;
+	JOG_tpPeca *peca;
 
-	StringDados[0] = 0;
 
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
-		TAB_DestroiTabuleiro()
+		TAB_DestroiTabuleiro();
 		return TST_CondRetOK;
 	}
 
-	//Testar a funcao CriarLista
-	else if(strcmp(ComandoTeste,CRIALISTA)==0)
+	//Chama a função IniciaTabuleiro
+	if(strcmp(ComandoTeste,INICIA)==0)
 	{
-		NumLidos = LER_LerParametros( "i" , &indLista ) ;
-		if(ValidaLista(indLista) || NumLidos!=1) return TST_CondRetParm;
-		Listas[indLista] = CIR_CriaLista();
-		if(Listas[indLista] == NULL) return TST_CondRetMemoria;
-
+		CondRet = TAB_IniciaTabuleiro();
+		if(CondRet == TAB_CondRetMemoria) return TST_CondRetMemoria;
 		return TST_CondRetOK;
 	}
 
-	//Testar a funcao InsereElemento
-	else if(strcmp(ComandoTeste,INSERE)==0)
+	//Testar a funcao FazJogada
+	else if(strcmp(ComandoTeste,JOGADA)==0)
 	{
-		NumLidos = LER_LerParametros("si",StringDados, &indLista);
-		if(!ValidaLista(indLista) || NumLidos!=2) return TST_CondRetParm;
+		NumLidos = LER_LerParametros( "iiii" , &indJogador,&indPeca,&dado,&ValorEsperado);
+		if(indJogador<0|| indJogador>DIM_VT_JOGADORES || indPeca<0 || indPeca>3 || dado<0 || NumLidos!=4)
+			return TST_CondRetParm;
 
-		pDado = malloc(strlen(StringDados)+1);
+		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		CondRet = TAB_FazJogada(peca,dado);
 
-		strcpy(pDado,StringDados);
 
-		CondRet = CIR_InsereElemento(Listas[indLista],pDado);
-		if(CondRet == CIR_CondRetMemoria) return TST_CondRetMemoria;
-		return TST_CompararString((char*)CIR_Conteudo(Listas[indLista]),StringDados,"Elemento inserido incorretamente");
+		return TST_CompararInt(CondRet, ValorEsperado,"Retorno diferente do esperado.");
 	}
 
-	//Testar a funcao ProximoElemento
-	else if(strcmp(ComandoTeste,PROXIMO)==0)
+	//Testar a funcao PoePecaNoJogo
+	else if(strcmp(ComandoTeste,NOVAPECA)==0)
 	{
-		NumLidos = LER_LerParametros("ii",&indLista,&ValorEsperado);
-		if(!ValidaLista(indLista)||NumLidos!=2) return TST_CondRetParm;
+		NumLidos = LER_LerParametros("iii",&indJogador,&indPeca,&ValorEsperado);
+		if(indJogador<0|| indJogador>DIM_VT_JOGADORES || indPeca<0 || indPeca>3 || NumLidos!=4)
+			return TST_CondRetParm;
 
-		return TST_CompararInt(CIR_ProximoElemento(Listas[indLista]),ValorEsperado,"Resultado nao e o esperado");
-	}
+		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		CondRet = TAB_PoePecaNoJogo(peca);
 
-	//Testar a funcao PrecedenteElemento
-	else if(strcmp(ComandoTeste,PRECEDENTE)==0)
-	{
-		NumLidos = LER_LerParametros("ii",&indLista,&ValorEsperado);
-		if(!ValidaLista(indLista)||NumLidos!=2) return TST_CondRetParm;
-
-
-		return TST_CompararInt(CIR_PrecedenteElemento(Listas[indLista]),ValorEsperado,"Resultado nao e o esperado");
-	}
-
-	//Testar a funcao Conteudo
-	else if(strcmp(ComandoTeste,CONTEUDO)==0)
-	{
-		NumLidos = LER_LerParametros("isi",&indLista,StringDados,&ValorEsperado);
-		if(!ValidaLista(indLista)||NumLidos!=3) return TST_CondRetParm;
-
-		pDado = CIR_Conteudo(Listas[indLista]);
-
-		if(ValorEsperado==1){
-
-			if(pDado==NULL) return TST_CompararPonteiroNulo(1,pDado,"Ponteiro nao deveria ser nulo");
-
-			return TST_CompararString(pDado,StringDados,"Conteudo do elemento incorreto");
-		}
 		if(ValorEsperado==0)
-			return TST_CompararPonteiroNulo(0,pDado,"Nao achou ponteiro nulo quando deveria");
-
+		{
+			return TST_CompararPonteiroNulo(1,JOG_LocalPeca(peca),"Peca deveria estar em jogo.");
+		}
+		if(ValorEsperado==4)
+		{
+			return TST_CompararPonteiroNulo(0,JOG_LocalPeca(peca),"Peca nao deveria estar em jogo.");
+		}
 	}
 
-	//Testar a funcao RemoveElemento
-	else if(strcmp(ComandoTeste,REMOVE)==0)
-	{
-		NumLidos = LER_LerParametros("ii",&indLista,&ValorEsperado);
-		if(!ValidaLista(indLista)||NumLidos!=2) return TST_CondRetParm;
-
-		return TST_CompararInt(CIR_RemoveElemento(Listas[indLista],LiberaDado),ValorEsperado,"Resultado nao e o esperado.");
-	}
 
 	return 0;
-}
-
-
-/******************************************
-Função : Valida indice do vetor de Listas Circulares
-******************************************/
-int ValidaLista(int ind)
-{
-	if(ind>DIM_VT_LISTA || Listas[ind]==NULL) return 0;
-	else return 1;
-}
-
-void LiberaDado(void *pDado)
-{
-	free(pDado);
 }

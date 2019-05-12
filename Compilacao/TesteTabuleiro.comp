@@ -1,8 +1,8 @@
-# Teste do módulo lista circular usando a biblioteca contendo o arcabouço
+# Teste do módulo tabuleiro usando a biblioteca contendo o arcabouço
 
 [Diretorios]
 
-Nome        =  TesteCircular
+Nome        =  TesteTabuleiro
 PathDefault =  ..\Ludo
 err         =  ..\Produto
 obj         =  ..\Objetos
@@ -10,11 +10,14 @@ c           =  ..\Ludo
 h           =  ..\Ludo
 
 [Modulos]
+Tabuleiro
 Circular
-testeCircular
+Lista
+Jogador
+testeTabuleiro
 
 [BuildInicio]
-/OUT:..\Produto\TesteCircular.exe
+/OUT:..\Produto\TesteTabuleiro.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

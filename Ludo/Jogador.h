@@ -3,18 +3,16 @@
 //  Ludo
 //
 
-#ifndef Jogador_h
-#define Jogador_h
+#if ! defined( JOGADOR_ )
+#define JOGADOR_
 
-
-#include <stdio.h>
 
 /***********************************************************************
 *
 *  $TC Tipo de dados: Cor
 *
 ***********************************************************************/
-typedef enum Cor {
+typedef enum {
     Nenhuma, Vermelho, Azul, Verde, Amarelo
 }JOG_tpCor;
 
