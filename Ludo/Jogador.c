@@ -73,8 +73,8 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
 }
 
 void JOG_Remove(void * possJog) {
-    if (possJog == NULL) return;
     JOG_tpJogador * jog = (JOG_tpJogador *)possJog;
+    if (possJog == NULL) return;
     LIS_DestruirLista(jog->pecas);
     free(jog);
 }
@@ -84,8 +84,8 @@ void JOG_Remove(void * possJog) {
  *  Função: JOG Atualizar posição de uma peça
  *
  * * * * * * * * * */
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa) {
-    if (jog == NULL || peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
+    if (peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
     // Atualiza a posição da peça
     peca->pos = novaCasa;
     return JOG_CondRetOk;
