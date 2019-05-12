@@ -14,7 +14,7 @@
 ***********************************************************************/
 struct Peca {
     void * pos;
-    Cor cor;
+    JOG_tpCor cor;
 };
 
 /***********************************************************************
@@ -24,7 +24,7 @@ struct Peca {
 ***********************************************************************/
 struct Jogador {
     LIS_tppLista pecas;
-    Cor cor;
+    JOG_tpCor cor;
 };
 
 
@@ -83,8 +83,8 @@ void JOG_Remove(void * possJog) {
  *  Função: JOG Atualizar posição de uma peça
  *
  * * * * * * * * * */
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa) {
-    if (jog == NULL || peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
+    if (peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
     // Atualiza a posição da peça
     p->pos = novaCasa;
     return JOG_CondRetOk;

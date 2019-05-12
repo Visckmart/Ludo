@@ -1,5 +1,5 @@
-#if ! defined( LISTA_ )
-    #define LISTA_
+#if ! defined( CIRCULAR_ )
+    #define CIRCULAR_
 /***************************************************************************
 *
 *  $MCD Módulo de definição: CIR  Lista Circular

@@ -25,3 +25,5 @@
 10/05     0.5h                 diagnosticar e corrigir os problemas encontrados     Correções no módulo Lista Circular
 10/05	  2.5h                 codificar módulo                                     Avanços consideráveis no módulo Tabuleiro
 11/05     4h                   codificar módulo                                     Finalização do módulo tabuleiro e documentação
+11/05	  1h                   codificar módulo                                     Codificando módulo de teste para tabuleiro
+11/05     2h                   diagnosticar e corrigir os problemas encontrados     Concertando erros que impediam a compilação de tabuleiro

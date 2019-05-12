@@ -6,7 +6,11 @@
 * 
 *
 *  Projeto: INF 1301 / Ludo
+*  Autores: Thiago Lamenza
 *
+*  $HA Hist�rico de evolu��o:
+*     Vers�o  Autor            Data        Observa��es
+*     1       Thiago Lamenza   18/abr/2019 inicio do desenvolvimento
 *
 ***************************************************************************/
 #include <stdlib.h>

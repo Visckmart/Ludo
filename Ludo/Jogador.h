@@ -3,18 +3,16 @@
 //  Ludo
 //
 
-#ifndef Jogador_h
-#define Jogador_h
+#if ! defined( JOGADOR_ )
+#define JOGADOR_
 
-
-#include <stdio.h>
 
 /***********************************************************************
 *
 *  $TC Tipo de dados: Cor
 *
 ***********************************************************************/
-typedef enum Cor {
+typedef enum {
     Nenhuma, Vermelho, Azul, Verde, Amarelo
 }JOG_tpCor;
 
@@ -36,15 +34,16 @@ typedef enum {
 
 } JOG_CondRetErro;
 
-JOG_tpJogador * JOG_Cria(Cor);
-JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
-void JOG_Remove(void *);
+JOG_tpJogador *JOG_Cria(JOG_tpCor Cor);
+JOG_CondRetErro JOG_Deleta(JOG_tpJogador *jog);
+void JOG_Remove(void *possJog);
 
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador *, int, void *);
-char JOG_TemPecas(JOG_tpJogador *);
-void * JOG_LocalPeca(JOG_tpPeca *);
-Cor JOG_CorPeca(JOG_tpPeca *);
-void * JOG_PosicoesDasPecas(JOG_tpJogador *, int *);
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa);
+char JOG_TemPecas(JOG_tpJogador *jog);
+void * JOG_LocalPeca(JOG_tpPeca *IDPeca);
+JOG_tpCor JOG_CorPeca(JOG_tpPeca *IDPeca);
+void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
+void * JOG_PosicoesDasPecas(JOG_tpJogador *jog, int *totalDePecas);
 
 
 #endif /* Jogador_h */

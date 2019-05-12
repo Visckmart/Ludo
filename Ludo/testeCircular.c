@@ -49,7 +49,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	int i,indLista=-1,NumLidos=-1,ValorEsperado=-1;
 	char StringDados[DIM_BUFFER];
 	char *pDado;
-	char teste1[DIM_BUFFER],teste2[DIM_BUFFER],teste3[DIM_BUFFER],teste4[DIM_BUFFER];
 
 	StringDados[0] = 0;
 
