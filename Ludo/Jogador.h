@@ -3,16 +3,18 @@
 //  Ludo
 //
 
-#if ! defined( JOGADOR_ )
-#define JOGADOR_
+#ifndef Jogador_h
+#define Jogador_h
 
+
+#include <stdio.h>
 
 /***********************************************************************
 *
 *  $TC Tipo de dados: Cor
 *
 ***********************************************************************/
-typedef enum {
+typedef enum Cor {
     Nenhuma, Vermelho, Azul, Verde, Amarelo
 }JOG_tpCor;
 
@@ -25,10 +27,10 @@ typedef enum {
     /* Concluiu corretamente */
     
     JOG_CondRetParametro,
-    /* Par�metro nulo */
+    /* Parâmetro nulo */
     
     JOG_CondRetFaltamPecas,
-    /* Acabaram as pe�as a serem movidas */
+    /* Acabaram as peças a serem movidas */
     
     
 
@@ -38,7 +40,7 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor);
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
 void JOG_Remove(void *);
 
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa);
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa);
 char JOG_TemPecas(JOG_tpJogador *);
 void * JOG_LocalPeca(JOG_tpPeca *);
 JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
