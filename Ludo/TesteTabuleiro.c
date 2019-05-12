@@ -34,7 +34,8 @@ Comandos disponíveis:
 ***********************/
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
-	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1;
+	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1,CondRet;
+	JOG_tpPeca *peca;
 
 
 	//Reset teste
@@ -47,7 +48,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Chama a função IniciaTabuleiro
 	if(strcmp(ComandoTeste,INICIA)==0)
 	{
-		TAB_IniciaTabuleiro();
+		CondRet = TAB_IniciaTabuleiro();
+		if(CondRet == TAB_CondRetMemoria) return TST_CondRetMemoria;
 		return TST_CondRetOK;
 	}
 
@@ -57,8 +59,11 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		NumLidos = LER_LerParametros( "iiii" , &indJogador,&indPeca,&dado,&ValorEsperado);
 		if(indJogador<0|| indJogador>DIM_VT_JOGADORES || indPeca<0 || indPeca>3 || dado<0 || NumLidos!=4)
 			return TST_CondRetParm;
-		CondRet = TAB_FazJogada(JOG_PecaNaPosicao(vJogadores[indJogador],indPeca),dado);
-		if(CondRet == TAB_CondRetMemoria) return TST_CondRetMemoria;
+
+		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		CondRet = TAB_FazJogada(peca,dado);
+
+
 		return TST_CompararInt(CondRet, ValorEsperado,"Retorno diferente do esperado.");
 	}
 
@@ -69,8 +74,17 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		if(indJogador<0|| indJogador>DIM_VT_JOGADORES || indPeca<0 || indPeca>3 || NumLidos!=4)
 			return TST_CondRetParm;
 
-		CondRet = TAB_PoePecaNoJogo(JOG_PecaNaPosicao(vJogadores[indJogador],indPeca));
-		return TST_CompararInt(CondRet,ValorEsperado,"Retorno diferente do esperado.");
+		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		CondRet = TAB_PoePecaNoJogo(peca);
+
+		if(ValorEsperado==0)
+		{
+			return TST_CompararPonteiroNulo(1,JOG_LocalPeca(peca),"Peca deveria estar em jogo.");
+		}
+		if(ValorEsperado==4)
+		{
+			return TST_CompararPonteiroNulo(0,JOG_LocalPeca(peca),"Peca nao deveria estar em jogo.");
+		}
 	}
 
 

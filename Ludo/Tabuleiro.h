@@ -54,27 +54,12 @@ typedef enum{
 	TAB_CondRetSemEspaco,
 	/*Não tem espaço para inserção*/
 
-	TAB_CondRetCasaVazia,
-	/*Não existe nada para remover*/
-
 	TAB_CondRetChegouFinal
 	/*Peca chegou ao final do tabuleiro*/
 
 }TAB_CondRet;
 
-/**************************************
-*
-* $TC Tipo de dados: TAB Casa
-*
-***************************************/
-typedef struct casa TAB_tpCasa;
 
-/**************************************
-*
-* $TC Tipo de dados: TAB Tabuleiro
-*
-***************************************/
-typedef struct tabuleiro TAB_tpTabuleiro;
 
 /***********************************************************************
 *
@@ -136,6 +121,7 @@ TAB_CondRet TAB_FazJogada(void *peca,int dado);
 *   Assertivas:
 *      Caso a casa de inserção esteja obstruida retorna TAB_CondRetSemEspaco.
 *      Caso peca seja NULL retorna TAB_CondRetParametro.
+*      Caso peca já esteja em jogo retorna TAB_CondRetParametro.
 ***********************************************************************/
 TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 
