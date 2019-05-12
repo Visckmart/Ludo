@@ -20,19 +20,19 @@
 #include "Circular.h"
 #include "LISTA.h"
 
-struct casa
+typedef struct casa
 {
     JOG_tpPeca *pecas[2];
     LIS_tppLista Bifurcacao;
     JOG_tpCor Cor;
-};
+}TAB_tpCasa;
 
 
-struct tabuleiro
+typedef struct tabuleiro
 {
     CIR_lstCircular *campoPrincipal;
 	LIS_tppLista retaFinal[4];
-};
+}TAB_tpTabuleiro;
 
 
 /**********************************************
@@ -70,7 +70,7 @@ static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int
 
 /****************************************************************
 
-Fun��o: TAB  &CriaCasa
+Função: TAB  &CriaCasa
 
 ****************************************************************/
 
@@ -90,7 +90,7 @@ TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor)
 
 /****************************************************************
 
-Fun��o: TAB  &IniciaTabuleiro
+Função: TAB  &IniciaTabuleiro
 
 ****************************************************************/
 
@@ -146,7 +146,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
 
 /****************************************************************
 
-Fun��o: TAB  &InserePeca
+Função: TAB  &InserePeca
 
 ****************************************************************/
 
@@ -158,6 +158,12 @@ TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca)
     return TAB_CondRetOk;
 }
 
+
+/****************************************************************
+
+Função: TAB  &RemovePeca
+
+****************************************************************/
 TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca)
 {
 	if(casa->pecas[0]==NULL) return TAB_CondRetCasaVazia;
@@ -173,6 +179,11 @@ TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca)
 	return TAB_CondRetOk;
 }
 
+/****************************************************************
+
+Função: TAB  &ComePecas
+
+****************************************************************/
 void TAB_ComePecas(TAB_tpCasa *casa)
 {
 	if(casa->pecas[0]!=NULL)
@@ -188,11 +199,22 @@ void TAB_ComePecas(TAB_tpCasa *casa)
 }
 
 
+/****************************************************************
+
+Função: TAB  &DestroiCasa
+
+****************************************************************/
 void TAB_DestroiCasa(TAB_tpCasa *casa)
 {
     free(casa);
 }
 
+
+/****************************************************************
+
+Função: TAB  &NumPecas
+
+****************************************************************/
 int TAB_NumPecas(TAB_tpCasa *casa)
 {
 	if(casa->pecas[0]!=NULL)
@@ -204,6 +226,12 @@ int TAB_NumPecas(TAB_tpCasa *casa)
 }
 
 
+
+/****************************************************************
+
+Função: TAB  &FazJogada
+
+****************************************************************/
 TAB_CondRet TAB_FazJogada(void *peca,int dado)
 {
 	TAB_tpCasa *casa;
@@ -233,6 +261,12 @@ TAB_CondRet TAB_FazJogada(void *peca,int dado)
 }
 
 
+
+/****************************************************************
+
+Função: TAB  &PoePecaNoJogo
+
+****************************************************************/
 TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 {
 	int indice;
@@ -256,6 +290,12 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 	return TAB_InserePeca(casa,peca);
 }
 
+
+/****************************************************************
+
+Função: TAB  &DestroiTabuleiro
+
+****************************************************************/
 TAB_CondRet TAB_DestroiTabuleiro()
 {
 	int i;
@@ -269,7 +309,7 @@ TAB_CondRet TAB_DestroiTabuleiro()
 
 /****************************************************************
 
-Fun��o: TAB  &Avanca Peca Lista Dupla
+Função: TAB  &Avanca Peca Lista Dupla
 
 CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 
@@ -315,7 +355,7 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
 
 /****************************************************************
 
-Fun��o: TAB  &Avanca Peca Lista Circular
+Função: TAB  &Avanca Peca Lista Circular
 
 CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
 
