@@ -35,6 +35,7 @@ struct Jogador {
  *
  * * * * * * * * * */
 JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
+    int i;
     // Aloca um espaço para o jogador
     JOG_tpJogador * jog = (JOG_tpJogador *)malloc(sizeof(JOG_tpJogador));
     if (jog == NULL) return NULL;
@@ -43,7 +44,7 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
     jog->pecas = LIS_CriarLista(JOG_Remove);
     if (jog->pecas == NULL) { free(jog); return NULL; }
     // Cria elementos de uma lista encadeada que guarda peças
-    for (int i = 1; i < 4; i++) {
+    for (i = 1; i < 4; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
         if (p == NULL) { JOG_Deleta(jog); return NULL; }
         p->pos = NULL;
@@ -83,8 +84,8 @@ void JOG_Remove(void * possJog) {
  *  Função: JOG Atualizar posição de uma peça
  *
  * * * * * * * * * */
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
-    if (peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa) {
+    if (jog == NULL || peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
     // Atualiza a posição da peça
     peca->pos = novaCasa;
     return JOG_CondRetOk;
@@ -124,9 +125,10 @@ JOG_tpCor JOG_CorPeca(JOG_tpPeca * IDPeca) {
  *
  * * * * * * * * * */
 void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
+    int i;
     IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
-    for (int i = 0; i < indexPeca; i++) {
+    for (i = 0; i < indexPeca; i++) {
         LIS_AvancarElementoCorrente(jog->pecas, 1);
         if (LIS_ObterValor(jog->pecas) == NULL) { return NULL; }
     }
