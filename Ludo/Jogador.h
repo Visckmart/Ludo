@@ -34,16 +34,15 @@ typedef enum {
 
 } JOG_CondRetErro;
 
-JOG_tpJogador *JOG_Cria(JOG_tpCor Cor);
-JOG_CondRetErro JOG_Deleta(JOG_tpJogador *jog);
-void JOG_Remove(void *possJog);
+JOG_tpJogador * JOG_Cria(JOG_tpCor);
+JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
+void JOG_Remove(void *);
 
-JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa);
-char JOG_TemPecas(JOG_tpJogador *jog);
-void * JOG_LocalPeca(JOG_tpPeca *IDPeca);
-JOG_tpCor JOG_CorPeca(JOG_tpPeca *IDPeca);
-void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
-void * JOG_PosicoesDasPecas(JOG_tpJogador *jog, int *totalDePecas);
+JOG_CondRetErro JOG_AtualizaPeca(JOG_tpJogador * jog, JOG_tpPeca * peca, void * novaCasa);
+char JOG_TemPecas(JOG_tpJogador *);
+void * JOG_LocalPeca(JOG_tpPeca *);
+JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
+void * JOG_PosicoesDasPecas(JOG_tpJogador *, int *);
 
 
 #endif /* Jogador_h */
