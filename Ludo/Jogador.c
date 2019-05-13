@@ -72,7 +72,7 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     return JOG_CondRetOk;
 }
 
-void JOG_RemovePeca(void * peca) {
+static void JOG_RemovePeca(void * peca) {
     if (peca != NULL) free(jog);
 }
 
