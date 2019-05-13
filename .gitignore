@@ -1,2 +1,8 @@
 /Batches/vsvars32.bat
 .project
+/Produto/*.exe
+/Produto/*.err
+/Objetos/*.obj
+/Objetos/*.build
+/Compilacao/*.list
+/Compilacao/*.make

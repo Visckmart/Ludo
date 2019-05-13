@@ -51,19 +51,19 @@ Estatísticas do construto
       testetabuleiro.c
 
    Estatísticas do arquivo: jogador.c
-      Total linhas:             140
-      Linhas de código:          64
-      Linhas de comentário:      53
-      Linhas em branco:          20
+      Total linhas:             171
+      Linhas de código:          87
+      Linhas de comentário:      58
+      Linhas em branco:          23
    Arquivos de inclusão de que necessita
       jogador.h
       lista.h
 
    Estatísticas do arquivo: jogador.h
-      Total linhas:              51
-      Linhas de código:          23
-      Linhas de comentário:       9
-      Linhas em branco:          16
+      Total linhas:             235
+      Linhas de código:          24
+      Linhas de comentário:     183
+      Linhas em branco:          25
    Arquivos em que é incluído
       jogador.c
       tabuleiro.c
@@ -139,10 +139,10 @@ Estatísticas do construto
 Totais por tipo de arquivo
 
   Tipo: h        Path: ..\Ludo
-         Total linhas do tipo:      2146
-         Linhas de código:           204
-         Linhas de comentário:      1686
-         Linhas em branco:           253
+         Total linhas do tipo:      2330
+         Linhas de código:           205
+         Linhas de comentário:      1860
+         Linhas em branco:           262
          Arquivos deste tipo:          7
 
   Tipo: obj      Path: ..\Objetos
@@ -167,17 +167,17 @@ Totais por tipo de arquivo
          Arquivos deste tipo:          0
 
   Tipo: c        Path: ..\Ludo
-         Total linhas do tipo:      1452
-         Linhas de código:           807
-         Linhas de comentário:       383
-         Linhas em branco:           292
+         Total linhas do tipo:      1483
+         Linhas de código:           830
+         Linhas de comentário:       388
+         Linhas em branco:           295
          Arquivos deste tipo:          5
 
 Totais para todo o construto TesteTabuleiro
 
-   Total linhas:              3598
-   Linhas de código:          1011
-   Linhas de comentário:      2069
-   Linhas em branco:           545
+   Total linhas:              3813
+   Linhas de código:          1035
+   Linhas de comentário:      2248
+   Linhas em branco:           557
    Arquivos processados:        12
 
