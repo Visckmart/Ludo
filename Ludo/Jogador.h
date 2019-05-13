@@ -204,26 +204,5 @@ JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
  ***********************************************************************/
 JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
 
-/***********************************************************************
- *
- *  $FC Função: JOG  &PosicoesDasPecas
- *
- *  $ED Descrição da função
- *     Retorna uma lista com as casas que as peças do jogador passado se encontram.
- *
- *  $EP Parâmetros
- *     Um ponteiro para um jogador e um ponteiro para um inteiro, que receberá
- *     a quantidade de casas retornadas.
- *
- *  $FV Valor retornado
- *     Um vetor com as casas as quais as peças do jogador se encontram, ou NULL
- *     caso ponteiro para Jogador seja inválido ou ele não tenha nenhuma peça.
- *
- *   Assertivas:
- *     Checa se o ponteiro recebido é válido, se o número de peças é maior que
- *     zero e se a alocação de memória foi feita com sucesso.
- ***********************************************************************/
-void * JOG_PosicoesDasPecas(JOG_tpJogador *, int *);
-
 
 #endif /* JOGADOR_ */
