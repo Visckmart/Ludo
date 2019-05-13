@@ -27,4 +27,5 @@
 11/05     4h                   codificar módulo                                     Finalização do módulo tabuleiro e documentação
 11/05	  1h                   codificar módulo                                     Codificando módulo de teste para tabuleiro
 11/05     2h                   diagnosticar e corrigir os problemas encontrados     Concertando erros que impediam a compilação de tabuleiro
-12/05	  1h                   redigir script de teste                              Versão inicial do script de teste para tabuleiro
+12/05	  3h                   redigir script de teste                              Versão inicial do script de teste para tabuleiro
+12/05     3h                   diagnosticar e corrigir os problemas encontrados     Concertando erros com base no avanço do script de teste

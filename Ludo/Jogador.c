@@ -44,7 +44,7 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
     jog->pecas = LIS_CriarLista(JOG_Remove);
     if (jog->pecas == NULL) { free(jog); return NULL; }
     // Cria elementos de uma lista encadeada que guarda peças
-    for (i = 1; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
         if (p == NULL) { JOG_Deleta(jog); return NULL; }
         p->pos = NULL;
@@ -85,7 +85,7 @@ void JOG_Remove(void * possJog) {
  *
  * * * * * * * * * */
 JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
-    if (peca == NULL || novaCasa == NULL) { return JOG_CondRetParametro; }
+    if (peca == NULL) { return JOG_CondRetParametro; }
     // Atualiza a posição da peça
     peca->pos = novaCasa;
     return JOG_CondRetOk;
@@ -126,6 +126,9 @@ JOG_tpCor JOG_CorPeca(JOG_tpPeca * IDPeca) {
  * * * * * * * * * */
 void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
     int i;
+
+    if(jog==NULL||indexPeca<0||indexPeca>4) return NULL;
+
     IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
     for (i = 0; i < indexPeca; i++) {
@@ -135,11 +138,3 @@ void * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
     return LIS_ObterValor(jog->pecas);
 }
 
-/* * * * * * * * * *
- *
- *  Função: JOG Retorna as posições das peças do jogador (se há alguma)
- *
- * * * * * * * * * */
-void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
-    return NULL;
-}

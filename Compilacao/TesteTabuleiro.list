@@ -24,8 +24,8 @@ Módulos do construto: TesteTabuleiro.comp
 Estatísticas do construto
 
    Estatísticas do arquivo: circular.c
-      Total linhas:             206
-      Linhas de código:         111
+      Total linhas:             210
+      Linhas de código:         115
       Linhas de comentário:      71
       Linhas em branco:          30
    Arquivos de inclusão de que necessita
@@ -51,19 +51,19 @@ Estatísticas do construto
       testetabuleiro.c
 
    Estatísticas do arquivo: jogador.c
-      Total linhas:             160
-      Linhas de código:          79
-      Linhas de comentário:      58
+      Total linhas:             140
+      Linhas de código:          64
+      Linhas de comentário:      53
       Linhas em branco:          20
    Arquivos de inclusão de que necessita
       jogador.h
       lista.h
 
    Estatísticas do arquivo: jogador.h
-      Total linhas:              49
-      Linhas de código:          22
+      Total linhas:              51
+      Linhas de código:          23
       Linhas de comentário:       9
-      Linhas em branco:          15
+      Linhas em branco:          16
    Arquivos em que é incluído
       jogador.c
       tabuleiro.c
@@ -96,10 +96,10 @@ Estatísticas do construto
       tabuleiro.c
 
    Estatísticas do arquivo: tabuleiro.c
-      Total linhas:             410
-      Linhas de código:         242
-      Linhas de comentário:     105
-      Linhas em branco:          72
+      Total linhas:             445
+      Linhas de código:         278
+      Linhas de comentário:     108
+      Linhas em branco:          68
    Arquivos de inclusão de que necessita
       circular.h
       jogador.h
@@ -107,19 +107,19 @@ Estatísticas do construto
       tabuleiro.h
 
    Estatísticas do arquivo: tabuleiro.h
-      Total linhas:             161
-      Linhas de código:          18
-      Linhas de comentário:     124
-      Linhas em branco:          19
+      Total linhas:             148
+      Linhas de código:          15
+      Linhas de comentário:     115
+      Linhas em branco:          18
    Arquivos em que é incluído
       tabuleiro.c
       testetabuleiro.c
 
    Estatísticas do arquivo: testetabuleiro.c
-      Total linhas:              78
-      Linhas de código:          47
+      Total linhas:              97
+      Linhas de código:          62
       Linhas de comentário:      15
-      Linhas em branco:          16
+      Linhas em branco:          20
    Arquivos de inclusão de que necessita
       generico.h
       jogador.h
@@ -139,9 +139,9 @@ Estatísticas do construto
 Totais por tipo de arquivo
 
   Tipo: h        Path: ..\Ludo
-         Total linhas do tipo:      2157
-         Linhas de código:           206
-         Linhas de comentário:      1695
+         Total linhas do tipo:      2146
+         Linhas de código:           204
+         Linhas de comentário:      1686
          Linhas em branco:           253
          Arquivos deste tipo:          7
 
@@ -167,17 +167,17 @@ Totais por tipo de arquivo
          Arquivos deste tipo:          0
 
   Tipo: c        Path: ..\Ludo
-         Total linhas do tipo:      1414
-         Linhas de código:           767
-         Linhas de comentário:       385
+         Total linhas do tipo:      1452
+         Linhas de código:           807
+         Linhas de comentário:       383
          Linhas em branco:           292
          Arquivos deste tipo:          5
 
 Totais para todo o construto TesteTabuleiro
 
-   Total linhas:              3571
-   Linhas de código:           973
-   Linhas de comentário:      2080
+   Total linhas:              3598
+   Linhas de código:          1011
+   Linhas de comentário:      2069
    Linhas em branco:           545
    Arquivos processados:        12
 

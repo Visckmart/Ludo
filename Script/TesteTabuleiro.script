@@ -15,13 +15,59 @@
 =inicia
 
 ==Testes com tabuleiro vazio
-=jogada    0    1    5    CondRetNaoAndou
-=jogada    1    3    4    CondRetNaoAndou
+=jogada    0    1    5    CondRetParametro
+=jogada    1    3    4    CondRetParametro
 
 ==Inserindo pecas no tabuleiro
 =novapeca  0    0    CondRetOk
 =novapeca  1    0    CondRetOk
+=novapeca  1    1    CondRetOk
+=novapeca  1    1    CondRetParametro
 =novapeca  0    1    CondRetOk
 
 ==Inserindo em casa cheia
 =novapeca  0    2    CondRetSemEspaco
+
+==Testando andar
+=jogada    1    1    1    CondRetOk
+
+==Testando comer ao andar
+=jogada    0    1    26   CondRetOk
+=jogada    1    0    4    CondRetParametro
+
+==Testando comer ao sair do abrigo
+=novapeca  1    2    CondRetOk
+=jogada    0    1    5    CondRetParametro
+
+==Testando obstrucao
+=novapeca  1    0    CondRetOk
+=novapeca  0    1    CondRetOk
+=jogada    0    1    30    CondRetOk
+=jogada    0    1    3     CondRetNaoAndou
+=jogada    0    1    1     CondRetOk
+=jogada    1    0    5     CondRetParametro
+
+==Testando entrada na reta final
+=jogada    0    1    25    CondRetOk
+=jogada    0    0    51    CondRetOk
+
+==Testando obstrucao na entrada da reta final
+=novapeca  0    2    CondRetOk
+=jogada    0    2    51    CondRetOk
+=jogada    0    2    5     CondRetNaoAndou
+
+==Testando andar e obstrucao na reta final
+=jogada    0    1    3     CondRetOk
+=jogada    0    0    3     CondRetOk
+=jogada    0    2    5     CondRetOk
+=jogada    0    2    1     CondRetNaoAndou
+
+==Testar rebater
+=jogada    0    1    3    CondRetOk
+=jogada    0    0    3    CondRetOk
+=jogada    0    2    1    CondRetNaoAndou
+
+==Testa finaliza percurso
+=jogada    0    1    2    CondRetChegouFinal
+=jogada    0    0    2    CondRetChegouFinal
+=jogada    0    2    3    CondRetChegouFinal

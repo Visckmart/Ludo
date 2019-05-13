@@ -76,7 +76,7 @@ typedef enum{
 *     Se executou corretamente retorna TAB_CondRetOk.
 *
 *   Assertivas:
-*      Caso haja erro de memódia retorna TAB_CondRetMemoria.
+*      Caso haja erro de memória retorna TAB_CondRetMemoria.
 ***********************************************************************/
 TAB_CondRet TAB_IniciaTabuleiro();
 
@@ -97,8 +97,9 @@ TAB_CondRet TAB_IniciaTabuleiro();
 *     Se a peça chegou ao final do tabuleiro retorna TAB_CondRetChegouFinal.
 *
 *   Assertivas:
-*      Caso a jogada seja invalida retorna TAB_CondRetNaoAndou.
 *      Caso peca seja NULL ou dado seja menor que 1 retorna TAB_CondRetParametro.
+*      Caso a peca não esteja no tabuleiro de jogo retorna TAB_CondRetParametro.
+*      Caso a jogada seja invalida retorna TAB_CondRetNaoAndou.
 ***********************************************************************/
 TAB_CondRet TAB_FazJogada(void *peca,int dado);
 
