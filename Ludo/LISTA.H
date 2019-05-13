@@ -317,6 +317,7 @@ typedef struct LIS_tagLista * LIS_tppLista ;
 *  $ED Descri��o da fun��o
 *     Procura o elemento que referencia o valor dado.
 *     A fun��o compara ponteiro e n�o conte�do apontado.
+*     Atenção: A função só procura a partir do elemento corrente em diante.
 *
 *  $EP Par�metros
 *     pLista  - ponteiro para a lista onde procura

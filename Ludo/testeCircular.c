@@ -1,4 +1,5 @@
 //Teste do Modulo Circular.h utilizando o arcabouco de testes
+//Autor:THiago Lamenza
 
 #include "GENERICO.h"
 #include "TST_ESPC.H"

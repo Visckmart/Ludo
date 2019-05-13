@@ -4,4 +4,5 @@ cd..\Produto
 TesteCircular.exe /s..\Script\TesteCircular.script
 TesteLista.exe /s..\Script\TesteLista.script
 TesteTabuleiro.exe /s..\Script\TesteTabuleiro.script
+TesteJogador.exe /s..\Script\TesteJogador.script
 popd

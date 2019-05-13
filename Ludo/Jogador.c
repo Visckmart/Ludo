@@ -118,6 +118,7 @@ void * JOG_LocalPeca(JOG_tpPeca * IDPeca) {
  *
  * * * * * * * * * */
 JOG_tpCor JOG_CorPeca(JOG_tpPeca * IDPeca) {
+	if(IDPeca==NULL) return -1;
     return IDPeca->cor;
 }
 

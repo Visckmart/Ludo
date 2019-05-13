@@ -1,8 +1,3 @@
-//
-//  Jogador.h
-//  Ludo
-//
-
 #if ! defined( JOGADOR_ )
     #define JOGADOR_
 
@@ -69,12 +64,10 @@ typedef enum {
     /* Concluiu corretamente */
     
     JOG_CondRetParametro,
-    /* Par�metro nulo */
+    /* Par�metro incorreto */
     
     JOG_CondRetFaltamPecas,
     /* Acabaram as pe�as a serem movidas */
-    
-    
 
 } JOG_CondRetErro;
 
@@ -185,6 +178,7 @@ void * JOG_LocalPeca(JOG_tpPeca *);
  *
  *  $FV Valor retornado
  *     A cor da peça.
+ *     -1 caso o ponteiro seja NULL
  *
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.

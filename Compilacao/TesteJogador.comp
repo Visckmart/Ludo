@@ -1,0 +1,25 @@
+# Teste do módulo lista circular usando a biblioteca contendo o arcabouço
+
+[Diretorios]
+
+Nome        =  TesteJogador
+PathDefault =  ..\Ludo
+err         =  ..\Produto
+obj         =  ..\Objetos
+c           =  ..\Ludo
+h           =  ..\Ludo
+
+[Modulos]
+Jogador
+Lista
+testeJogador
+
+[BuildInicio]
+/OUT:..\Produto\TesteJogador.exe
+/INCREMENTAL:NO
+/MACHINE:IX86
+
+[BuildFim]
+ArcaboucoTeste.lib
+
+[Fim]
