@@ -11,11 +11,8 @@
 
 #define DIM_VT_JOGADORES 2
 
-/*Condições de retorno de tabuleiro*/
-TAB_CondRet CondRet;
-
 /* Vetor de peças a serem usadas nos testes*/
-JOG_tpJogador *vJogadores[2];
+static JOG_tpJogador *vJogadores[2];
 
 
 
@@ -34,7 +31,7 @@ Comandos disponíveis:
 ***********************/
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
-	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1,CondRet;
+	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1,CondRet=-1;
 	JOG_tpPeca *peca;
 
 
