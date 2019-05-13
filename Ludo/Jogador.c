@@ -96,7 +96,7 @@ JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
  *  Função: JOG Checar se o jogador tem peças
  *
  * * * * * * * * * */
-char JOG_TemPecas(JOG_tpJogador * jog) {
+int JOG_TemPecas(JOG_tpJogador * jog) {
     if (jog == NULL) { return -1; }
     IrInicioLista(jog->pecas);
     return LIS_ObterValor(jog->pecas) != NULL;
@@ -147,6 +147,8 @@ JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
  * * * * * * * * * */
 void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     int tot = 0;
+    int i = 0;
+    JOG_tpPeca ** posicoes;
     if (jog == NULL) return NULL;
     IrInicioLista(jog->pecas);
     while (LIS_ObterValor(jog->pecas) != NULL) {
@@ -156,11 +158,11 @@ void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     if (tot == 0) return NULL;
     
     *totalDePecas = tot;
-    JOG_tpPeca ** posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
+    posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
     if (posicoes == NULL) { return NULL; }
     
     IrInicioLista(jog->pecas);
-    for (int i = 0; i < tot; i++) {
+    for (i = 0; i < tot; i++) {
         posicoes[i] = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
         LIS_AvancarElementoCorrente(jog->pecas, 1);
     }
