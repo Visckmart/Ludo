@@ -138,32 +138,3 @@ JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
     return LIS_ObterValor(jog->pecas);
 }
 
-/* * * * * * * * * *
- *
- *  Função: JOG Retorna as posições das peças do jogador (se há alguma)
- *
- * * * * * * * * * */
-void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
-    int tot = 0;
-    int i = 0;
-    JOG_tpPeca ** posicoes;
-    if (jog == NULL) return NULL;
-    IrInicioLista(jog->pecas);
-    while (LIS_ObterValor(jog->pecas) != NULL) {
-        tot ++;
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
-    }
-    if (tot == 0) return NULL;
-    
-    *totalDePecas = tot;
-    posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
-    if (posicoes == NULL) { return NULL; }
-    
-    IrInicioLista(jog->pecas);
-    for (i = 0; i < tot; i++) {
-        posicoes[i] = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
-    }
-    return posicoes;
-}
-
