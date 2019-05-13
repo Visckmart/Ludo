@@ -105,8 +105,6 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor);
  ***********************************************************************/
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
 
-void JOG_Remove(void *);
-
 /***********************************************************************
  *
  *  $FC Função: JOG  &AtualizaPeca
