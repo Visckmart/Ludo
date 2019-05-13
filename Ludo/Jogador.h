@@ -151,7 +151,7 @@ JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-char JOG_TemPecas(JOG_tpJogador *);
+int JOG_TemPecas(JOG_tpJogador *);
 
 /***********************************************************************
  *
