@@ -198,7 +198,11 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 
 	do
 	{
-		if(noCorrente->pCont == pCont) return CIR_CondRetOk;/*Se encontrar no caminho para e retorna o endereço.*/
+		if(noCorrente->pCont == pCont)
+		{
+			pLista->NoCorrente = noCorrente;
+			return CIR_CondRetOk;/*Se encontrar no caminho para e retorna o endereço.*/
+		}
 
 		noCorrente = noCorrente->proximo;
 	}while(noCorrente!=inicio);
