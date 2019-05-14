@@ -17,7 +17,7 @@ Jogador
 testeTabuleiro
 
 [BuildInicio]
-/OUT:..\Produto\TesteTabuleiro.exe
+/OUT:..\Produto\TRAB2-4.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

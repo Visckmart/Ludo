@@ -1,6 +1,23 @@
-Instrucoes:
-
+Instrucoes para compilar/rodar:
+Obs:
 1) Copiar o vsvars32.bat da sua instalacao do visual studio para a pasta /Batches
 2) Abrir o terminal na pasta /Batches
 3) Rodar vsvars32.bat
 4) Rodar Tudo.bat
+5) Feche os outputs de texto no formato .err, contendo informações da compilação ou possíveis warnings/erros, que abrirem.
+6) Observe os resultados dos testes no terminal.
+
+Tudo.bat roda os batches Limpa.bat, Compila.bat e Executa.bat.
+Limpa.bat limpa construtos de compilações anteriores.
+Compila.bat gera os arquivos make e compila os módulos de testes a partir disso.
+Executa.bat executa todos os testes em sequência.
+
+Caso queira rodar eles individualmente:
+1) Vá pelo terminal até a pasta /Produto
+2) Execute o .exe desejado pelo terminal
+
+TRAB2-1.exe -> Teste do módulo Lista Circular
+TRAB2-2.exe -> Teste do módulo Jogador
+TRAB2-3.exe -> Teste do módulo Lista Duplamente Encadeada
+TRAB2-4.exe -> Teste do módulo Tabuleiro
+
