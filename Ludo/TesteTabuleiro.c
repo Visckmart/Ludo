@@ -39,7 +39,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
-		TAB_DeletaTabuleiro();
+		TAB_FinalizaTabuleiro();
 		return TST_CondRetOK;
 	}
 

@@ -130,7 +130,7 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 
 /***********************************************************************
 *
-*  $FC Função: TAB  &DestroiTabuleiro
+*  $FC Função: TAB  &FinalizaTabuleiro
 *
 *  $ED Descrição da função
 *     Destroi completamente o tabuleiro.
@@ -144,7 +144,7 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 *   Assertivas:
 *      Caso Tabuleiro não exista, somente retorna TAB_CondRetOk.
 ***********************************************************************/
-TAB_CondRet TAB_DeletaTabuleiro();
+TAB_CondRet TAB_FinalizaTabuleiro();
 
 
 #endif /* Tabuleiro_h */

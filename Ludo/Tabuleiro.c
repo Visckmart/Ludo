@@ -100,7 +100,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     JOG_tpCor Cores[4] = {Amarelo,Verde,Vermelho,Azul};
     TAB_tpCasa *casa;
 
-    if(Tabuleiro!=NULL) TAB_DeletaTabuleiro();
+    if(Tabuleiro!=NULL) TAB_FinalizaTabuleiro();
 
     tab = (TAB_tpTabuleiro*)malloc(sizeof(TAB_tpTabuleiro));
 
@@ -305,10 +305,10 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 
 /****************************************************************
 
-Função: TAB  &DeletaTabuleiro
+Função: TAB  &FinalizaTabuleiro
 
 ****************************************************************/
-TAB_CondRet TAB_DeletaTabuleiro()
+TAB_CondRet TAB_FinalizaTabuleiro()
 {
 	int i;
 	if(Tabuleiro==NULL) return TAB_CondRetOk;
