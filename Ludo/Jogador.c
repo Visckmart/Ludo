@@ -98,7 +98,7 @@ JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
  * * * * * * * * * */
 int JOG_TemPecas(JOG_tpJogador * jog) {
     if (jog == NULL) { return -1; }
-    IrInicioLista(jog->pecas);
+    LIS_IrInicioLista(jog->pecas);
     return LIS_ObterValor(jog->pecas) != NULL;
 }
 
@@ -132,7 +132,7 @@ JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
 
     if(jog==NULL||indexPeca<0||indexPeca>4) return NULL;
 
-    IrInicioLista(jog->pecas);
+    LIS_IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
     for (i = 0; i < indexPeca; i++) {
         LIS_AvancarElementoCorrente(jog->pecas, 1);
@@ -151,7 +151,7 @@ void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     int i = 0;
     JOG_tpPeca ** posicoes;
     if (jog == NULL) return NULL;
-    IrInicioLista(jog->pecas);
+    LIS_IrInicioLista(jog->pecas);
     while (LIS_ObterValor(jog->pecas) != NULL) {
         tot ++;
         LIS_AvancarElementoCorrente(jog->pecas, 1);
@@ -162,7 +162,7 @@ void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
     if (posicoes == NULL) { return NULL; }
     
-    IrInicioLista(jog->pecas);
+    LIS_IrInicioLista(jog->pecas);
     for (i = 0; i < tot; i++) {
         posicoes[i] = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
         LIS_AvancarElementoCorrente(jog->pecas, 1);

@@ -21,6 +21,7 @@
 *
 *     O módulo cria e administra uma copia do tabuleiro.
 *     O módulo não é capaz de administrar mais de um tabuleiro.
+*     Esse tabuleiro deverá ser administrado com as funções do módulo.
 *
 *     O tabuleiro tem 52 casas no campo de jogo principal e 4 retas finais com 5 casas cada.
 *     Os jogadores não são armazenados em tabuleiro, apenas peças.
@@ -88,6 +89,7 @@ TAB_CondRet TAB_IniciaTabuleiro();
 *  $ED Descrição da função
 *     Avalia e executa uma jogada, andando com uma peça e comendo peças inimigas se necessário.
 *     Caso a jogada não seja válida a peça permanece no mesmo lugar.
+*     Caso a peça chegue no final do tabuleiro ela é retirada.
 *
 *  $EP Parâmetros
 *	  peca - Ponteiro para a peça a ser movida.
@@ -142,7 +144,7 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 *   Assertivas:
 *      Caso Tabuleiro não exista, somente retorna TAB_CondRetOk.
 ***********************************************************************/
-TAB_CondRet TAB_DestroiTabuleiro();
+TAB_CondRet TAB_DeletaTabuleiro();
 
 
 #endif /* Tabuleiro_h */

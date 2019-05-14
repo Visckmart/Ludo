@@ -100,7 +100,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     JOG_tpCor Cores[4] = {Amarelo,Verde,Vermelho,Azul};
     TAB_tpCasa *casa;
 
-    if(Tabuleiro!=NULL) TAB_DestroiTabuleiro();
+    if(Tabuleiro!=NULL) TAB_DeletaTabuleiro();
 
     tab = (TAB_tpTabuleiro*)malloc(sizeof(TAB_tpTabuleiro));
 
@@ -305,10 +305,10 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 
 /****************************************************************
 
-Função: TAB  &DestroiTabuleiro
+Função: TAB  &DeletaTabuleiro
 
 ****************************************************************/
-TAB_CondRet TAB_DestroiTabuleiro()
+TAB_CondRet TAB_DeletaTabuleiro()
 {
 	int i;
 	if(Tabuleiro==NULL) return TAB_CondRetOk;
@@ -355,7 +355,7 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
     res--; /*Bater no final do tabuleiro conta como "andar*/
     if(res==0)
     {
-    	IrInicioLista(Lista);
+    	LIS_IrInicioLista(Lista);
     	JOG_AtualizaPeca(temp,NULL);
     	return TAB_CondRetChegouFinal;
     }
@@ -372,7 +372,7 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
 		res--;
     }
     if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk)return TAB_CondRetNaoAndou;
-    IrInicioLista(Lista);
+    LIS_IrInicioLista(Lista);
     JOG_AtualizaPeca(temp,casaCorr);
     return TAB_CondRetOk;
 }
@@ -411,7 +411,7 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
         if(casaCorr->Cor == CorPeca)
         /*Se a casa tem cor igual a pe�a sendo movida ela � uma bifurcacao para ela, encaminha para a função apropriada*/
         {
-            IrInicioLista(casaCorr->Bifurcacao);
+            LIS_IrInicioLista(casaCorr->Bifurcacao);
             Proximo = LIS_ObterValor(casaCorr->Bifurcacao);
             if(TAB_NumPecas(Proximo)==2)
             {

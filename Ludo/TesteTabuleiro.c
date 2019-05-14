@@ -1,4 +1,5 @@
 //Teste do Modulo Tabuleiro.h utilizando o arcabouco de testes
+//Autor:THiago Lamenza
 
 #include "GENERICO.h"
 #include "TST_ESPC.H"
@@ -38,7 +39,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
-		TAB_DestroiTabuleiro();
+		TAB_DeletaTabuleiro();
 		return TST_CondRetOK;
 	}
 
