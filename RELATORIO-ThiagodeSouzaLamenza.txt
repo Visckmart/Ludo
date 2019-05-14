@@ -29,3 +29,6 @@
 11/05     2h                   diagnosticar e corrigir os problemas encontrados     Concertando erros que impediam a compilação de tabuleiro
 12/05	  3h                   redigir script de teste                              Versão inicial do script de teste para tabuleiro
 12/05     3h                   diagnosticar e corrigir os problemas encontrados     Concertando erros com base no avanço do script de teste
+13/05     1h                   revisar código do módulo                             Revisão final de diversos módulos
+13/05     1h                   codificar módulo                                     Fim do módulo teste jogador
+13/05     0.5h                 redigir script de teste                              Redação inicial dos scripts de teste para jogador
