@@ -27,7 +27,7 @@ struct Jogador {
     JOG_tpCor cor;
 };
 
-
+static void JOG_RemovePeca(void *);
 
 /* * * * * * * * * *
  *
