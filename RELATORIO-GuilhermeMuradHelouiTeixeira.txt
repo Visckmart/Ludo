@@ -1,13 +1,15 @@
 Data	Horas Trabalhadas	Tipo Tarefa					Descrição da Tarefa Realizada
 --------------------------------------------------------------------------------------------------------------------------------------------------
-07/05	0.5h			estudar						Análise módulo de lista circular
-07/05	1h			codificar módulo				Adição ao módulo de lista circular
-09/05	2h			estudar						Análise de scripts de teste
-09/05	1h			revisar script de teste				Revisão e complementação dos scripts de teste para lista Circular
-11/05	1h			codificar módulo				Adição ao módulo de Jogador
-11/05	0.5h			revisar requisitos não funcionais		Revisão e incrementação dos requisitos não funcionais
-12/05	2h			estudar e revisar				Estudo e revisão de todo o projeto
-12/05	0.5h			revisar requisitos não funcionais		Revisão e incrementação dos requisitos não funcionais
-13/05	1h			discutir trabalho				Discussão do trabalho com o grupo, com organizações finais
-13/05	1h			revisar script de teste				Revisão e complementação dos scripts de teste para Jogador
-13/05	1h			ajustar código					Ajustes finais no código antes da entrega do T2
+10/04	2h					estudar						Estudo sobre o jogo de Ludo
+11/04	3.5h				estudar						Estudo sobre a implementação do projeto
+07/05	0.5h				estudar						Análise módulo de lista circular
+07/05	1h					codificar módulo			Adição ao módulo de lista circular
+09/05	2h					estudar						Análise de scripts de teste
+09/05	1h					revisar script de teste		Revisão e complementação dos scripts de teste para lista Circular
+11/05	1h					codificar módulo			Adição ao módulo de Jogador
+11/05	0.5h				revisar especifícações		Revisão e incrementação dos requisitos não funcionais
+12/05	2h					estudar						Estudo e revisão de todo o projeto
+12/05	0.5h				revisar especifícações		Revisão e incrementação dos requisitos não funcionais
+13/05	1h					estudar						Estudo e organização dos módulos
+13/05	1h					revisar script de teste		Revisão e complementação dos scripts de teste para Jogador
+13/05	1h					ajustar código				Ajustes finais no código antes da entrega do T2
