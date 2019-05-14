@@ -29,8 +29,16 @@
 ==Testando atualizapeca e localpeca
 =atualizapeca 0 0 3
 =localpeca 0 0 3 pNaoNulo
+=atualizapeca 0 1 3
+=localpeca 0 1 3 pNaoNulo
+=atualizapeca 0 2 3
+=localpeca 0 2 3 pNaoNulo
 =atualizapeca 1 0 2
 =localpeca 1 0 2 pNaoNulo
+=atualizapeca 1 1 2
+=localpeca 1 1 2 pNaoNulo
+=atualizapeca 1 2 2
+=localpeca 1 2 2 pNaoNulo
 
 ==Testando tempeca
 =tempeca 0 1
@@ -40,4 +48,12 @@
 =corpeca 0 0 Amarelo
 =corpeca 1 0 Vermelho
 =corpeca 2 0 -1
+
+==Deletando Jogadores
+=deleta 1
+=tempeca 1 -1
+=corpeca 1 0 -1
+=deleta 0 
+=tempeca 0 -1
+=corpeca 0 0 -1
 

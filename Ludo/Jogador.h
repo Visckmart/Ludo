@@ -66,8 +66,6 @@ typedef enum {
     JOG_CondRetParametro,
     /* Par�metro incorreto */
     
-    JOG_CondRetFaltamPecas,
-    /* Acabaram as pe�as a serem movidas */
 
 } JOG_CondRetErro;
 
