@@ -73,7 +73,7 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
 }
 
 static void JOG_RemovePeca(void * peca) {
-    if (peca != NULL) free(jog);
+    if (peca != NULL) free(peca);
 }
 
 /* * * * * * * * * *
