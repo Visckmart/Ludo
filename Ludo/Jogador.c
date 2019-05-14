@@ -41,7 +41,7 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
     if (jog == NULL) return NULL;
     
     // Cria a primeira peça
-    jog->pecas = LIS_CriarLista(JOG_Remove);
+    jog->pecas = LIS_CriarLista(JOG_RemovePeca);
     if (jog->pecas == NULL) { free(jog); return NULL; }
     // Cria elementos de uma lista encadeada que guarda peças
     for (i = 0; i < 4; i++) {
@@ -72,11 +72,8 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     return JOG_CondRetOk;
 }
 
-void JOG_Remove(void * possJog) {
-    JOG_tpJogador * jog = (JOG_tpJogador *)possJog;
-    if (possJog == NULL) return;
-    LIS_DestruirLista(jog->pecas);
-    free(jog);
+static void JOG_RemovePeca(void * peca) {
+    if (peca != NULL) free(jog);
 }
 
 /* * * * * * * * * *
@@ -169,4 +166,5 @@ void * JOG_PosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     }
     return posicoes;
 }
+
 
