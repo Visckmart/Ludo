@@ -64,7 +64,6 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
  *  Função: JOG Deletar jogador
  *
  * * * * * * * * * */
-
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     if (jog == NULL) { return JOG_CondRetParametro; }
     LIS_DestruirLista(jog->pecas);
@@ -72,6 +71,11 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     return JOG_CondRetOk;
 }
 
+/* * * * * * * * * *
+ *
+ *  Função: Remove a peça recebida
+ *
+ * * * * * * * * * */
 static void JOG_RemovePeca(void * peca) {
     if (peca != NULL) free(peca);
 }

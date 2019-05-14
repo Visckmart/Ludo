@@ -1,0 +1,14 @@
+Data	Horas Trabalhadas	Tipo Tarefa					Descrição da Tarefa Realizada
+--------------------------------------------------------------------------------------------------------------------------------------------------
+12/04	5h			Estudo/Projetar					Estudo das regras a serem seguidas e alguns quesitos práticos
+13/04	3h			Estudo						Finalização do estudo das regras
+01/05	0.5h			Codificar Módulo				Início da implementação do módulo Jogador
+11/05	0.5h			Estudo						Estudo geral do trabalho 
+11/05	1h			Projetar					Projetando a implementação do módulo Jogador
+11/05	2h			Codificar Módulo				Prosseguimento na implementação do módulo Jogador
+11/05	0.5h			Diagnosticar e Corrigir problemas encontrados	Correções de problemas na implementação do módulo Jogador
+11/05	1h			Revisar especificações				Documentação do módulo Jogador
+12/05	0.5h			Diagnosticar e Corrigir problemas encontrados	Mais correções de problemas na implementação do módulo Jogador
+13/05	0.5h			Estudo						Estudo geral do trabalho
+13/05	1h			Estudo						Estudo sobre o módulo Jogador e sobre questões gerais do projeto 
+13/05	0.5h			Diagnosticar e Corrigir problemas encontrados	Correções de problemas na implementação do módulo Jogador
