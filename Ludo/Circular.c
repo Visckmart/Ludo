@@ -92,7 +92,7 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 	No *novo,*prox;
 	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
 	
-	if (pCont== NULL) return CIR_CondRetParametro;
+	if (pLista==NULL || pCont== NULL) return CIR_CondRetParametro;
 
 	if (novo == NULL) return CIR_CondRetMemoria;
 
