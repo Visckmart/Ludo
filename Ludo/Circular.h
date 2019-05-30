@@ -128,7 +128,7 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
 *   Assertivas:
 *       pLista não pode ser NULL, caso seja a função retorna NULL.
 ***********************************************************************/
-void *CIR_Conteudo(CIR_lstCircular *pLista);
+void *CIR_ObterConteudo(CIR_lstCircular *pLista);
 
 /***********************************************************************
 *
@@ -188,7 +188,7 @@ CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(vo
 *       pLista não pode ser NULL, caso seja a função retorna CIR_CondRetParametro
 *       Se pLista é vazia retorna CIR_CondRetListaVazia
 ***********************************************************************/
-CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista);
+CIR_CondRetErro CIR_ObterProximoElemento(CIR_lstCircular *pLista);
 
 /***********************************************************************
 *
@@ -207,7 +207,7 @@ CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista);
 *       pLista não pode ser NULL, caso seja a função retorna CIR_CondRetParametro
 *       Se pLista é vazia retorna CIR_CondRetListaVazia
 ***********************************************************************/
-CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista);
+CIR_CondRetErro CIR_ObterPrecedenteElemento(CIR_lstCircular *pLista);
 
 /***********************************************************************
 *

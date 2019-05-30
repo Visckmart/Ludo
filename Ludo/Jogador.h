@@ -65,7 +65,12 @@ typedef enum {
     
     JOG_CondRetParametro,
     /* Par�metro incorreto */
-    
+
+	JOG_CondRetTemPecas,
+	/* Jogador tem peças*/
+
+	JOG_CondRetNaoTemPecas
+	/* Jogador não tem peças*/
 
 } JOG_CondRetErro;
 
@@ -142,7 +147,7 @@ JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-int JOG_TemPecas(JOG_tpJogador *);
+JOG_CondRetErro JOG_TemPecas(JOG_tpJogador *);
 
 /***********************************************************************
  *
@@ -161,7 +166,7 @@ int JOG_TemPecas(JOG_tpJogador *);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-void * JOG_LocalPeca(JOG_tpPeca *);
+void * JOG_ObterLocalPeca(JOG_tpPeca *);
 
 /***********************************************************************
  *
@@ -181,7 +186,7 @@ void * JOG_LocalPeca(JOG_tpPeca *);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
+JOG_tpCor JOG_ObterCorPeca(JOG_tpPeca *);
 
 /***********************************************************************
  *
@@ -200,7 +205,7 @@ JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
+JOG_tpPeca * JOG_ObterPecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
 
 /***********************************************************************
  *
@@ -221,7 +226,7 @@ JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
  *     Checa se o ponteiro recebido é válido, se o número de peças é maior que
  *     zero e se a alocação de memória foi feita com sucesso.
  ***********************************************************************/
-void * JOG_PosicoesDasPecas(JOG_tpJogador *, int *);
+void * JOG_ObterPosicoesDasPecas(JOG_tpJogador *, int *);
 
 
 #endif /* JOGADOR_ */
