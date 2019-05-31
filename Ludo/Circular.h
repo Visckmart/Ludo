@@ -76,18 +76,20 @@ typedef enum {
 *     Cria uma lista genérica circular contendo um elemento.
 *     Os possíveis tipos são desconhecidos a priori.
 *     A tipagem deles é implicita.
+*	  A cabeça para a lista é colocada no ponteiro passado por referência.
 *
 *  $EP Parâmetros
-*
+*	  *pResultado - Ponteiro para o resultado passado por referência.
 *  $FV Valor retornado
-*     Se executou corretamente retorna o ponteiro para a cabeça da lista.
+*     Se executou corretamente retorna CIR_CondRetOk.
 *
 *     Esse ponteiro será usado para todas as outras funções do módulo.
 *
 *   Assertivas:
-*   Se houver erro na alocação retorna NULL.
+*   Se pResultado passado for nulo retorna CIR_CondRetParametro.
+*	Caso haja erro de alocação retorna CIR_CondRetMemoria.
 ***********************************************************************/
-CIR_lstCircular *CIR_CriaLista();
+CIR_CondRetErro CIR_CriaLista(CIR_lstCircular *pResultado);
 
 
 /***********************************************************************

@@ -45,16 +45,14 @@ struct circular{
 *  Funcao: CIR  &CriaLista
 *
 *  *************************************************/
-CIR_lstCircular *CIR_CriaLista() //Cria uma nova lista composta de um elemento que aponta para si mesmo
+CIR_CondRetErro CIR_CriaLista(CIR_lstCircular *pResultado) //Cria uma nova lista composta de um elemento que aponta para si mesmo
 {
-	CIR_lstCircular *circ;
-	circ = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));
-	
-	if(circ==NULL) return NULL;
-	
-	
-	circ->NoCorrente = NULL;
-	return circ;
+	if(pResultado == NULL) return CIR_CondRetParametro;
+	pResultado = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));
+	if(pResultado == NULL) return CIR_CondRetMemoria;
+
+	pResultado->NoCorrente = NULL;
+	return CIR_CondRetOk;
 }
 
 /***************************************************

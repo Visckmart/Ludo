@@ -122,7 +122,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
 		}
     }
 
-    tab->campoPrincipal = CIR_CriaLista();
+    if(CIR_CriaLista(tab->campoPrincipal)!=CIR_CondRetOk) return TAB_CondRetMemoria;
     a=0;
     for(i=0;i<num_casasnotabuleiro;i++)
     {
