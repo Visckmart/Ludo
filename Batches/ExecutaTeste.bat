@@ -1,8 +1,9 @@
 ECHO Executa os testes ja compilados baseado no arquivo TesteSoma.script
 pushd .
 cd..\Produto
-TesteCircular.exe /s..\Script\TesteCircular.script
-TesteLista.exe /s..\Script\TesteLista.script
-TesteTabuleiro.exe /s..\Script\TesteTabuleiro.script
-TesteJogador.exe /s..\Script\TesteJogador.script
+TRAB2-1.exe /s..\Script\TesteCircular.script
+TRAB2-2.exe /s..\Script\TesteJogador.script
+TRAB2-3.exe /s..\Script\TesteLista.script
+TRAB2-4.exe /s..\Script\TesteTabuleiro.script
+
 popd

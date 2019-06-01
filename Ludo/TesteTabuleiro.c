@@ -1,4 +1,5 @@
 //Teste do Modulo Tabuleiro.h utilizando o arcabouco de testes
+//Autor:THiago Lamenza
 
 #include "GENERICO.h"
 #include "TST_ESPC.H"
@@ -38,7 +39,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
-		TAB_DestroiTabuleiro();
+		TAB_FinalizaTabuleiro();
 		return TST_CondRetOK;
 	}
 
@@ -59,7 +60,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		if(indJogador<0|| indJogador>DIM_VT_JOGADORES || indPeca<0 || indPeca>3 || dado<0 || NumLidos!=4)
 			return TST_CondRetParm;
 
-		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		peca = JOG_ObterPecaNaPosicao(vJogadores[indJogador],indPeca);
 		CondRet = TAB_FazJogada(peca,dado);
 
 
@@ -73,18 +74,18 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		if(indJogador<0|| indJogador>DIM_VT_JOGADORES || indPeca<0 || indPeca>3 || NumLidos!=3)
 			return TST_CondRetParm;
 
-		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		peca = JOG_ObterPecaNaPosicao(vJogadores[indJogador],indPeca);
 		CondRet = TAB_PoePecaNoJogo(peca);
 
 		if(ValorEsperado==0)
 		{
 			if(CondRet==ValorEsperado)
-				return TST_CompararPonteiroNulo(1,JOG_LocalPeca(peca),"Peca deveria estar em jogo.");
+				return TST_CompararPonteiroNulo(1,JOG_ObterLocalPeca(peca),"Peca deveria estar em jogo.");
 		}
 		if(ValorEsperado==4)
 		{
 			if(CondRet==ValorEsperado)
-				return TST_CompararPonteiroNulo(0,JOG_LocalPeca(peca),"Peca nao deveria estar em jogo.");
+				return TST_CompararPonteiroNulo(0,JOG_ObterLocalPeca(peca),"Peca nao deveria estar em jogo.");
 		}
 		return TST_CompararInt(CondRet,ValorEsperado,"Valor encontrado diferente do esperado");
 	}

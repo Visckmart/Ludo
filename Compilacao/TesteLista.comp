@@ -15,7 +15,7 @@ TestLis
 Lista
 
 [BuildInicio]
-/OUT:..\Produto\TesteLista.exe
+/OUT:..\Produto\TRAB2-3.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

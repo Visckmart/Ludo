@@ -15,7 +15,7 @@ Lista
 testeJogador
 
 [BuildInicio]
-/OUT:..\Produto\TesteJogador.exe
+/OUT:..\Produto\TRAB2-2.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

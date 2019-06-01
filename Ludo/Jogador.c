@@ -1,11 +1,23 @@
-//
-//  Jogador.c
-//  Ludo
-//
-
+/***************************************************************************
+*  $MCI Módulo de implementação: JOG  Jogador
+*
+*  Arquivo gerado:              Jogador.c
+*  Letras identificadoras:      JOG
+*
+*
+*  Projeto: INF 1301 / Ludo
+*  Autores: Victor Martins
+*
+*  $HA Histórico de evolução:
+*     Versão  Autor            Data        Observações
+*     1       Victor Martins   3/Maio/2019 inicio do desenvolvimento
+*
+***************************************************************************/
 #include "Jogador.h"
 #include <stdlib.h>
 #include "LISTA.H"
+#define num_jogadores 4
+#define num_pecas 4
 
 /***********************************************************************
 *
@@ -27,7 +39,7 @@ struct Jogador {
     JOG_tpCor cor;
 };
 
-
+static void JOG_RemovePeca(void *);
 
 /* * * * * * * * * *
  *
@@ -44,7 +56,7 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
     jog->pecas = LIS_CriarLista(JOG_RemovePeca);
     if (jog->pecas == NULL) { free(jog); return NULL; }
     // Cria elementos de uma lista encadeada que guarda peças
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < num_jogadores; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
         if (p == NULL) { JOG_Deleta(jog); return NULL; }
         p->pos = NULL;
@@ -64,7 +76,6 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
  *  Função: JOG Deletar jogador
  *
  * * * * * * * * * */
-
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     if (jog == NULL) { return JOG_CondRetParametro; }
     LIS_DestruirLista(jog->pecas);
@@ -72,8 +83,13 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     return JOG_CondRetOk;
 }
 
+/* * * * * * * * * *
+ *
+ *  Função: Remove a peça recebida
+ *
+ * * * * * * * * * */
 static void JOG_RemovePeca(void * peca) {
-    if (peca != NULL) free(jog);
+    if (peca != NULL) free(peca);
 }
 
 /* * * * * * * * * *
@@ -93,10 +109,13 @@ JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa) {
  *  Função: JOG Checar se o jogador tem peças
  *
  * * * * * * * * * */
-int JOG_TemPecas(JOG_tpJogador * jog) {
-    if (jog == NULL) { return -1; }
-    IrInicioLista(jog->pecas);
-    return LIS_ObterValor(jog->pecas) != NULL;
+JOG_CondRetErro JOG_TemPecas(JOG_tpJogador * jog) {
+    if (jog == NULL) { return JOG_CondRetParametro; }
+    LIS_IrInicioLista(jog->pecas);
+	if (LIS_ObterValor(jog->pecas) != NULL) {
+		return JOG_CondRetTemPecas;
+	}
+	else { return JOG_CondRetNaoTemPecas; }
 }
 
 /* * * * * * * * * *
@@ -104,7 +123,7 @@ int JOG_TemPecas(JOG_tpJogador * jog) {
  *  Função: JOG Obter posicao de uma peca peca
  *
  * * * * * * * * * */
-void * JOG_LocalPeca(JOG_tpPeca * IDPeca) {
+void * JOG_ObterLocalPeca(JOG_tpPeca * IDPeca) {
     if (IDPeca == NULL) { return NULL; }
     return IDPeca->pos;
 }
@@ -114,7 +133,7 @@ void * JOG_LocalPeca(JOG_tpPeca * IDPeca) {
  *  Função: JOG Obter cor da peca
  *
  * * * * * * * * * */
-JOG_tpCor JOG_CorPeca(JOG_tpPeca * IDPeca) {
+JOG_tpCor JOG_ObterCorPeca(JOG_tpPeca * IDPeca) {
 	if(IDPeca==NULL) return -1;
     return IDPeca->cor;
 }
@@ -124,12 +143,12 @@ JOG_tpCor JOG_CorPeca(JOG_tpPeca * IDPeca) {
  *  Função: JOG Obter peca dado um índice
  *
  * * * * * * * * * */
-JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
+JOG_tpPeca * JOG_ObterPecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
     int i;
 
-    if(jog==NULL||indexPeca<0||indexPeca>4) return NULL;
+    if(jog==NULL||indexPeca<0||indexPeca>num_pecas) return NULL;
 
-    IrInicioLista(jog->pecas);
+    LIS_IrInicioLista(jog->pecas);
     // Procura o elemento que guarda a peça (anda 0 se o ID for 0, 1 se o ID for 1, ...)
     for (i = 0; i < indexPeca; i++) {
         LIS_AvancarElementoCorrente(jog->pecas, 1);
@@ -137,4 +156,34 @@ JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
     }
     return LIS_ObterValor(jog->pecas);
 }
+
+/* * * * * * * * * *
+ *
+ *  Função: JOG Retorna as posições das peças do jogador (se há alguma)
+ *
+ * * * * * * * * * */
+void * JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
+    int tot = 0;
+    int i = 0;
+    JOG_tpPeca ** posicoes;
+    if (jog == NULL) return NULL;
+    LIS_IrInicioLista(jog->pecas);
+    while (LIS_ObterValor(jog->pecas) != NULL) {
+        tot ++;
+        LIS_AvancarElementoCorrente(jog->pecas, 1);
+    }
+    if (tot == 0) return NULL;
+    
+    *totalDePecas = tot;
+    posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
+    if (posicoes == NULL) { return NULL; }
+    
+    LIS_IrInicioLista(jog->pecas);
+    for (i = 0; i < tot; i++) {
+        posicoes[i] = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
+        LIS_AvancarElementoCorrente(jog->pecas, 1);
+    }
+    return posicoes;
+}
+
 

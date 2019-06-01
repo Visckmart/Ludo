@@ -19,12 +19,13 @@
 =declararparm   CondRetListaVazia	int 3
 =declararparm   CondRetNaoAchou		int 4
 
-
+==Cria lista com referencia nula
+=crialista      0   2
 ==Cria lista 0
-=crialista		0
+=crialista		0   0
 
 ==Cria lista 1
-=crialista		1
+=crialista		1   0
 
 ==Cria lista 2
 =crialista		2

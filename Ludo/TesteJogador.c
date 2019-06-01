@@ -104,7 +104,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm;
 		if(vJogadores[indJogador]==NULL) return TST_CondRetParm;
 
-		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		peca = JOG_ObterPecaNaPosicao(vJogadores[indJogador],indPeca);
 		if(peca==NULL)return TST_CondRetParm;
 		
 		JOG_AtualizaPeca(peca,vPonteiros[indPonteiro]);
@@ -132,14 +132,14 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm;
 		if(vJogadores[indJogador]==NULL) return TST_CondRetParm;
 
-		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		peca = JOG_ObterPecaNaPosicao(vJogadores[indJogador],indPeca);
 		if(peca==NULL)return TST_CondRetErro;
 
 		if(valorEsperado==0)
 		{
-			return TST_CompararPonteiroNulo(0,JOG_LocalPeca(peca),"Ponteiro nao e nulo como deveria ser.");
+			return TST_CompararPonteiroNulo(0,JOG_ObterLocalPeca(peca),"Ponteiro nao e nulo como deveria ser.");
 		}
-		return TST_CompararPonteiro(JOG_LocalPeca(peca),vPonteiros[indPonteiro],"Ponteiro esperado não encontrado.");
+		return TST_CompararPonteiro(JOG_ObterLocalPeca(peca),vPonteiros[indPonteiro],"Ponteiro esperado não encontrado.");
 	}
 
 	else if(strcmp(ComandoTeste,LOCALPECA)==0)
@@ -151,10 +151,10 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			return TST_CondRetParm;
 		if(vJogadores[indJogador]==NULL) return TST_CondRetParm;
 
-		peca = JOG_PecaNaPosicao(vJogadores[indJogador],indPeca);
+		peca = JOG_ObterPecaNaPosicao(vJogadores[indJogador],indPeca);
 		if(peca==NULL)return TST_CondRetErro;
 
-		return TST_CompararInt(JOG_CorPeca(peca),valorEsperado,"Cor esperada não encontrado.");
+		return TST_CompararInt(JOG_ObterCorPeca(peca),valorEsperado,"Cor esperada não encontrado.");
 	}
 
 

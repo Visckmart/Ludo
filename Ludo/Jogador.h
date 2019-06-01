@@ -65,7 +65,12 @@ typedef enum {
     
     JOG_CondRetParametro,
     /* Par�metro incorreto */
-    
+
+	JOG_CondRetTemPecas,
+	/* Jogador tem peças*/
+
+	JOG_CondRetNaoTemPecas
+	/* Jogador não tem peças*/
 
 } JOG_CondRetErro;
 
@@ -102,6 +107,8 @@ JOG_tpJogador * JOG_Cria(JOG_tpCor);
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
+
+void JOG_Remove(void *);
 
 /***********************************************************************
  *
@@ -140,7 +147,7 @@ JOG_CondRetErro JOG_AtualizaPeca(JOG_tpPeca * peca, void * novaCasa);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-int JOG_TemPecas(JOG_tpJogador *);
+JOG_CondRetErro JOG_TemPecas(JOG_tpJogador *);
 
 /***********************************************************************
  *
@@ -159,7 +166,7 @@ int JOG_TemPecas(JOG_tpJogador *);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-void * JOG_LocalPeca(JOG_tpPeca *);
+void * JOG_ObterLocalPeca(JOG_tpPeca *);
 
 /***********************************************************************
  *
@@ -179,7 +186,7 @@ void * JOG_LocalPeca(JOG_tpPeca *);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
+JOG_tpCor JOG_ObterCorPeca(JOG_tpPeca *);
 
 /***********************************************************************
  *
@@ -198,7 +205,28 @@ JOG_tpCor JOG_CorPeca(JOG_tpPeca *);
  *   Assertivas:
  *     Checa se o ponteiro recebido é válido.
  ***********************************************************************/
-JOG_tpPeca * JOG_PecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
+JOG_tpPeca * JOG_ObterPecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
+
+/***********************************************************************
+ *
+ *  $FC Função: JOG  &PosicoesDasPecas
+ *
+ *  $ED Descrição da função
+ *     Retorna uma lista com as casas que as peças do jogador passado se encontram.
+ *
+ *  $EP Parâmetros
+ *     Um ponteiro para um jogador e um ponteiro para um inteiro, que receberá
+ *     a quantidade de casas retornadas.
+ *
+ *  $FV Valor retornado
+ *     Um vetor com as casas as quais as peças do jogador se encontram, ou NULL
+ *     caso ponteiro para Jogador seja inválido ou ele não tenha nenhuma peça.
+ *
+ *   Assertivas:
+ *     Checa se o ponteiro recebido é válido, se o número de peças é maior que
+ *     zero e se a alocação de memória foi feita com sucesso.
+ ***********************************************************************/
+void * JOG_ObterPosicoesDasPecas(JOG_tpJogador *, int *);
 
 
 #endif /* JOGADOR_ */

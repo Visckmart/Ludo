@@ -6,3 +6,4 @@
 /Objetos/*.build
 /Compilacao/*.list
 /Compilacao/*.make
+/.vscode/

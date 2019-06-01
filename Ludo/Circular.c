@@ -1,5 +1,5 @@
 /***************************************************************************
-*  $MCI MÃ³dulo de implementaÃ§Ã£o: LIS  Lista Circular
+*  $MCI MÃ³dulo de implementação: LIS  Lista Circular
 *
 *  Arquivo gerado:              Circular.c
 *  Letras identificadoras:      CIR
@@ -9,7 +9,7 @@
 *  Autores: Thiago Lamenza
 *
 *  $HA Hist�rico de evolu��o:
-*     Vers�o  Autor            Data        Observa��es
+*     Vers�o  Autor            Data        Observações
 *     1       Thiago Lamenza   18/abr/2019 inicio do desenvolvimento
 *
 ***************************************************************************/
@@ -45,21 +45,19 @@ struct circular{
 *  Funcao: CIR  &CriaLista
 *
 *  *************************************************/
-CIR_lstCircular *CIR_CriaLista() //Cria uma nova lista composta de um elemento que aponta para si mesmo
+CIR_CondRetErro CIR_CriaLista(CIR_lstCircular *pResultado) //Cria uma nova lista composta de um elemento que aponta para si mesmo
 {
-	CIR_lstCircular *circ;
-	circ = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));
-	
-	if(circ==NULL) return NULL;
-	
-	
-	circ->NoCorrente = NULL;
-	return circ;
+	if(pResultado == NULL) return CIR_CondRetParametro;
+	pResultado = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));
+	if(pResultado == NULL) return CIR_CondRetMemoria;
+
+	pResultado->NoCorrente = NULL;
+	return CIR_CondRetOk;
 }
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &DestroiLista
+*  Função: CIR  &DestroiLista
 *
 *  *************************************************/
 CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
@@ -84,7 +82,7 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &InsereElemento
+*  Função: CIR  &InsereElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
@@ -92,7 +90,7 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 	No *novo,*prox;
 	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
 	
-	if (pCont== NULL) return CIR_CondRetParametro;
+	if (pLista==NULL || pCont== NULL) return CIR_CondRetParametro;
 
 	if (novo == NULL) return CIR_CondRetMemoria;
 
@@ -117,7 +115,7 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &RemoveElemento
+*  Função: CIR  &RemoveElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(void*))
@@ -145,10 +143,10 @@ CIR_CondRetErro CIR_RemoveElemento(CIR_lstCircular *pLista,void (*RemoveDado)(vo
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &ProximoElemento
+*  Função: CIR  &ProximoElemento
 *
 *  *************************************************/
-CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista)
+CIR_CondRetErro CIR_ObterProximoElemento(CIR_lstCircular *pLista)
 {
 	if (pLista == NULL) return CIR_CondRetParametro;
 	if (pLista->NoCorrente==NULL) return CIR_CondRetListaVazia;
@@ -158,10 +156,10 @@ CIR_CondRetErro CIR_ProximoElemento(CIR_lstCircular *pLista)
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &PrecedenteElemento
+*  Função: CIR  &PrecedenteElemento
 *
 *  *************************************************/
-CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista)
+CIR_CondRetErro CIR_ObterPrecedenteElemento(CIR_lstCircular *pLista)
 {
 	if(pLista==NULL) return CIR_CondRetParametro;
 	if (pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
@@ -171,10 +169,10 @@ CIR_CondRetErro CIR_PrecedenteElemento(CIR_lstCircular *pLista)
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &Conteudo
+*  Função: CIR  &Conteudo
 *
 *  *************************************************/
-void *CIR_Conteudo(CIR_lstCircular *pLista)
+void *CIR_ObterConteudo(CIR_lstCircular *pLista)
 {
 	if(pLista == NULL || pLista->NoCorrente==NULL) return NULL;
 	
@@ -183,7 +181,7 @@ void *CIR_Conteudo(CIR_lstCircular *pLista)
 
 /***************************************************
 *
-*  FunÃ§Ã£o: CIR  &ProcuraElemento
+*  Função: CIR  &ProcuraElemento
 *
 *  *************************************************/
 CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
