@@ -75,7 +75,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		}
 		else
 		{
-			CondRet = CIR_CriaLista(Listas[indLista]);
+			CondRet = CIR_CriaLista(&Listas[indLista]);
 		}
 		
 		if(CondRet == 1) return TST_CondRetMemoria;

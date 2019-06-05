@@ -10,7 +10,7 @@
 =declararparm   str3    string  "xpto"
 =declararparm	str4	string	"uv123"
 
-=declararparm	pNulo	int		0
+=declararparm	pNulo	    int	0
 =declararparm	pNaoNulo	int	1
 =declararparm   CondRetOk	int 0
 
@@ -19,8 +19,6 @@
 =declararparm   CondRetListaVazia	int 3
 =declararparm   CondRetNaoAchou		int 4
 
-==Cria lista com referencia nula
-=crialista      0   2
 ==Cria lista 0
 =crialista		0   0
 
@@ -28,7 +26,7 @@
 =crialista		1   0
 
 ==Cria lista 2
-=crialista		2
+=crialista		2   0
 
 ==Teste com lista com um elemento
 =proximo		0	CondRetListaVazia

@@ -1,4 +1,4 @@
-//Propósito: Testa o modulo Jogador.h
+//Propï¿½sito: Testa o modulo Jogador.h
 //Script: TesteTabuleiro.script
 //Autor: Thiago Lamenza
 //Data: 13/05/2019
@@ -6,7 +6,8 @@
 ==Declarando parametros
 =declararparm CondRetOk int 0
 =declararparm CondRetParametro int 1
-=declararparm CondRetFaltamPecas int 2
+=declararparm CondRetTemPecas int 2
+=declararparm CondRetNaoTemPecas int 3
 =declararparm Nenhuma int 0
 =declararparm Vermelho int 1
 =declararparm Azul int 2
@@ -41,8 +42,7 @@
 =localpeca 1 2 2 pNaoNulo
 
 ==Testando tempeca
-=tempeca 0 1
-=tempeca 3 -1
+=tempeca 0 CondRetTemPecas
 
 ==Testando CorPeca
 =corpeca 0 0 Amarelo
@@ -51,9 +51,9 @@
 
 ==Deletando Jogadores
 =deleta 1
-=tempeca 1 -1
+=tempeca 1 CondRetParametro
 =corpeca 1 0 -1
 =deleta 0 
-=tempeca 0 -1
+=tempeca 0 CondRetParametro
 =corpeca 0 0 -1
 
