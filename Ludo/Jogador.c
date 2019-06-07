@@ -46,29 +46,30 @@ static void JOG_RemovePeca(void *);
  *  Função: JOG Criar jogador
  *
  * * * * * * * * * */
-JOG_tpJogador * JOG_Cria(JOG_tpCor corDasPecas) {
+JOG_CondRetErro JOG_Cria(JOG_tpCor corDasPecas,JOG_tpJogador **pResultado) {
     int i;
     // Aloca um espaço para o jogador
-    JOG_tpJogador * jog = (JOG_tpJogador *)malloc(sizeof(JOG_tpJogador));
-    if (jog == NULL) return NULL;
+    if(pResultado==NULL) return JOG_CondRetParametro;
+    *pResultado = (JOG_tpJogador *)malloc(sizeof(JOG_tpJogador));
+    if ((*pResultado) == NULL) return JOG_CondRetMemoria;
     
     // Cria a primeira peça
-    jog->pecas = LIS_CriarLista(JOG_RemovePeca);
-    if (jog->pecas == NULL) { free(jog); return NULL; }
+    (*pResultado)->pecas = LIS_CriarLista(JOG_RemovePeca);
+    if ((*pResultado)->pecas == NULL) { free((*pResultado)); return JOG_CondRetMemoria; }
     // Cria elementos de uma lista encadeada que guarda peças
     for (i = 0; i < num_jogadores; i++) {
         JOG_tpPeca * p = (JOG_tpPeca *)malloc(sizeof(JOG_tpPeca));
-        if (p == NULL) { JOG_Deleta(jog); return NULL; }
+        if (p == NULL) { JOG_Deleta((*pResultado)); return JOG_CondRetMemoria; }
         p->pos = NULL;
         p->cor = corDasPecas;
-        LIS_InserirElementoApos(jog->pecas, p);
+        LIS_InserirElementoApos((*pResultado)->pecas, p);
     }
     
     // Guarda a cor do jogador
-    jog->cor = corDasPecas;
+    (*pResultado)->cor = corDasPecas;
     
     // Retorna o jogador criado
-    return jog;
+    return JOG_CondRetOk;
 }
 
 /* * * * * * * * * *

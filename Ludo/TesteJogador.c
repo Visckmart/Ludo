@@ -45,7 +45,7 @@ Comandos disponíveis:
 
 TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
-	int i,indJogador=-1,indPeca=-1,indPonteiro=-1,Cor=-1,numLidos=-1,valorEsperado=-1;
+	int i,indJogador=-1,indPeca=-1,indPonteiro=-1,Cor=-1,numLidos=-1,valorEsperado=-1,condRet=-1;
 	JOG_tpPeca *peca;
 
 
@@ -70,14 +70,22 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	//Chama a função IniciaTabuleiro e cria os jogadores de teste além de criar o vetor de ponteiros teste.
 	if(strcmp(ComandoTeste,CRIA)==0)
 	{
-		numLidos = LER_LerParametros("ii",&indJogador,&Cor);
-		if(numLidos!=2 || indJogador<0 || indJogador>DIM_VT_JOGADORES
+		numLidos = LER_LerParametros("iii",&indJogador,&Cor,&valorEsperado);
+		if(numLidos!=3 || indJogador<0 || indJogador>DIM_VT_JOGADORES
 		   || Cor<0 || Cor>=5)
 			return TST_CondRetParm;
-		vJogadores[indJogador] = JOG_Cria(Cor);
+
+		if(valorEsperado==1)
+		{
+			condRet = JOG_Cria(Cor,NULL);
+		}
+		else
+		{
+			condRet = JOG_Cria(Cor,&vJogadores[indJogador]);
+		}
 		
-		if(vJogadores[indJogador] == NULL) return TST_CondRetMemoria;
-		return TST_CondRetOK;
+		if(condRet==JOG_CondRetMemoria) return TST_CondRetMemoria;
+		return TST_CompararInt(valorEsperado,condRet,"Valor esperado diferente do obtido.");
 	}
 
 	//Testar a funcao FazJogada

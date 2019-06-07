@@ -8,6 +8,7 @@
 =declararparm CondRetParametro int 1
 =declararparm CondRetTemPecas int 2
 =declararparm CondRetNaoTemPecas int 3
+=declararparm CondRetMemoria int 4
 =declararparm Nenhuma int 0
 =declararparm Vermelho int 1
 =declararparm Azul int 2
@@ -19,9 +20,12 @@
 ==Iniciando o teste
 =inicia
 
+==Criando jogador com ponteiro nulo
+=cria 0 Azul CondRetParametro
+
 ==Criando jogadores
-=cria 0 Amarelo
-=cria 1 Vermelho
+=cria 0 Amarelo CondRetOk
+=cria 1 Vermelho CondRetOk
 
 ==Testando local peca em peca com local nulo
 =localpeca 0 1 0 pNulo
