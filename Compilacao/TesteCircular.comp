@@ -10,7 +10,7 @@ c           =  ..\Ludo
 h           =  ..\Ludo
 
 [Modulos]
-Circular    /D_DEBUG
+Circular        /D_DEBUG
 testeCircular
 
 [BuildInicio]

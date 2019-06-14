@@ -13,17 +13,18 @@ popd
 REM Compila o programa baseado nas instrucoes dos arquivos make gerado
 pushd .
 cd..\Compilacao
-nmake /FTesteCircular.make
 nmake /FTesteLista.make
-nmake /FTesteTabuleiro.make
+del ..\Objetos\*.obj
+nmake /FTesteCircular.make
+del ..\Objetos\*.obj
 nmake /FTesteJogador.make
-
+del ..\Objetos\*.obj
+nmake /FTesteTabuleiro.make
 REM Abre os arquivos de erro gerados (feche para continuar)
 cd ..\Produto
-notepad TesteCircular.err
-notepad TesteLista.err
-notepad TesteTabuleiro.err
-notepad TesteJogador.err
+
+copy    *.err      Tudo.err
+notepad Tudo.err
 popd
 
 

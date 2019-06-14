@@ -363,3 +363,7 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 	}while(noCorrente!=inicio);
 	return CIR_CondRetNaoAchou;
 }
+
+#ifdef _DEBUG
+	#undef _DEBUG
+#endif
