@@ -1,4 +1,4 @@
-# Teste do módulo lista circular usando a biblioteca contendo o arcabouço
+# Teste do mï¿½dulo lista circular usando a biblioteca contendo o arcabouï¿½o
 
 [Diretorios]
 
@@ -10,7 +10,7 @@ c           =  ..\Ludo
 h           =  ..\Ludo
 
 [Modulos]
-Circular
+Circular    /D_DEBUG
 testeCircular
 
 [BuildInicio]

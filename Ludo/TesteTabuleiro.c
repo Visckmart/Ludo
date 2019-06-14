@@ -47,8 +47,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	if(strcmp(ComandoTeste,INICIA)==0)
 	{
 		CondRet = TAB_IniciaTabuleiro();
-		vJogadores[0] = JOG_Cria(Amarelo);
-		vJogadores[1] = JOG_Cria(Vermelho);
+		JOG_Cria(Amarelo,&vJogadores[0]);
+		JOG_Cria(Vermelho,&vJogadores[1]);
 		if(CondRet == TAB_CondRetMemoria) return TST_CondRetMemoria;
 		return TST_CondRetOK;
 	}

@@ -19,9 +19,9 @@
 #include "Jogador.h"
 #include "Circular.h"
 #include "LISTA.h"
-#define num_retasfinais 4
-#define num_casasnaretafinal 5
-#define num_casasnotabuleiro 52
+#define NUM_RETASFINAIS 4
+#define NUM_CASASNARETAFINAL 5
+#define NUM_CASASNOTABULEIRO 52
 
 typedef struct casa
 {
@@ -60,7 +60,7 @@ static TAB_tpCasa *inicioPorCor[4];
  * Protótipo das funções estáticas encapsuladas pelo módulo
  *
  ********************************************/
-static TAB_tpCasa* TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor);
+static TAB_CondRet TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor,TAB_tpCasa **novaCasa);
 static TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca);
 static TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca);
 static void TAB_DestroiCasa(TAB_tpCasa *casa);
@@ -77,18 +77,17 @@ Função: TAB  &CriaCasa
 
 ****************************************************************/
 
-TAB_tpCasa *TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor)
+TAB_CondRet TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor,TAB_tpCasa **novaCasa)
 {
-    TAB_tpCasa *nova;
-    nova = (TAB_tpCasa*) malloc(sizeof(TAB_tpCasa));
-    if(nova==NULL) return NULL;
+	if(novaCasa==NULL) return TAB_CondRetParametro;
+    *novaCasa = (TAB_tpCasa*) malloc(sizeof(TAB_tpCasa));
+    if(*novaCasa==NULL) return TAB_CondRetMemoria;
 
-    nova->pecas[0] = NULL;
-    nova->pecas[1] = NULL;
-    nova->Cor = cor;
-    nova->Bifurcacao = bifurcacao;
-
-    return nova;
+    (*novaCasa)->pecas[0] = NULL;
+    (*novaCasa)->pecas[1] = NULL;
+    (*novaCasa)->Cor = cor;
+    (*novaCasa)->Bifurcacao = bifurcacao;
+	return TAB_CondRetOk;
 }
 
 /****************************************************************
@@ -102,6 +101,7 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     TAB_tpTabuleiro * tab;
     JOG_tpCor Cores[4] = {Amarelo,Verde,Vermelho,Azul};
     TAB_tpCasa *casa;
+	TAB_CondRet CondRet;
 
     if(Tabuleiro!=NULL) TAB_FinalizaTabuleiro();
 
@@ -110,35 +110,38 @@ TAB_CondRet TAB_IniciaTabuleiro() {
     if (tab == NULL) {
         return TAB_CondRetMemoria;
     }
-    for(i=0;i<num_retasfinais;i++)
+    for(i=0;i<NUM_RETASFINAIS;i++)
     {
 		tab->retaFinal[i] = LIS_CriarLista(TAB_DestroiCasa);
-		for(a=0;a<num_casasnaretafinal;a++)
+		for(a=0;a<NUM_CASASNARETAFINAL;a++)
 		{
-			casa = TAB_CriaCasa(NULL,Nenhuma);
-			if(casa==NULL) return TAB_CondRetMemoria;
+			CondRet = TAB_CriaCasa(NULL,Nenhuma,&casa);
+
+			if(CondRet == TAB_CondRetMemoria) return TAB_CondRetMemoria;
 
 			LIS_InserirElementoApos(tab->retaFinal[i],casa);
 		}
     }
 
-    if(CIR_CriaLista(tab->campoPrincipal)!=CIR_CondRetOk) return TAB_CondRetMemoria;
+    if(CIR_CriaLista(&tab->campoPrincipal)==CIR_CondRetMemoria) return TAB_CondRetMemoria;
     a=0;
-    for(i=0;i<num_casasnotabuleiro;i++)
+    for(i=0;i<NUM_CASASNOTABULEIRO;i++)
     {
-    	if(i%(num_casasnotabuleiro/4)==0)
+    	if(i%(NUM_CASASNOTABULEIRO/4)==0)
     	{
-    		casa = TAB_CriaCasa(tab->retaFinal[a],Cores[a]);
+    		CondRet = TAB_CriaCasa(tab->retaFinal[a],Cores[a],&casa);
 
     		a++;
     	}
     	else
     	{
-    		casa = TAB_CriaCasa(NULL,Nenhuma);
-    	}
-    	if(casa==NULL) return TAB_CondRetMemoria;
+    		CondRet = TAB_CriaCasa(NULL,Nenhuma,&casa);
 
-    	if((i-2)%(num_casasnotabuleiro/4)==0) inicioPorCor[(i-2)/(num_casasnotabuleiro/4)] = casa; /*Se for uma das casas de inicio salva seu endereço no vetor de casas de inicio*/
+    	}
+    	if(CondRet==TAB_CondRetMemoria) return TAB_CondRetMemoria;
+
+    	if((i-2)%(NUM_CASASNOTABULEIRO/4)==0) 
+			inicioPorCor[(i-2)/(NUM_CASASNOTABULEIRO/4)] = casa; /*Se for uma das casas de inicio salva seu endereço no vetor de casas de inicio*/
 
     	CIR_InsereElemento(tab->campoPrincipal,casa);
     }
@@ -259,7 +262,7 @@ TAB_CondRet TAB_FazJogada(void *peca,int dado)
 	}
 	else
 	{
-		for(i=0;i<num_retasfinais;i++)
+		for(i=0;i<NUM_RETASFINAIS;i++)
 		{
 			if(LIS_ProcurarValor(Tabuleiro->retaFinal[i],casa) != LIS_CondRetNaoAchou)
 			{
@@ -316,7 +319,7 @@ TAB_CondRet TAB_FinalizaTabuleiro()
 	int i;
 	if(Tabuleiro==NULL) return TAB_CondRetOk;
 	CIR_DestroiLista(Tabuleiro->campoPrincipal,TAB_DestroiCasa);
-	for(i=0;i<num_retasfinais;i++) LIS_DestruirLista(Tabuleiro->retaFinal[i]);
+	for(i=0;i<NUM_RETASFINAIS;i++) LIS_DestruirLista(Tabuleiro->retaFinal[i]);
 
 	free(Tabuleiro);
 	return TAB_CondRetOk;

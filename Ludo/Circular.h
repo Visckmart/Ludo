@@ -89,7 +89,7 @@ typedef enum {
 *   Se pResultado passado for nulo retorna CIR_CondRetParametro.
 *	Caso haja erro de alocação retorna CIR_CondRetMemoria.
 ***********************************************************************/
-CIR_CondRetErro CIR_CriaLista(CIR_lstCircular *pResultado);
+CIR_CondRetErro CIR_CriaLista(CIR_lstCircular **pResultado);
 
 
 /***********************************************************************

@@ -1,5 +1,4 @@
-﻿Data      Horas Trabalhadas    Tipo Tarefa                                          Descrição da Tarefa Realizada
-
+﻿
 18/04     0.5h                 especificar módulo                                   Planejamento do módulo Lista Circular
 18/04     2h                   codificar módulo                                     Inicio da codificação do módulo Lisca Circular
 19/04     1h                   codificar módulo                                     Fim da codificação inicial do módulo Lista Circular
@@ -34,3 +33,5 @@
 13/05     1h                   revisar código do módulo                             Revisão final de diversos módulos
 13/05     1h                   codificar módulo                                     Fim do módulo teste jogador
 13/05     0.5h                 redigir script de teste                              Redação inicial dos scripts de teste para jogador
+31/05     1h                   revisar código do módulo                             Concertos em todos os módulos com base na correção do T2
+04/05     2h                   revisar código do módulo                             Mais erros apontados no T2

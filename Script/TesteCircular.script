@@ -10,7 +10,7 @@
 =declararparm   str3    string  "xpto"
 =declararparm	str4	string	"uv123"
 
-=declararparm	pNulo	int		0
+=declararparm	pNulo	    int	0
 =declararparm	pNaoNulo	int	1
 =declararparm   CondRetOk	int 0
 
@@ -19,30 +19,40 @@
 =declararparm   CondRetListaVazia	int 3
 =declararparm   CondRetNaoAchou		int 4
 
-==Cria lista com referencia nula
-=crialista      0   2
+== Iniciar contagem
+=inicializarcontadores ""
+=lercontadores         "..\\script\\Circular"
+=iniciarcontagem
+
 ==Cria lista 0
-=crialista		0   0
+=crialista		0   CondRetOk
 
 ==Cria lista 1
-=crialista		1   0
+=crialista		1   CondRetOk
 
 ==Cria lista 2
-=crialista		2
+=crialista		2   CondRetOk
+
+==Testes com erro no parametro
+=crialista  4 CondRetParametro
+=proximo    0 CondRetParametro
+=precedente 0 CondRetParametro
+=remove     0 CondRetParametro
+=insere     str0    0   CondRetParametro
 
 ==Teste com lista com um elemento
 =proximo		0	CondRetListaVazia
 =precedente		0	CondRetListaVazia
 =conteudo		0	""	pNulo
-=insere			str1	0
+=insere			str1	0   CondRetOk
 =proximo		0	CondRetOk
 =precedente 	0	CondRetOk
 =conteudo		0 	str1	pNaoNulo
 
 ==Teste com lista de dois elementos
 
-=insere			str2	1
-=insere			str0	1
+=insere			str2	1   CondRetOk
+=insere			str0	1   CondRetOk
 
 =precedente		1	CondRetOk
 =conteudo		1 	str2	pNaoNulo
@@ -55,10 +65,10 @@
 =precedente		1	CondRetOk
 
 ==Teste com lista de varios elementos
-=insere 		str0	2
-=insere 		str1	2
-=insere 		str2	2
-=insere 		str3	2
+=insere 		str0	2   CondRetOk
+=insere 		str1	2   CondRetOk
+=insere 		str2	2   CondRetOk
+=insere 		str3	2   CondRetOk
 
 =precedente 	2	CondRetOk
 =conteudo		2	str2	pNaoNulo
@@ -83,6 +93,18 @@
 =remove			2		CondRetOk
 =remove			2		CondRetListaVazia
 =conteudo		2	""	pNulo
+
+==Testando destroi
+=destroi    0   CondRetParametro
+=destroi    0   CondRetOk
+=crialista  3   CondRetOk
+=destroi    3   CondRetOk
+
+
+==Terminar e ler contadores
+=pararcontagem
+=verificarcontagens     0
+=terminarcontadores
 
 =reseta
 

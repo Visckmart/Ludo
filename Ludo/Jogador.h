@@ -2,7 +2,6 @@
     #define JOGADOR_
 
 
-#include <stdio.h>
 
 /***************************************************************************
  *
@@ -67,10 +66,13 @@ typedef enum {
     /* Par�metro incorreto */
 
 	JOG_CondRetTemPecas,
-	/* Jogador tem peças*/
+	/* Jogador tem peças */
 
-	JOG_CondRetNaoTemPecas
-	/* Jogador não tem peças*/
+	JOG_CondRetNaoTemPecas,
+	/* Jogador não tem peças */
+
+    JOG_CondRetMemoria
+    /* Erro de memoria */
 
 } JOG_CondRetErro;
 
@@ -84,14 +86,16 @@ typedef enum {
  *
  *  $EP Parâmetros
  *      A cor do jogador
+ *      Endereço do ponteiro onde será colocado o jogador criado
  *
  *  $FV Valor retornado
- *     Se executou corretamente retorna um ponteiro válido.
+ *     Se executou corretamente retorna JOG_CondRetOk
  *
  *   Assertivas:
- *     Caso haja erro de memória retorna NULL.
+ *     Caso haja erro de memória retorna JOG_CondRetMemoria
+ *     Se ponteiro passado como parametro é nulo retorna JOG_CondRetParametro
  ***********************************************************************/
-JOG_tpJogador * JOG_Cria(JOG_tpCor);
+JOG_CondRetErro JOG_Cria(JOG_tpCor,JOG_tpJogador **);
 
 /***********************************************************************
  *
