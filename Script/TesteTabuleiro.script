@@ -11,6 +11,10 @@
 =declararparm    CondRetSemEspaco     int    4
 =declararparm    CondRetChegouFinal   int    5
 
+==Inicializando contadores
+=inicializarcontadores ""
+
+
 ==Iniciando o tabuleiro
 =inicia
 
@@ -71,3 +75,6 @@
 =jogada    0    1    2    CondRetChegouFinal
 =jogada    0    0    2    CondRetChegouFinal
 =jogada    0    2    3    CondRetChegouFinal
+
+==Finalizando contadores
+=terminarcontadores

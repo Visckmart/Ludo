@@ -115,7 +115,6 @@ TAB_CondRet TAB_IniciaTabuleiro() {
 		tab->retaFinal[i] = LIS_CriarLista(TAB_DestroiCasa);
 		for(a=0;a<NUM_CASASNARETAFINAL;a++)
 		{
-			printf("%d",a);
 			CondRet = TAB_CriaCasa(NULL,Nenhuma,&casa);
 
 			if(CondRet == TAB_CondRetMemoria) return TAB_CondRetMemoria;
