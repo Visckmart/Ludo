@@ -64,11 +64,11 @@
 =jogada    0    2    1     CondRetNaoAndou
 
 ==Testar rebater
-=jogada    0    1    3    CondRetOk
-=jogada    0    0    3    CondRetOk
-=jogada    0    2    1    CondRetNaoAndou
+=jogada    0    1    6    CondRetOk
+=jogada    0    0    6    CondRetOk
+=jogada    0    2    6    CondRetOk
 
 ==Testa finaliza percurso
-=jogada    0    1    2    CondRetChegouFinal
-=jogada    0    0    2    CondRetChegouFinal
+=jogada    0    1    4    CondRetChegouFinal
+=jogada    0    0    4    CondRetChegouFinal
 =jogada    0    2    3    CondRetChegouFinal

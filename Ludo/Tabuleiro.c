@@ -374,7 +374,7 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
     }
     TAB_RemovePeca(casaInicial,indPeca); /*Evita que a peça rebata e fique presa numa obstruçao gerada por ela mesma*/
     res--; /*Bater no final do tabuleiro conta como "andar*/
-    if(res==0)
+    if(res--==0)
     {
     	LIS_IrInicioLista(Lista);
     	JOG_AtualizaPeca(temp,NULL);
@@ -392,6 +392,7 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
 		casaCorr = Proximo;
 		res--;
     }
+	printf("aaa\n");
     if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk)return TAB_CondRetNaoAndou;
     LIS_IrInicioLista(Lista);
     JOG_AtualizaPeca(temp,casaCorr);
@@ -522,6 +523,7 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 		CIR_ObterProximoElemento(Tabuleiro->campoPrincipal);
 	}
 	for (i = 0; i < NUM_RETASFINAIS; i++) {			//Coloca no mesmo vetor as posições de todas as peças nas retas finais
+		LIS_IrInicioLista(Tabuleiro->retaFinal[i]);
 		for (j = 0; j < NUM_CASASNARETAFINAL; j++) {
 			casaAtual = LIS_ObterValor(Tabuleiro->retaFinal[i]);
 			if (TAB_ObterNumPecas(casaAtual) > 0) {
@@ -536,8 +538,9 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 					counts[indexcoratual]++;
 				}
 			}
-			LIS_AvancarElementoCorrente(Tabuleiro->retaFinal[i]);
+			LIS_AvancarElementoCorrente(Tabuleiro->retaFinal[i],1);
 		}
+		LIS_IrInicioLista(Tabuleiro->retaFinal[i]);
 	}
 
 	for (i = 0; i < NUM_CASASEMTODOOTABULEIRO; i++) {	//Preenche o vetor de casas com espaços vazios

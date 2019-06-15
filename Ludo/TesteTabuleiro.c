@@ -34,7 +34,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
 	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1,CondRet=-1;
 	JOG_tpPeca *peca;
-	TAB_DesenhaTabuleiro();
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
