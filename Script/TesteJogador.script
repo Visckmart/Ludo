@@ -23,6 +23,9 @@
 ==Criando jogador com ponteiro nulo
 =cria 0 Azul CondRetParametro
 
+==Testando numPecas
+=numpecas 0 4
+
 ==Criando jogadores
 =cria 0 Amarelo CondRetOk
 =cria 1 Vermelho CondRetOk
