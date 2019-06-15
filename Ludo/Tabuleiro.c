@@ -19,12 +19,12 @@
 #include "Jogador.h"
 #include "Circular.h"
 #include "LISTA.h"
-#define NUM_RETASFINAIS 4
-#define NUM_CASASNARETAFINAL 5
-#define NUM_CASASNOTABULEIRO 52
-#define NUM_JOGADORES 4
-#define NUM_PECAS 16
-#define NUM_PECASPORJOGADOR 4
+#define NUM_RETASFINAIS 4 /*Numero de retas finais*/
+#define NUM_CASASNARETAFINAL 5 /*Numero de casas na reta final*/
+#define NUM_CASASNOTABULEIRO 52 /*Numero de casas na parte principal do tabuleiro*/
+#define NUM_MAXJOGADORES 4 /*Numero maximo de jogadores*/
+#define NUM_MAXPECASABRIGO 4 /*Numero maximo de peças no abrigo*/
+#define NUM_MAXPECASPORJOGADOR 4 /*Número maximo de peças por jogador*/
 
 typedef struct casa
 {
@@ -57,6 +57,16 @@ static TAB_tpTabuleiro *Tabuleiro = NULL;
  *
  ***********************************************/
 static TAB_tpCasa *inicioPorCor[4];
+
+/************************************************
+ * 
+ * Vetor que contém o número de casas em cada abrigo, inicia com NUM_MAX_ABRIGO para cada jogador
+ * 
+ * Ordem: Vermelho,Azul,Verde,Amarelo
+ * 
+ ***********************************************/
+static int vNumPecasAbrigo[NUM_MAXJOGADORES] = {NUM_MAXPECASABRIGO,NUM_MAXPECASABRIGO,NUM_MAXPECASABRIGO,NUM_MAXPECASABRIGO};
+
 
 /*********************************************
  *
@@ -199,11 +209,15 @@ void TAB_ComePecas(TAB_tpCasa *casa)
 	{
 		JOG_AtualizaPeca(casa->pecas[0],NULL);
 		casa->pecas[0]=NULL;
+
+		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[0])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
 	}
 	if(casa->pecas[1]!=NULL)
 	{
 		JOG_AtualizaPeca(casa->pecas[1],NULL);
 		casa->pecas[1]=NULL;
+
+		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[0])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
 	}
 }
 
@@ -307,6 +321,8 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 
 	CondRet = TAB_InserePeca(casa,peca);
 	if(CondRet==TAB_CondRetOk) JOG_AtualizaPeca(peca,casa);
+
+	vNumPecasAbrigo[JOG_ObterCorPeca(peca)-1] -= 1; /*Reduz o número de peças no abrigo do jogador, -1 pois o enum Cor inclui uma cor Neutra*/
 	return CondRet;
 }
 
