@@ -55,8 +55,11 @@ typedef enum{
 	TAB_CondRetSemEspaco,
 	/*Não tem espaço para inserção*/
 
-	TAB_CondRetChegouFinal
+	TAB_CondRetChegouFinal,
 	/*Peca chegou ao final do tabuleiro*/
+
+	TAB_CondRetNaoDesenhou
+	/*Nao conseguiu desenhar o tabuleiro*/
 
 }TAB_CondRet;
 
@@ -137,7 +140,7 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 *     Não libera as peças contidas no tabuleiro, somente o tabuleiro em sí.
 *
 *  $EP Parâmetros
-
+*
 *  $FV Valor retornado
 *     Se executou corretamente retorna TAB_CondRetOk.
 *
@@ -145,6 +148,25 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca);
 *      Caso Tabuleiro não exista, somente retorna TAB_CondRetOk.
 ***********************************************************************/
 TAB_CondRet TAB_FinalizaTabuleiro();
+
+/***********************************************************************
+*
+*  $FC Função: TAB  &DesenhaTabuleiro
+*
+*  $ED Descrição da função
+*     Desenha o tabuleiro em seu estado atual no terminal
+*
+*  $EP Parâmetros
+*	  tabuleiro - ponteiro para o tabuleiro
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso a lista de jogadores não exista, retorna TAB_CondRetParametro.
+***********************************************************************/
+TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpTabuleiro tabuleiro);
+
 
 
 #endif /* Tabuleiro_h */
