@@ -79,7 +79,6 @@ static int PAR_escolhePeca(Jogador * jog) {
     }
     do {
         printf("Escolha a peça a ser jogada (entre 1 e %d): ", totalPec-1);
-        printf("Escolha a peça a ser jogada ");
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 1 || pecaEscolhida >= totalPec);
     return pecaEscolhida;
