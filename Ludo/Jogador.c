@@ -171,7 +171,7 @@ void * JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     LIS_IrInicioLista(jog->pecas);
     while (LIS_ObterValor(jog->pecas) != NULL) {
         tot ++;
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
+        if (LIS_AvancarElementoCorrente(jog->pecas, 1) == CondRetFimLista) break;
     }
     if (tot == 0) return NULL;
     
@@ -187,4 +187,10 @@ void * JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
     return posicoes;
 }
 
-
+int JOG_NumPecas(JOG_tpJogador * jog) {
+	int total = 0;
+    if (jog == NULL) return -1;
+    LIS_IrInicioLista(jog->pecas);
+	while (LIS_AvancarElementoCorrente(jog->pecas, 1) != CondRetFimLista) total++;
+	return total;
+}
