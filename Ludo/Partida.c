@@ -68,10 +68,9 @@ static int PAR_obterNumJogadores() {
     return numJogad;
 }
 
-static int PAR_escolhePeca(Jogador * jog) {
-    int totalPec;
+static JOG_tpPeca * PAR_escolhePeca(Jogador * jog) {
+    int totalPec = JOG_NumPecas(jog);
     int pecaEscolhida;
-    void * casas = JOG_ObterPosicoesDasPecas(jog, &totalPec);
     if (totalPec < 1) exit(10);
     if (totalPec == 1) {
         printf("Somente uma peça poderia ser escolhida, jogada feita automaticamente.")
@@ -81,6 +80,6 @@ static int PAR_escolhePeca(Jogador * jog) {
         printf("Escolha a peça a ser jogada (entre 1 e %d): ", totalPec-1);
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 1 || pecaEscolhida >= totalPec);
-    return pecaEscolhida;
+    return JOG_ObterPecaNaPosicao(jog, pecaEscolhida);
 }
     
