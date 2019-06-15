@@ -14,6 +14,7 @@
 *
 ***************************************************************************/
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "Tabuleiro.h"
 #include "Jogador.h"
@@ -22,6 +23,7 @@
 #define NUM_RETASFINAIS 4 /*Numero de retas finais*/
 #define NUM_CASASNARETAFINAL 5 /*Numero de casas na reta final*/
 #define NUM_CASASNOTABULEIRO 52 /*Numero de casas na parte principal do tabuleiro*/
+#define NUM_CASASEMTODOOTABULEIRO 72 /*Numero de casas na parte principal tal como em todas as retas finais*/
 #define NUM_MAXJOGADORES 4 /*Numero maximo de jogadores*/
 #define NUM_MAXPECASABRIGO 4 /*Numero maximo de peças no abrigo*/
 #define NUM_MAXPECASPORJOGADOR 4 /*Número maximo de peças por jogador*/
@@ -81,7 +83,8 @@ static void TAB_ComePecas(TAB_tpCasa *casa);
 static int TAB_ObterNumPecas(TAB_tpCasa *casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
-
+static void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16]);
+static void TAB_exibirTabuleiro(int ** v, int * u);
 
 
 /****************************************************************
@@ -473,31 +476,48 @@ Função: TAB  &DesenhaTabuleiro
 
 ****************************************************************/
 
-TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpTabuleiro * tabuleiro)
+TAB_CondRet TAB_DesenhaTabuleiro()
 {
-	//[r,r,r,r,b,b,b,b,g,g,g,g,y,y,y,y]
-	int i;
-	int counts = [0, 0, 0, 0];
-	int posicaoDasPecas[NUM_PECAS];
-	int indexcoratual;
-	int indexpeca;
-	JOG_tpCor corAtual;
-	TAB_tpCasa casaAtual;
 	CIR_CondRetErro condRet;
-	if (listajogadores == NULL) {
+
+	int v[72][2];
+	int u[16];
+
+	if (tabuleiro == NULL) {
 		return TAB_CondRetParametro;
 	}
-	/*
-	condRet = CIR_ProcuraElemento(tabuleiro->campoPrincipal, inicioPorCor[0]);
+
+	condRet = CIR_ProcuraElemento(Tabuleiro->campoPrincipal, inicioPorCor[0]);
 	if (condRet != CIR_CondRetOk) {
 		return TAB_CondRetNaoDesenhou;
 	}
-	//vai para a p
-	rimeira casa do vermelho.
-	     
 
-	for (i = 0; i < NUM_CASASNOTABULEIRO; i++) {
-		casaAtual = CIR_ObterConteudo(tabuleiro->campoPrincipal);
+	TAB_preparaVetoresDesenho(&v,&u);
+
+	TAB_exibirTabuleiro(v,u);
+
+	return TAB_CondRetOk;
+}
+
+void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16]) {
+	int a, i, j, index, indexcoratual, indexpeca;
+	int counts[] = { 0, 0, 0, 0 };
+	int posicaoDasPecas[NUM_PECAS];
+	JOG_tpCor corAtual;
+	TAB_tpCasa casaAtual;
+	int * u;
+	int ** v;
+	v = *pVetorCasas;
+	u = *pVetorAbrigo;
+
+	char cores[] = { 'r','b','g','y' };
+
+	for (i = 0; i < NUM_PECAS; i++) {	//Preenche todas as posições do vetor com -1
+		posicaoDasPecas = -1;
+	}
+
+	for (i = 0; i < NUM_CASASNOTABULEIRO; i++) {	//Coloca em um vetor as posições de todas as peças que estão no campo principal
+		casaAtual = CIR_ObterConteudo(Tabuleiro->campoPrincipal);
 		if (TAB_ObterNumPecas(casaAtual) > 0) {
 			corAtual = JOG_ObterCorPeca(casaAtual.pecas[0]);
 			indexcoratual = corAtual - 1;
@@ -505,12 +525,81 @@ TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpTabuleiro * tabuleiro)
 			posicaoDasPecas[indexpeca] = i;
 			counts[indexcoratual]++;
 		}
-		CIR_ObterProximoElemento(tabuleiro->campoPrincipal);
+		CIR_ObterProximoElemento(Tabuleiro->campoPrincipal);
 	}
-	*/
+	for (i = 0; i < NUM_RETASFINAIS; i++) {			//Coloca no mesmo vetor as posições de todas as peças nas retas finais
+		for (j = 0; j < NUM_CASASNARETAFINAL; j++) {
+			casaAtual = CIR_ObterConteudo(Tabuleiro->retaFinal[i]);
+			if (TAB_ObterNumPecas(casaAtual) > 0) {
+				corAtual = JOG_ObterCorPeca(casaAtual.pecas[0]);
+				indexcoratual = corAtual - 1;
+				indexpeca = indexcoratual * 4 + counts[indexcoratual];
+				posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_RETASFINAIS + j;
+				counts[indexcoratual]++;
+			}
+			CIR_ObterProximoElemento(Tabuleiro->campoPrincipal);
+		}
+	}
 
+	for (i = 0; i < NUM_CASASEMTODOOTABULEIRO; i++) {	//Preenche o vetor de casas com espaços vazios
+		v[i][0] = ' ';
+		v[i][1] = ' ';
+	}
 
-	return TAB_CondRetOk;
+	for (i = 0; i < NUM_MAXPECASABRIGO * NUM_MAXJOGADORES; i++) {	//Preenche o vetor de abrigos com espaços vazios
+		u[i] = ' ';
+	}
+
+	for (i = 0; i < NUM_MAXJOGADORES; i++) {	//Preenche o vetor de casas com as peças de cada uma
+		for (j = 0; j < NUM_MAXPECASPORJOGADOR; j++) {
+			index = 4 * i + j;
+			if (pospecas[index] != -1) {
+				if (v[pospecas[index]][0] != ' ') {
+					v[pospecas[index]][1] = cores[i];
+				}
+				else {
+					v[pospecas[index]][0] = cores[i];
+				}
+			}
+		}
+
+		for (j = 0; j < vNumPecasAbrigo[i]; j++) {	//preenche o vetor de abrigos com as peças de cada uma
+			u[i * 4 + j] = cores[i];
+		}
+
+	}
 }
 
-
+void TAB_exibirTabuleiro(int ** v, int * u) {
+	printf(".--------------------------------------------.\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[49][0], v[49][1], v[50][0], v[50][1], v[51][0], v[51][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[48][0], v[48][1], v[52][0], v[52][1], v[0][0], v[0][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[47][0], v[47][1], v[53][0], v[53][1], v[1][0], v[1][1]);
+	printf("|      %c%c%c%c       .--.--.--.       %c%c%c%c      |\n", u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7]);
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[46][0], v[46][1], v[54][0], v[54][1], v[2][0], v[2][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[45][0], v[45][1], v[55][0], v[55][1], v[3][0], v[3][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[44][0], v[44][1], v[56][0], v[56][1], v[4][0], v[4][1]);
+	printf(".--.--.--.--.--.--.--.--.--.--.--.--.--.--.--.\n");
+	printf("|%c%c|%c%c|%c%c|%c%c|%c%c|%c%c|        |%c%c|%c%c|%c%c|%c%c|%c%c|%c%c|\n", v[38][0], v[38][1], v[39][0], v[39][1], v[40][0], v[40][1], v[41][0], v[41][1], v[42][0], v[42][1], v[43][0], v[43][1], v[5][0], v[5][1], v[6][0], v[6][1], v[7][0], v[7][1], v[8][0], v[8][1], v[9][0], v[9][1], v[10][0], v[10][1]);
+	printf(".--.--.--.--.--.--.        .--.--.--.--.--.--.\n");
+	printf("|%c%c|%c%c|%c%c|%c%c|%c%c|%c%c|        |%c%c|%c%c|%c%c|%c%c|%c%c|%c%c|\n", v[37][0], v[37][1], v[67][0], v[67][1], v[68][0], v[68][1], v[69][0], v[69][1], v[70][0], v[70][1], v[71][0], v[71][1], v[61][0], v[61][1], v[60][0], v[60][1], v[59][0], v[59][1], v[58][0], v[58][1], v[57][0], v[57][1], v[11][0], v[11][1]);
+	printf(".--.--.--.--.--.--.        .--.--.--.--.--.--.\n");
+	printf("|%c%c|%c%c|%c%c|%c%c|%c%c|%c%c|        |%c%c|%c%c|%c%c|%c%c|%c%c|%c%c|\n", v[36][0], v[36][1], v[35][0], v[35][1], v[34][0], v[34][1], v[33][0], v[33][1], v[32][0], v[32][1], v[31][0], v[31][1], v[17][0], v[17][1], v[16][0], v[16][1], v[15][0], v[15][1], v[14][0], v[14][1], v[13][0], v[13][1], v[12][0], v[12][1]);
+	printf(".--.--.--.--.--.--.--.--.--.--.--.--.--.--.--.\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[30][0], v[30][1], v[66][0], v[66][1], v[18][0], v[18][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[29][0], v[29][1], v[65][0], v[65][1], v[19][0], v[19][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[28][0], v[28][1], v[64][0], v[64][1], v[20][0], v[20][1]);
+	printf("|      %c%c%c%c       .--.--.--.       %c%c%c%c      |\n", u[8], u[9], u[10], u[11], u[12], u[13], u[14], u[15]);
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[27][0], v[27][1], v[63][0], v[63][1], v[21][0], v[21][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[26][0], v[26][1], v[62][0], v[62][1], v[22][0], v[22][1]);
+	printf("|                 .--.--.--.                 |\n");
+	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[25][0], v[25][1], v[24][0], v[24][1], v[23][0], v[23][1]);
+	printf(".-----------------.--.--.--.-----------------.\n");
+}

@@ -165,8 +165,6 @@ TAB_CondRet TAB_FinalizaTabuleiro();
 *   Assertivas:
 *      Caso a lista de jogadores não exista, retorna TAB_CondRetParametro.
 ***********************************************************************/
-TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpTabuleiro tabuleiro);
-
-
+TAB_CondRet TAB_DesenhaTabuleiro();
 
 #endif /* Tabuleiro_h */
