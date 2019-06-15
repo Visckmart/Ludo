@@ -28,6 +28,7 @@ static char ATUALIZA[] = "=atualizapeca";
 static char TEMPECA[] = "=tempeca";
 static char LOCALPECA[] = "=localpeca";
 static char CORPECA[] = "=corpeca";
+static char NUMPECAS[] = "numpecas";
 
 
 /***********************
@@ -40,6 +41,7 @@ Comandos disponíveis:
 =tempeca        indJogador      valorEsperado
 =localpeca      indJogador      indPeca         indPonteiro		valorEsperado
 =corpeca		indJogador		indPeca			valorEsperado
+=numpecas		insJogador		valorEsperado
          
 ***********************/
 
@@ -125,7 +127,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	else if(strcmp(ComandoTeste,TEMPECA)==0)
 	{
 		numLidos = LER_LerParametros("ii",&indJogador,&valorEsperado);
-		if(numLidos!=2) return TST_CondRetParm;
+		if(indJogador<0 || indJogador>DIM_VT_JOGADORES || numLidos!=2) return TST_CondRetParm;
 
 		return TST_CompararInt(JOG_TemPecas(vJogadores[indJogador]),valorEsperado,"Valor esperado não encontrado.");
 	}
@@ -163,6 +165,14 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		if(peca==NULL)return TST_CondRetErro;
 
 		return TST_CompararInt(JOG_ObterCorPeca(peca),valorEsperado,"Cor esperada não encontrado.");
+	}
+
+	else if(strcmp(ComandoTeste,NUMPECAS)==0)
+	{
+		numLidos = LER_LerParametros("ii",&indJogador,&valorEsperado);
+		if(indJogador<0 || indJogador>DIM_VT_JOGADORES || numLidos!=2) return TST_CondRetParm;
+
+		return TST_CompararInt(JOG_NumPecas(vJogadores[indJogador]),valorEsperado,"Numero errado de pecas.");
 	}
 
 
