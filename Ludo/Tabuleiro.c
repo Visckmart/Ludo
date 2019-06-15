@@ -513,6 +513,11 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 			indexpeca = indexcoratual * 4 + counts[indexcoratual];
 			posicaoDasPecas[indexpeca] = i;
 			counts[indexcoratual]++;
+			if (TAB_ObterNumPecas(casaAtual) == 2) {
+				indexpeca = indexcoratual * 4 + counts[indexcoratual];
+				posicaoDasPecas[indexpeca] = i;
+				counts[indexcoratual]++;
+			}
 		}
 		CIR_ObterProximoElemento(Tabuleiro->campoPrincipal);
 	}
@@ -523,10 +528,15 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 				corAtual = JOG_ObterCorPeca(casaAtual->pecas[0]);
 				indexcoratual = corAtual - 1;
 				indexpeca = indexcoratual * 4 + counts[indexcoratual];
-				posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_RETASFINAIS + j;
+				posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_CASASNARETAFINAL + j;
 				counts[indexcoratual]++;
+				if (TAB_ObterNumPecas(casaAtual) == 2) {
+					indexpeca = indexcoratual * 4 + counts[indexcoratual];
+					posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_CASASNARETAFINAL + j; i;
+					counts[indexcoratual]++;
+				}
 			}
-			CIR_ObterProximoElemento(Tabuleiro->campoPrincipal);
+			LIS_AvancarElementoCorrente(Tabuleiro->retaFinal[i]);
 		}
 	}
 
@@ -566,7 +576,7 @@ void TAB_exibirTabuleiro(int v[72][2], int u[16]) {
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[48][0], v[48][1], v[52][0], v[52][1], v[0][0], v[0][1]);
 	printf("|                 .--.--.--.                 |\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[47][0], v[47][1], v[53][0], v[53][1], v[1][0], v[1][1]);
-	printf("|      %c%c%c%c       .--.--.--.       %c%c%c%c      |\n", u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7]);
+	printf("|      %c%c%c%c       .--.--.--.       %c%c%c%c      |\n", u[12], u[13], u[14], u[15], u[0], u[1], u[2], u[3]);
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[46][0], v[46][1], v[54][0], v[54][1], v[2][0], v[2][1]);
 	printf("|                 .--.--.--.                 |\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[45][0], v[45][1], v[55][0], v[55][1], v[3][0], v[3][1]);
@@ -584,7 +594,7 @@ void TAB_exibirTabuleiro(int v[72][2], int u[16]) {
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[29][0], v[29][1], v[65][0], v[65][1], v[19][0], v[19][1]);
 	printf("|                 .--.--.--.                 |\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[28][0], v[28][1], v[64][0], v[64][1], v[20][0], v[20][1]);
-	printf("|      %c%c%c%c       .--.--.--.       %c%c%c%c      |\n", u[8], u[9], u[10], u[11], u[12], u[13], u[14], u[15]);
+	printf("|      %c%c%c%c       .--.--.--.       %c%c%c%c      |\n", u[8], u[9], u[10], u[11], u[4], u[5], u[6], u[7]);
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[27][0], v[27][1], v[63][0], v[63][1], v[21][0], v[21][1]);
 	printf("|                 .--.--.--.                 |\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[26][0], v[26][1], v[62][0], v[62][1], v[22][0], v[22][1]);
