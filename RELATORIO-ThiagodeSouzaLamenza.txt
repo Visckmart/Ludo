@@ -39,3 +39,5 @@
 13/06     1.5h                 revisar código do módulo                             Aplicação do módulo conta em Circular
 14/06     1h                   revisar código do módulo                             Finalização de conta em Circular
 14/06     0.5h                 revisar script de teste                              Uso de contadores no script de teste circular
+15/06     1h                   codificar módulo                                     Progresso no módulo partida
+15/06     5h                   revisar código do módulo                             Auxílio e acomodação ao módulo desenh
