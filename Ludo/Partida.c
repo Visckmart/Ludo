@@ -63,16 +63,16 @@ int PAR_rolaDado()
 static int PAR_obterNumJogadores() {
     int numJogad;
     do {
-        printf("Digite o numero de jogadores (de 2 a 4): ");
+        printf("Digite o numero de jogadores (de %d a %d): ", NUM_MIN_JOGADORES, NUM_MAX_JOGADORE);
         scanf("%d", &numJogad);
-    } while (numJogad < 2 || numJogad > 4);
+    } while (numJogad < NUM_MIN_JOGADORES || numJogad > NUM_MAX_JODORES);
     return numJogad;
 }
 
 static JOG_tpPeca * PAR_escolhePeca(JOG_tpJogador * jog) {
     int totalPec = JOG_NumPecas(jog);
     int pecaEscolhida;
-    if (totalPec < 1) exit(10);
+    if (totalPec < 1) return NULL;
     if (totalPec == 1) {
         printf("Somente uma peça poderia ser escolhida, jogada feita automaticamente.")
         return 1;
