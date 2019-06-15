@@ -68,7 +68,7 @@ static int PAR_obterNumJogadores() {
     return numJogad;
 }
 
-static JOG_tpPeca * PAR_escolhePeca(Jogador * jog) {
+static JOG_tpPeca * PAR_escolhePeca(JOG_tpJogador * jog) {
     int totalPec = JOG_NumPecas(jog);
     int pecaEscolhida;
     if (totalPec < 1) exit(10);
@@ -82,4 +82,3 @@ static JOG_tpPeca * PAR_escolhePeca(Jogador * jog) {
     } while (pecaEscolhida < 1 || pecaEscolhida >= totalPec);
     return JOG_ObterPecaNaPosicao(jog, pecaEscolhida);
 }
-    
