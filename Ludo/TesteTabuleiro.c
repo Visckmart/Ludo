@@ -34,8 +34,7 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 {
 	int indJogador=-1,indPeca=-1,dado=-1,NumLidos=-1,ValorEsperado=-1,CondRet=-1;
 	JOG_tpPeca *peca;
-
-
+	TAB_DesenhaTabuleiro();
 	//Reset teste
 	if(strcmp(ComandoTeste,RESETA)==0)
 	{
@@ -47,8 +46,8 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 	if(strcmp(ComandoTeste,INICIA)==0)
 	{
 		CondRet = TAB_IniciaTabuleiro();
-		JOG_Cria(Amarelo,&vJogadores[0]);
-		JOG_Cria(Vermelho,&vJogadores[1]);
+		JOG_Cria(Vermelho,&vJogadores[0]);
+		JOG_Cria(Verde,&vJogadores[1]);
 		if(CondRet == TAB_CondRetMemoria) return TST_CondRetMemoria;
 		return TST_CondRetOK;
 	}
@@ -62,7 +61,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 
 		peca = JOG_ObterPecaNaPosicao(vJogadores[indJogador],indPeca);
 		CondRet = TAB_FazJogada(peca,dado);
-
 
 		return TST_CompararInt(CondRet, ValorEsperado,"Retorno diferente do esperado.");
 	}
@@ -89,7 +87,5 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		}
 		return TST_CompararInt(CondRet,ValorEsperado,"Valor encontrado diferente do esperado");
 	}
-
-	TAB_CondRet TAB_DesenhaTabuleiro();
 	return 0;
 }

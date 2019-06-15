@@ -84,8 +84,8 @@ static void TAB_ComePecas(TAB_tpCasa *casa);
 static int TAB_ObterNumPecas(TAB_tpCasa *casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
-static void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16]);
-static void TAB_exibirTabuleiro(int ** v, int * u);
+static void TAB_preparaVetoresDesenho(int  pVetorCasas[72][2], int pVetorAbrigo[16]);
+static void TAB_exibirTabuleiro(int v[72][2], int u[16]);
 
 
 /****************************************************************
@@ -211,17 +211,17 @@ void TAB_ComePecas(TAB_tpCasa *casa)
 {
 	if(casa->pecas[0]!=NULL)
 	{
+		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[0])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
+
 		JOG_AtualizaPeca(casa->pecas[0],NULL);
 		casa->pecas[0]=NULL;
-
-		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[0])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
 	}
 	if(casa->pecas[1]!=NULL)
 	{
+		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[1])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
+
 		JOG_AtualizaPeca(casa->pecas[1],NULL);
 		casa->pecas[1]=NULL;
-
-		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[0])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
 	}
 }
 
@@ -275,7 +275,6 @@ TAB_CondRet TAB_FazJogada(void *peca,int dado)
 	else if(casa->pecas[1]==peca) indPeca=1;
 	else return TAB_CondRetParametro;
 
-
 	if(CIR_ProcuraElemento(Tabuleiro->campoPrincipal,casa)!=CIR_CondRetNaoAchou)
 	{
 		CondRet = TAB_AvancaPecaCircular(Tabuleiro->campoPrincipal, indPeca, dado);
@@ -302,7 +301,6 @@ Função: TAB  &PoePecaNoJogo
 ****************************************************************/
 TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 {
-	int indice;
 	TAB_tpCasa *casa;
 	JOG_tpCor Cor;
 	TAB_CondRet CondRet;
@@ -310,23 +308,19 @@ TAB_CondRet TAB_PoePecaNoJogo(void *peca)
 	if(peca==NULL) return TAB_CondRetParametro;
 	if(JOG_ObterLocalPeca(peca)!=NULL) return TAB_CondRetParametro;
 
-	Cor = JOG_ObterCorPeca(peca);
-	if(Cor == Amarelo) indice = 0;
-	else if(Cor == Verde) indice = 1;
-	else if(Cor == Vermelho) indice = 2;
-	else if(Cor == Azul) indice = 3;
-	else return TAB_CondRetParametro;
+	Cor = JOG_ObterCorPeca(peca)-1;
+	if(Cor<0) return TAB_CondRetParametro;
 
-	casa = inicioPorCor[indice]; /*Seleciona a casa de inicio correta baseada na cor*/
+
+	casa = inicioPorCor[Cor]; /*Seleciona a casa de inicio correta baseada na cor*/
 
 
 	if(TAB_ObterNumPecas(casa)>0 && JOG_ObterCorPeca(casa->pecas[0])!= JOG_ObterCorPeca(peca)) TAB_ComePecas(casa); /*Se houver uma peca inimiga come ela*/
 	else if(TAB_ObterNumPecas(casa)==2) return TAB_CondRetSemEspaco; /*Se a casa estiver cheia não executa a inserção*/
+	vNumPecasAbrigo[Cor] -= 1; /*Reduz o número de peças no abrigo do jogador, -1 pois o enum Cor inclui uma cor Neutra*/
 
 	CondRet = TAB_InserePeca(casa,peca);
 	if(CondRet==TAB_CondRetOk) JOG_AtualizaPeca(peca,casa);
-
-	vNumPecasAbrigo[JOG_ObterCorPeca(peca)-1] -= 1; /*Reduz o número de peças no abrigo do jogador, -1 pois o enum Cor inclui uma cor Neutra*/
 	return CondRet;
 }
 
@@ -361,7 +355,6 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
     JOG_tpPeca *temp;
     if(Lista==NULL || indPeca>1 || indPeca<0 || numCasas<0) return TAB_CondRetParametro;
     if(numCasas==0) return TAB_CondRetOk;
-
     casaInicial = casaCorr = LIS_ObterValor(Lista);
     if(casaCorr==NULL) return TAB_CondRetParametro;
     temp = casaCorr->pecas[indPeca];
@@ -420,13 +413,11 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
     TAB_tpCasa *casaInicial,*casaCorr,*Proximo;
     if(Lista==NULL || indPeca>1 || indPeca<0 || numCasas<0) return TAB_CondRetParametro;
     if(numCasas==0) return TAB_CondRetOk;
-    
     casaInicial = casaCorr = CIR_ObterConteudo(Lista);
     if(casaCorr==NULL || casaCorr->pecas[indPeca]==NULL) return TAB_CondRetParametro;
     temp = casaCorr->pecas[indPeca];
     if(temp==NULL) return TAB_CondRetParametro;
     CorPeca = JOG_ObterCorPeca(temp);
-
     while(res>0)
     {
         CIR_ObterProximoElemento(Lista);
@@ -460,7 +451,6 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
 			else
 				return TAB_CondRetNaoAndou;
         }
-
 		casaCorr = Proximo;
 		res--;
     }
@@ -493,25 +483,23 @@ TAB_CondRet TAB_DesenhaTabuleiro()
 		return TAB_CondRetNaoDesenhou;
 	}
 
-	TAB_preparaVetoresDesenho(&v,&u);
+	TAB_preparaVetoresDesenho(v,u);
 
 	TAB_exibirTabuleiro(v,u);
 
 	return TAB_CondRetOk;
 }
 
-void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16]) {
-	int a, i, j, index, indexcoratual, indexpeca;
+void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
+	int i, j, index, indexcoratual, indexpeca;
 	int counts[] = { 0, 0, 0, 0 };
 	int posicaoDasPecas[NUM_PECAS];
 	JOG_tpCor corAtual;
 	TAB_tpCasa *casaAtual;
-	int * u;
-	int ** v;
-	v = *pVetorCasas;
-	u = *pVetorAbrigo;
-
 	char cores[] = { 'r','b','g','y' };
+
+
+	
 
 	for (i = 0; i < NUM_PECAS; i++) {	//Preenche todas as posições do vetor com -1
 		posicaoDasPecas[i] = -1;
@@ -530,7 +518,7 @@ void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16])
 	}
 	for (i = 0; i < NUM_RETASFINAIS; i++) {			//Coloca no mesmo vetor as posições de todas as peças nas retas finais
 		for (j = 0; j < NUM_CASASNARETAFINAL; j++) {
-			casaAtual = CIR_ObterConteudo(Tabuleiro->retaFinal[i]);
+			casaAtual = LIS_ObterValor(Tabuleiro->retaFinal[i]);
 			if (TAB_ObterNumPecas(casaAtual) > 0) {
 				corAtual = JOG_ObterCorPeca(casaAtual->pecas[0]);
 				indexcoratual = corAtual - 1;
@@ -571,7 +559,7 @@ void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16])
 	}
 }
 
-void TAB_exibirTabuleiro(int ** v, int * u) {
+void TAB_exibirTabuleiro(int v[72][2], int u[16]) {
 	printf(".--------------------------------------------.\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[49][0], v[49][1], v[50][0], v[50][1], v[51][0], v[51][1]);
 	printf("|                 .--.--.--.                 |\n");
