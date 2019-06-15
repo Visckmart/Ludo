@@ -50,7 +50,7 @@ static TAB_tpTabuleiro *Tabuleiro = NULL;
  *
  * Vetor de casas de entrada no tabuleiro ordenada por cor, é setada com a função IniciaTabuleiro.
  *
- * Ordem: Amarelo,Verde,Vermelho,Azul
+ * Ordem: Vermelho,Azul,Verde,Amarelo
  *
  ***********************************************/
 static TAB_tpCasa *inicioPorCor[4];
@@ -99,7 +99,7 @@ Função: TAB  &IniciaTabuleiro
 TAB_CondRet TAB_IniciaTabuleiro() {
 	int i,a;
     TAB_tpTabuleiro * tab;
-    JOG_tpCor Cores[4] = {Amarelo,Verde,Vermelho,Azul};
+    JOG_tpCor Cores[4] = {Vermelho,Azul,Verde,Amarelo};
     TAB_tpCasa *casa;
 	TAB_CondRet CondRet;
 
