@@ -27,6 +27,7 @@
 #define NUM_MAXJOGADORES 4 /*Numero maximo de jogadores*/
 #define NUM_MAXPECASABRIGO 4 /*Numero maximo de peças no abrigo*/
 #define NUM_MAXPECASPORJOGADOR 4 /*Número maximo de peças por jogador*/
+#define NUM_PECAS (NUM_MAXJOGADORES*NUM_MAXPECASPORJOGADOR)
 
 typedef struct casa
 {
@@ -483,7 +484,7 @@ TAB_CondRet TAB_DesenhaTabuleiro()
 	int v[72][2];
 	int u[16];
 
-	if (tabuleiro == NULL) {
+	if (Tabuleiro == NULL) {
 		return TAB_CondRetParametro;
 	}
 
@@ -504,7 +505,7 @@ void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16])
 	int counts[] = { 0, 0, 0, 0 };
 	int posicaoDasPecas[NUM_PECAS];
 	JOG_tpCor corAtual;
-	TAB_tpCasa casaAtual;
+	TAB_tpCasa *casaAtual;
 	int * u;
 	int ** v;
 	v = *pVetorCasas;
@@ -513,13 +514,13 @@ void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16])
 	char cores[] = { 'r','b','g','y' };
 
 	for (i = 0; i < NUM_PECAS; i++) {	//Preenche todas as posições do vetor com -1
-		posicaoDasPecas = -1;
+		posicaoDasPecas[i] = -1;
 	}
 
 	for (i = 0; i < NUM_CASASNOTABULEIRO; i++) {	//Coloca em um vetor as posições de todas as peças que estão no campo principal
 		casaAtual = CIR_ObterConteudo(Tabuleiro->campoPrincipal);
 		if (TAB_ObterNumPecas(casaAtual) > 0) {
-			corAtual = JOG_ObterCorPeca(casaAtual.pecas[0]);
+			corAtual = JOG_ObterCorPeca(casaAtual->pecas[0]);
 			indexcoratual = corAtual - 1;
 			indexpeca = indexcoratual * 4 + counts[indexcoratual];
 			posicaoDasPecas[indexpeca] = i;
@@ -531,7 +532,7 @@ void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16])
 		for (j = 0; j < NUM_CASASNARETAFINAL; j++) {
 			casaAtual = CIR_ObterConteudo(Tabuleiro->retaFinal[i]);
 			if (TAB_ObterNumPecas(casaAtual) > 0) {
-				corAtual = JOG_ObterCorPeca(casaAtual.pecas[0]);
+				corAtual = JOG_ObterCorPeca(casaAtual->pecas[0]);
 				indexcoratual = corAtual - 1;
 				indexpeca = indexcoratual * 4 + counts[indexcoratual];
 				posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_RETASFINAIS + j;
@@ -553,12 +554,12 @@ void TAB_preparaVetoresDesenho(int * pVetorCasas[72][2], int * pVetorAbrigo[16])
 	for (i = 0; i < NUM_MAXJOGADORES; i++) {	//Preenche o vetor de casas com as peças de cada uma
 		for (j = 0; j < NUM_MAXPECASPORJOGADOR; j++) {
 			index = 4 * i + j;
-			if (pospecas[index] != -1) {
-				if (v[pospecas[index]][0] != ' ') {
-					v[pospecas[index]][1] = cores[i];
+			if (posicaoDasPecas[index] != -1) {
+				if (v[posicaoDasPecas[index]][0] != ' ') {
+					v[posicaoDasPecas[index]][1] = cores[i];
 				}
 				else {
-					v[pospecas[index]][0] = cores[i];
+					v[posicaoDasPecas[index]][0] = cores[i];
 				}
 			}
 		}

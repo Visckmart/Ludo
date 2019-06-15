@@ -90,6 +90,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		return TST_CompararInt(CondRet,ValorEsperado,"Valor encontrado diferente do esperado");
 	}
 
-
+	TAB_CondRet TAB_DesenhaTabuleiro();
 	return 0;
 }
