@@ -26,10 +26,11 @@
 #include <stdlib.h>
 
 /* Variáveis estáticas do módulo */
-static vJogadores[NUM_MAX_JOGADORES];
-static turno = 0;
+static JOG_tpJogador vJogadores[NUM_MAX_JOGADORES];
 
-/*Funções estátivas emcapsuladas pelo módulo*/
+static int numeroDeJogadores = 0;
+
+/* Funções estáticas encapsuladas pelo módulo */
 static int PAR_rolaDado(void);
 
 
@@ -81,4 +82,12 @@ static JOG_tpPeca * PAR_escolhePeca(JOG_tpJogador * jog) {
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 1 || pecaEscolhida >= totalPec);
     return JOG_ObterPecaNaPosicao(jog, pecaEscolhida);
+}
+
+void PAR_finaliza() {
+    int i;
+    TAB_FinalizaTabuleiro()
+    for (i = 0; i < numeroDeJogadores; i++) {
+        JOG_Deleta(vJogadores[i]);
+    }
 }
