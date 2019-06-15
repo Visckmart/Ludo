@@ -22,6 +22,9 @@
 #define NUM_RETASFINAIS 4
 #define NUM_CASASNARETAFINAL 5
 #define NUM_CASASNOTABULEIRO 52
+#define NUM_JOGADORES 4
+#define NUM_PECAS 16
+#define NUM_PECASPORJOGADOR 4
 
 typedef struct casa
 {
@@ -82,7 +85,6 @@ TAB_CondRet TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor,TAB_tpCasa **nova
 	if(novaCasa==NULL) return TAB_CondRetParametro;
     *novaCasa = (TAB_tpCasa*) malloc(sizeof(TAB_tpCasa));
     if(*novaCasa==NULL) return TAB_CondRetMemoria;
-
     (*novaCasa)->pecas[0] = NULL;
     (*novaCasa)->pecas[1] = NULL;
     (*novaCasa)->Cor = cor;
@@ -448,4 +450,51 @@ TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCas
     TAB_RemovePeca(casaInicial,indPeca);
     return TAB_CondRetOk;
 }
+
+/****************************************************************
+
+Função: TAB  &DesenhaTabuleiro
+
+****************************************************************/
+
+TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpTabuleiro * tabuleiro)
+{
+	//[r,r,r,r,b,b,b,b,g,g,g,g,y,y,y,y]
+	int i;
+	int counts = [0, 0, 0, 0];
+	int posicaoDasPecas[NUM_PECAS];
+	int indexcoratual;
+	int indexpeca;
+	JOG_tpCor corAtual;
+	TAB_tpCasa casaAtual;
+	CIR_CondRetErro condRet;
+	if (listajogadores == NULL) {
+		return TAB_CondRetParametro;
+	}
+	/*
+	condRet = CIR_ProcuraElemento(tabuleiro->campoPrincipal, inicioPorCor[0]);
+	if (condRet != CIR_CondRetOk) {
+		return TAB_CondRetNaoDesenhou;
+	}
+	//vai para a p
+	rimeira casa do vermelho.
+	     
+
+	for (i = 0; i < NUM_CASASNOTABULEIRO; i++) {
+		casaAtual = CIR_ObterConteudo(tabuleiro->campoPrincipal);
+		if (TAB_ObterNumPecas(casaAtual) > 0) {
+			corAtual = JOG_ObterCorPeca(casaAtual.pecas[0]);
+			indexcoratual = corAtual - 1;
+			indexpeca = indexcoratual * 4 + counts[indexcoratual];
+			posicaoDasPecas[indexpeca] = i;
+			counts[indexcoratual]++;
+		}
+		CIR_ObterProximoElemento(tabuleiro->campoPrincipal);
+	}
+	*/
+
+
+	return TAB_CondRetOk;
+}
+
 
