@@ -35,3 +35,7 @@
 13/05     0.5h                 redigir script de teste                              Redação inicial dos scripts de teste para jogador
 31/05     1h                   revisar código do módulo                             Concertos em todos os módulos com base na correção do T2
 04/05     2h                   revisar código do módulo                             Mais erros apontados no T2
+13/06     0.5h                 estudar                                              Estudar o uso do módulo Conta
+13/06     1.5h                 revisar código do módulo                             Aplicação do módulo conta em Circular
+14/06     1h                   revisar código do módulo                             Finalização de conta em Circular
+14/06     0.5h                 revisar script de teste                              Uso de contadores no script de teste circular
