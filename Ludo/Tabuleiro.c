@@ -84,7 +84,7 @@ static void TAB_ComePecas(TAB_tpCasa *casa);
 static int TAB_ObterNumPecas(TAB_tpCasa *casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
-static void TAB_preparaVetoresDesenho(int  pVetorCasas[72][2], int pVetorAbrigo[16]);
+static void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],TAB_tpCasa **vEspeciais, int numEspeciais);
 static void TAB_exibirTabuleiro(int v[72][2], int u[16]);
 
 
@@ -468,7 +468,7 @@ Função: TAB  &DesenhaTabuleiro
 
 ****************************************************************/
 
-TAB_CondRet TAB_DesenhaTabuleiro()
+TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpCasa **vEspeciais,int numEspeciais)
 {
 	CIR_CondRetErro condRet;
 
@@ -484,17 +484,20 @@ TAB_CondRet TAB_DesenhaTabuleiro()
 		return TAB_CondRetNaoDesenhou;
 	}
 
-	TAB_preparaVetoresDesenho(v,u);
+	TAB_preparaVetoresDesenho(v,u,vEspeciais,numEspeciais);
 
 	TAB_exibirTabuleiro(v,u);
 
 	return TAB_CondRetOk;
 }
 
-void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
-	int i, j, index, indexcoratual, indexpeca;
+void TAB_preparaVetoresDesenho(int v[72][2], int  u[16], 
+							   TAB_tpCasa **vEspeciais,int numEspeciais) 
+	{
+	int i, j, k, index, indexcoratual, indexpeca;
 	int counts[] = { 0, 0, 0, 0 };
 	int posicaoDasPecas[NUM_PECAS];
+	int vIndexEspeciais[NUM_MAXPECASPORJOGADOR];/*Vetor de int onde serão colocados os indexes das peças especiais*/
 	JOG_tpCor corAtual;
 	TAB_tpCasa *casaAtual;
 	char cores[] = { 'r','b','g','y' };
@@ -509,6 +512,16 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 	for (i = 0; i < NUM_CASASNOTABULEIRO; i++) {	//Coloca em um vetor as posições de todas as peças que estão no campo principal
 		casaAtual = CIR_ObterConteudo(Tabuleiro->campoPrincipal);
 		if (TAB_ObterNumPecas(casaAtual) > 0) {
+
+			/*Adiciona o index à lista de indexes especiais se achar a peça correta*/
+			for(k=0;k<numEspeciais;k++)
+			{
+				if(casaAtual == vEspeciais[k])
+				{
+					vIndexEspeciais[k] = i;
+				}
+			}
+
 			corAtual = JOG_ObterCorPeca(casaAtual->pecas[0]);
 			indexcoratual = corAtual - 1;
 			indexpeca = indexcoratual * 4 + counts[indexcoratual];
@@ -527,6 +540,16 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 		for (j = 0; j < NUM_CASASNARETAFINAL; j++) {
 			casaAtual = LIS_ObterValor(Tabuleiro->retaFinal[i]);
 			if (TAB_ObterNumPecas(casaAtual) > 0) {
+
+				/*Adiciona o index à lista de indexes especiais se achar a peça correta*/
+				for(k=0;k<numEspeciais;k++)
+				{
+					if(casaAtual == vEspeciais[k])
+					{
+						vIndexEspeciais[k] = i;
+					}
+				}
+				
 				corAtual = JOG_ObterCorPeca(casaAtual->pecas[0]);
 				indexcoratual = corAtual - 1;
 				indexpeca = indexcoratual * 4 + counts[indexcoratual];
@@ -564,11 +587,24 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16]) {
 				}
 			}
 		}
-
 		for (j = 0; j < vNumPecasAbrigo[i]; j++) {	//preenche o vetor de abrigos com as peças de cada uma
 			u[i * 4 + j] = cores[i];
 		}
+	}
 
+	for(i=0; i < numEspeciais; i++) /* Destaca as peças especiais */
+	{
+		index = vIndexEspeciais[i];
+
+		if(v[index][0] >= '1' && v[index][0] <= '4') /*Se a primeira casa já contém uma peça especial preenche a segunda*/
+		{
+			v[index][1] = '0' + i; /* Caracter equivalente à i */
+		}
+		else
+		{
+			v[index][0] = '0' + i; /* Caracter equivalente à i */
+		}
+		
 	}
 }
 

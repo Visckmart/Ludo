@@ -75,19 +75,20 @@ static int PAR_escolhePeca(JOG_tpJogador * jog) {
     int totalPec;
     int pecaEscolhida;
     void * casas = JOG_ObterPosicoesDasPecas(jog, &totalPec);
-    if (totalPec < 1) exit(10);
+    if (totalPec < 1) return -1;
     if (totalPec == 1) {
         printf("Somente uma peça poderia ser escolhida, jogada feita automaticamente.");
         return 1;
     }
     do {
+        TAB_DesenhaTabuleiro(casas,totalPec);
         printf("Escolha a peça a ser jogada (entre 1 e %d): ", totalPec-1);
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 1 || pecaEscolhida >= totalPec);
     return pecaEscolhida;
 }
 
-PAR_CondRet PAR_FazRodada(int turno)
+PAR_CondRet PAR_executaRodada(int turno)
 {
     int indPeca,dado;
 
@@ -131,6 +132,7 @@ PAR_CondRet PAR_FazRodada(int turno)
         }
     }while(condRetTab = TAB_FazJogada(peca,dado) != TAB_CondRetOk);
     
+    TAB_DesenhaTabuleiro(NULL,0);
     printf("Fim da jogada.\n");
     return PAR_CondRetOk;
 }

@@ -157,7 +157,8 @@ TAB_CondRet TAB_FinalizaTabuleiro();
 *     Desenha o tabuleiro em seu estado atual no terminal
 *
 *  $EP Parâmetros
-*	  tabuleiro - ponteiro para o tabuleiro
+*	  vEspeciais - Ponteiro para um vetor contendo uma lista de casas especiais contendo peças à serem destacadas.
+*	  numEspeciais - Número de peças à serem destacadas.
 *
 *  $FV Valor retornado
 *     Se executou corretamente retorna TAB_CondRetOk.
@@ -165,6 +166,6 @@ TAB_CondRet TAB_FinalizaTabuleiro();
 *   Assertivas:
 *      Caso a lista de jogadores não exista, retorna TAB_CondRetParametro.
 ***********************************************************************/
-TAB_CondRet TAB_DesenhaTabuleiro();
+TAB_CondRet TAB_DesenhaTabuleiro(void **vEspeciais,int numEspeciais);
 
 #endif /* Tabuleiro_h */
