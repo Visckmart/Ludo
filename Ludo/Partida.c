@@ -71,21 +71,40 @@ static int PAR_obterNumJogadores() {
     return numJogad;
 }
 
-static int PAR_escolhePeca(JOG_tpJogador * jog) {
-    int totalPec;
+static PAR_CondRet PAR_escolhePeca(JOG_tpJogador * jog,int *indPeca,int *vEscolhidas) {
+    int i,totalPec;
     int pecaEscolhida;
     void * casas = JOG_ObterPosicoesDasPecas(jog, &totalPec);
-    if (totalPec < 1) return -1;
+    
+    for(i=0;i<totalPec;i++)
+    {
+        if(!vEscolhidas[i]) /*Se houver ao menos uma escolha possível nota esse fato*/
+        {
+            i=-1;/*Seta i como um valor distinto para detectar que existe escolha possível*/
+            break;
+        }
+    }
+    if(i!=-1)
+    {
+        printf("Nao ha escolhas possiveis, finalizando turno...\n");
+        return PAR_CondRetSemEscolha;
+    }
+
+    if (totalPec < 1) return PAR_CondRetParametro;
     if (totalPec == 1) {
         printf("Somente uma peça poderia ser escolhida, jogada feita automaticamente.");
-        return 1;
+        indPeca = 1;
+        return PAR_CondRetOk;
     }
+    TAB_DesenhaTabuleiro(casas,totalPec);
     do {
-        TAB_DesenhaTabuleiro(casas,totalPec);
         printf("Escolha a peça a ser jogada (entre 1 e %d): ", totalPec-1);
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 1 || pecaEscolhida >= totalPec);
-    return pecaEscolhida;
+    *indPeca = pecaEscolhida;
+    vEscolhidas[*indPeca] = 1;
+
+    return PAR_CondRetOk;
 }
 
 PAR_CondRet PAR_executaRodada(int turno)
@@ -108,8 +127,11 @@ PAR_CondRet PAR_executaRodada(int turno)
 
     do
     {
-        indPeca = PAR_escolhePeca(vJogadores[turno]);
-        vEscolhas[indPeca] = 1;
+        if(PAR_escolhePeca(vJogadores[turno],&indPeca,vEscolhas)==PAR_CondRetSemEscolha)
+        {
+            TAB_DesenhaTabuleiro;
+            return PAR_CondRetSemEscolha;
+        }
 
         peca = JOG_ObterPecaNaPosicao(vJogadores[turno],indPeca);
         if(peca==NULL) return PAR_CondRetParametro; 
@@ -123,11 +145,6 @@ PAR_CondRet PAR_executaRodada(int turno)
 
         if(condRetTab == TAB_CondRetNaoAndou)
         {
-            if(vEscolhas[0] && vEscolhas[1] && vEscolhas[2] && vEscolhas[3])
-            {
-                printf("Nao ha jogadas possiveis, passando turno...\n");
-                break;
-            }
             printf("Essa peca nao pode se mover, escolha outra.\n");
         }
     }while(condRetTab = TAB_FazJogada(peca,dado) != TAB_CondRetOk);

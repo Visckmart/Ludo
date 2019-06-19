@@ -158,7 +158,7 @@ TAB_CondRet TAB_FinalizaTabuleiro();
 *
 *  $EP Parâmetros
 *	  vEspeciais - Ponteiro para um vetor contendo uma lista de casas especiais contendo peças à serem destacadas.
-*	  numEspeciais - Número de peças à serem destacadas.
+*	  numEspeciais - Número de peças à serem destacadas, se for 0 nenhuma será destacada independente de vEspeciais.
 *
 *  $FV Valor retornado
 *     Se executou corretamente retorna TAB_CondRetOk.

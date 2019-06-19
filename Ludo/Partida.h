@@ -8,5 +8,8 @@ typedef enum{
 
 	PAR_CondRetMemoria,
 	/*Erro de memoria*/
+	
+	PAR_CondRetSemEscolha
+	/*Não existe uma escolha*/
 
 }PAR_CondRet;
