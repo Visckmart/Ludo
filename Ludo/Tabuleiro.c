@@ -79,12 +79,12 @@ static int vNumPecasAbrigo[NUM_MAXJOGADORES] = {NUM_MAXPECASABRIGO,NUM_MAXPECASA
 static TAB_CondRet TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor,TAB_tpCasa **novaCasa);
 static TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca);
 static TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca);
-static void TAB_DestroiCasa(TAB_tpCasa *casa);
+static void TAB_DestroiCasa(void *casa);
 static void TAB_ComePecas(TAB_tpCasa *casa);
 static int TAB_ObterNumPecas(TAB_tpCasa *casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
-static void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],TAB_tpCasa **vEspeciais, int numEspeciais);
+static void TAB_preparaVetoresDesenho(int v[72][2], int  u[16], TAB_tpCasa **vEspeciais,int numEspeciais);
 static void TAB_exibirTabuleiro(int v[72][2], int u[16]);
 
 
@@ -231,7 +231,7 @@ void TAB_ComePecas(TAB_tpCasa *casa)
 Função: TAB  &DestroiCasa
 
 ****************************************************************/
-void TAB_DestroiCasa(TAB_tpCasa *casa)
+void TAB_DestroiCasa(void *casa)
 {
     free(casa);
 }
@@ -467,7 +467,7 @@ Função: TAB  &DesenhaTabuleiro
 
 ****************************************************************/
 
-TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpCasa **vEspeciais,int numEspeciais)
+TAB_CondRet TAB_DesenhaTabuleiro(void **vEspeciais,int numEspeciais)
 {
 	CIR_CondRetErro condRet;
 
@@ -483,7 +483,7 @@ TAB_CondRet TAB_DesenhaTabuleiro(TAB_tpCasa **vEspeciais,int numEspeciais)
 		return TAB_CondRetNaoDesenhou;
 	}
 
-	TAB_preparaVetoresDesenho(v,u,vEspeciais,numEspeciais);
+	TAB_preparaVetoresDesenho(v,u,(TAB_tpCasa**)vEspeciais,numEspeciais);
 
 	TAB_exibirTabuleiro(v,u);
 
@@ -561,7 +561,7 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 				counts[indexcoratual]++;
 				if (TAB_ObterNumPecas(casaAtual) == 2) {
 					indexpeca = indexcoratual * 4 + counts[indexcoratual];
-					posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_CASASNARETAFINAL + j; i;
+					posicaoDasPecas[indexpeca] = NUM_CASASNOTABULEIRO + i * NUM_CASASNARETAFINAL + j;
 					counts[indexcoratual]++;
 				}
 			}
