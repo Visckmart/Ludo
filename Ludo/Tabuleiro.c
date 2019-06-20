@@ -599,7 +599,7 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 
 		if(index!=-1) /*Index -1 significa casa inatingível*/
 		{
-			if(v[index][0] >= '1' && v[index][0] <= '4') /*Se a primeira casa já contém uma peça especial preenche a segunda*/
+			if(v[index][0] >= '0' && v[index][0] <= '3') /*Se a primeira casa já contém uma peça especial preenche a segunda*/
 			{
 				v[index][1] = '0' + i; /* Caracter equivalente à i */
 			}
