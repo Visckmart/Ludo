@@ -550,7 +550,7 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 				{
 					if(casaAtual == vEspeciais[k])
 					{
-						vIndexEspeciais[k] = i;
+						vIndexEspeciais[k] = NUM_CASASNOTABULEIRO + i * NUM_CASASNARETAFINAL + j;
 					}
 				}
 				
