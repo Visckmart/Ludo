@@ -1,0 +1,26 @@
+# Teste do módulo partida para jogar.
+
+[Diretorios]
+
+Nome        =  Partida
+PathDefault =  ..\Ludo
+err         =  ..\Produto
+obj         =  ..\Objetos
+c           =  ..\Ludo
+h           =  ..\Ludo
+
+[Modulos]
+Partida
+Tabuleiro
+Circular
+Lista
+Jogador
+
+
+[BuildInicio]
+/OUT:..\Produto\Ludo.exe
+/INCREMENTAL:NO
+/MACHINE:IX86
+
+
+[Fim]
