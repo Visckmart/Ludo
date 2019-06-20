@@ -161,7 +161,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             if(JOG_TemPecas(vJogadores[turno])==JOG_CondRetNaoTemPecas)
             {
                 TAB_DesenhaTabuleiro(NULL,0);
-                printf("Jogador %d venceu!!\n",turno);
+                printf("Jogador %d (%s) venceu!!\n",turno,cores[turno]);
                 PAR_Finaliza();
                 return PAR_CondRetTerminou;
             }
