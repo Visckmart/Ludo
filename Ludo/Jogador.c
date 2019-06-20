@@ -93,6 +93,20 @@ static void JOG_RemovePeca(void * peca) {
     if (peca != NULL) free(peca);
 }
 
+
+JOG_CondRetErro JOG_Remove(JOG_tpPeca *peca,JOG_tpJogador *jog)
+{
+    if(peca==NULL || jog==NULL) return JOG_CondRetParametro;
+    LIS_IrInicioLista(jog->pecas);
+    if(LIS_ProcurarValor(jog->pecas,peca)!=LIS_CondRetOK)
+    {
+        return JOG_CondRetParametro;
+    }
+    LIS_ExcluirElemento(jog->pecas);
+    return JOG_CondRetOk;
+}
+
+
 /* * * * * * * * * *
  *
  *  Função: JOG Atualizar posição de uma peça
@@ -163,28 +177,28 @@ JOG_tpPeca * JOG_ObterPecaNaPosicao(JOG_tpJogador * jog, int indexPeca) {
  *  Função: JOG Retorna as posições das peças do jogador (se há alguma)
  *
  * * * * * * * * * */
-void * JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas) {
-    int tot = 0;
-    int i = 0;
-    JOG_tpPeca ** posicoes;
-    if (jog == NULL) return NULL;
+JOG_CondRetErro JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas,void ***posicoes) {
+    int tot = 0,i;
+
+    if (jog == NULL || totalDePecas==NULL || posicoes==NULL) return JOG_CondRetParametro;
+
     LIS_IrInicioLista(jog->pecas);
     while (LIS_ObterValor(jog->pecas) != NULL) {
-        tot ++;
+
+        tot++;
         if (LIS_AvancarElementoCorrente(jog->pecas, 1) == LIS_CondRetFimLista) break;
-    }
-    if (tot == 0) return NULL;
-    
+    }  
+    (*posicoes) = (void**) malloc(sizeof(void*)*tot);
+    if((*posicoes)==NULL) return JOG_CondRetMemoria;
     *totalDePecas = tot;
-    posicoes = (JOG_tpPeca **)malloc(sizeof(JOG_tpPeca *)*tot);
-    if (posicoes == NULL) { return NULL; }
-    
+
     LIS_IrInicioLista(jog->pecas);
-    for (i = 0; i < tot; i++) {
-        posicoes[i] = (JOG_tpPeca *)LIS_ObterValor(jog->pecas);
-        LIS_AvancarElementoCorrente(jog->pecas, 1);
+    for(i=0;i<tot;i++)
+    {
+        (*posicoes)[i] = JOG_ObterLocalPeca(LIS_ObterValor(jog->pecas));
+        LIS_AvancarElementoCorrente(jog->pecas,1);
     }
-    return posicoes;
+    return JOG_CondRetOk;
 }
 
 int JOG_NumPecas(JOG_tpJogador * jog) {

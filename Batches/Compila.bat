@@ -8,6 +8,7 @@ gmake /b..\ /cTesteCircular
 gmake /b..\ /cTesteLista
 gmake /b..\ /cTesteTabuleiro
 gmake /b..\ /cTesteJogador
+gmake /b..\ /cPartida
 popd
 
 REM Compila o programa baseado nas instrucoes dos arquivos make gerado
@@ -20,6 +21,8 @@ del ..\Objetos\*.obj
 nmake /FTesteJogador.make
 del ..\Objetos\*.obj
 nmake /FTesteTabuleiro.make
+del ..\Objetos\*.obj
+nmake /FPartida.make
 REM Abre os arquivos de erro gerados (feche para continuar)
 cd ..\Produto
 

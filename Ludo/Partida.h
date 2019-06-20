@@ -9,7 +9,12 @@ typedef enum{
 	PAR_CondRetMemoria,
 	/*Erro de memoria*/
 	
-	PAR_CondRetSemEscolha
+	PAR_CondRetSemEscolha,
 	/*Não existe uma escolha*/
 
+	PAR_CondRetTerminou
+	/*Partida terminou*/
+
 }PAR_CondRet;
+
+void PAR_Finaliza();

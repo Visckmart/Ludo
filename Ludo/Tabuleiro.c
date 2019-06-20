@@ -392,7 +392,6 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
 		casaCorr = Proximo;
 		res--;
     }
-	printf("aaa\n");
     if(TAB_InserePeca(casaCorr,temp)!=TAB_CondRetOk)return TAB_CondRetNaoAndou;
     LIS_IrInicioLista(Lista);
     JOG_AtualizaPeca(temp,casaCorr);
@@ -502,13 +501,18 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 	TAB_tpCasa *casaAtual;
 	char cores[] = { 'r','b','g','y' };
 
-
-	
+	/*Marca as casas NULL como inatingíveis*/
+	for(i=0; i < numEspeciais; i++)
+	{
+		if(vEspeciais[i]==NULL)
+		{
+			vIndexEspeciais[i] = -1;
+		}
+	}
 
 	for (i = 0; i < NUM_PECAS; i++) {	//Preenche todas as posições do vetor com -1
 		posicaoDasPecas[i] = -1;
 	}
-
 	for (i = 0; i < NUM_CASASNOTABULEIRO; i++) {	//Coloca em um vetor as posições de todas as peças que estão no campo principal
 		casaAtual = CIR_ObterConteudo(Tabuleiro->campoPrincipal);
 		if (TAB_ObterNumPecas(casaAtual) > 0) {
@@ -570,11 +574,9 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 		v[i][0] = ' ';
 		v[i][1] = ' ';
 	}
-
 	for (i = 0; i < NUM_MAXPECASABRIGO * NUM_MAXJOGADORES; i++) {	//Preenche o vetor de abrigos com espaços vazios
 		u[i] = ' ';
 	}
-
 	for (i = 0; i < NUM_MAXJOGADORES; i++) {	//Preenche o vetor de casas com as peças de cada uma
 		for (j = 0; j < NUM_MAXPECASPORJOGADOR; j++) {
 			index = 4 * i + j;
@@ -591,18 +593,20 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 			u[i * 4 + j] = cores[i];
 		}
 	}
-
-	for(i=0; i < numEspeciais; i++) /* Destaca as peças especiais */
+	for(i=0; i < numEspeciais; i++) /* Destaca as peças especiais no tabuleiro*/
 	{
 		index = vIndexEspeciais[i];
 
-		if(v[index][0] >= '1' && v[index][0] <= '4') /*Se a primeira casa já contém uma peça especial preenche a segunda*/
+		if(index!=-1) /*Index -1 significa casa inatingível*/
 		{
-			v[index][1] = '0' + i; /* Caracter equivalente à i */
-		}
-		else
-		{
-			v[index][0] = '0' + i; /* Caracter equivalente à i */
+			if(v[index][0] >= '1' && v[index][0] <= '4') /*Se a primeira casa já contém uma peça especial preenche a segunda*/
+			{
+				v[index][1] = '0' + i; /* Caracter equivalente à i */
+			}
+			else
+			{
+				v[index][0] = '0' + i; /* Caracter equivalente à i */
+			}
 		}
 		
 	}

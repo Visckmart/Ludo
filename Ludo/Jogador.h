@@ -112,7 +112,7 @@ JOG_CondRetErro JOG_Cria(JOG_tpCor,JOG_tpJogador **);
  ***********************************************************************/
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
 
-void JOG_Remove(void *);
+JOG_CondRetErro JOG_Remove(JOG_tpPeca *,JOG_tpJogador *);
 
 /***********************************************************************
  *
@@ -219,18 +219,18 @@ JOG_tpPeca * JOG_ObterPecaNaPosicao(JOG_tpJogador * jog, int indexPeca);
  *     Retorna uma lista com as casas que as peças do jogador passado se encontram.
  *
  *  $EP Parâmetros
- *     Um ponteiro para um jogador e um ponteiro para um inteiro, que receberá
- *     a quantidade de casas retornadas.
+ *     jog - Ponteiro para o jogador dono das peças.
+ *     totaldePecas - Ponteiro onde será colocado o número de peças.
+ *     posicoes - Ponteiro onde será colocado o vetor das posições.
  *
  *  $FV Valor retornado
- *     Um vetor com as casas as quais as peças do jogador se encontram, ou NULL
- *     caso ponteiro para Jogador seja inválido ou ele não tenha nenhuma peça.
+ *     JOG_CondRetOK se executou corretamente
  *
  *   Assertivas:
- *     Checa se o ponteiro recebido é válido, se o número de peças é maior que
- *     zero e se a alocação de memória foi feita com sucesso.
+ *     Nenhum dos ponteiros recebidos pode ser Nulo, caso seja retorna JOG_CondRetParametro.
+ *     Retorna JOG_CondRetMemoria caso haja erro de memória.
  ***********************************************************************/
-void * JOG_ObterPosicoesDasPecas(JOG_tpJogador *, int *);
+JOG_CondRetErro JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePecas,void ***posicoes);
 
 
 #endif /* JOGADOR_ */
