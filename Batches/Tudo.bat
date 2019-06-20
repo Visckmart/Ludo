@@ -4,3 +4,4 @@ if not exist ..\Produto\ mkdir ..\Produto\
 Call Limpa
 Call Compila
 Call ExecutaTeste
+Call ExecutaPartida
