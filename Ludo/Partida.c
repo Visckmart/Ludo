@@ -36,7 +36,7 @@ static int numeroDeJogadores = 0;
 
 /*Funções estáticas encapsuladas pelo módulo*/
 static int PAR_RolaDado(void);
-static PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca,int *vEscolhidas,int dado);
+static PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec);
 static int PAR_obterNumJogadores();
 
 /***********************************************************************	
@@ -53,8 +53,9 @@ static int PAR_obterNumJogadores();
 ***********************************************************************/	
 PAR_CondRet PAR_inicia()
 {
-    int i;
+    int i,turno=0;
     int numJog = PAR_obterNumJogadores();
+    TAB_CondRet condRet;
     JOG_tpCor vCores[NUM_CORES] = {Vermelho,Azul,Verde,Amarelo};
 
     numeroDeJogadores = numJog;
@@ -67,7 +68,7 @@ PAR_CondRet PAR_inicia()
     if(TAB_IniciaTabuleiro()==TAB_CondRetMemoria)
         return PAR_CondRetMemoria;
 
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     
     do {
         condRet = PAR_ExecutaRodada(turno);
@@ -134,8 +135,7 @@ int PAR_obterNumJogadores() {
 *   Caso o total de peças seja menor que 1, retorna PAR_CondRetParametro.
 *
 ***********************************************************************/	
-PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca, int totalPec) {
-    int i;
+PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
     int pecaEscolhida;
 
     if (totalPec < 1) return PAR_CondRetParametro;
@@ -177,7 +177,7 @@ PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca, int totalPec) {
 ***********************************************************************/	
 PAR_CondRet PAR_ExecutaRodada(int turno)
 {
-    int indPeca, dado, totalPec;
+    int i,indPeca, dado, totalPec;
     void **casas;
 
     /*Vetor das escolhas feitas até o momento
@@ -205,8 +205,9 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
         {
             printf("Essa peca nao pode se mover, escolha outra.\n");
         }
-        JOG_ObterPosicoesDasPecas(jog, &totalPec,&casas);
-        PAR_EscolhePeca(vJogadores[turno],&indPeca, totalPec);
+        JOG_ObterPosicoesDasPecas(vJogadores[turno], &totalPec,&casas);
+        TAB_DesenhaTabuleiro(casas,totalPec);
+        PAR_EscolhePeca(&indPeca, totalPec);
         /* Checa se há escolhas */
         for(i=0;i<totalPec;i++)
         {
@@ -222,9 +223,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             TAB_DesenhaTabuleiro(NULL,0);
             return PAR_CondRetSemEscolha;
         }
-        vEscolhas[*indPeca] = 1;
-
-        TAB_DesenhaTabuleiro(casas, totalPec);
+        vEscolhas[indPeca] = 1;
 
         /*Checa se há alguma casa fora do abrigo*/
         for(i=0;i<totalPec;i++)
@@ -262,8 +261,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             condRetTab = TAB_FazJogada(peca,dado);
         }
         
-    }while(condRetTab != TAB_CondRetOk || condRetTab != TAB_CondRetChegouFinal);
-    
+    }while(condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal);
     if(condRetTab == TAB_CondRetChegouFinal)
         {
             printf("Peca %d do jogador %s chegou no final.\n", indPeca, cores[turno]);
@@ -290,9 +288,5 @@ void PAR_Finaliza() {
 
 int main(void)
 {
-    int turno = 0;
-    PAR_CondRet condRet;
     PAR_inicia();
-    
-
 }

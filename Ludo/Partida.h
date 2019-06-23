@@ -27,3 +27,4 @@ typedef enum{
 }PAR_CondRet;
 
 void PAR_Finaliza();
+PAR_CondRet PAR_ExecutaRodada(int turno);
