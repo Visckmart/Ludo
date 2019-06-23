@@ -1,3 +1,12 @@
+/***********************************************************************
+*
+*  $TC Tipo de dados: PAR Condições de retorno
+*
+*
+*  $ED Descrição do tipo
+*     Condições de retorno das funções de Partida
+*
+***********************************************************************/
 typedef enum{
 
 	PAR_CondRetOk,
