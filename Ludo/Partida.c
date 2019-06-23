@@ -38,7 +38,18 @@ static int PAR_RolaDado(void);
 static PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca,int *vEscolhidas,int dado);
 static int PAR_obterNumJogadores();
 
-
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &PAR_inicia
+*	
+*  $ED Descrição da função	
+*     Inicia uma partida.
+*
+*  $FV Valor retornado	
+*     Se executou corretamente retorna PAR_CondRetOk.
+*     Pode retornar PAR_CondRetMemoria, caso não alguma alocação não pôde ser concluída.
+*
+***********************************************************************/	
 PAR_CondRet PAR_inicia()
 {
     int i;
@@ -61,11 +72,33 @@ PAR_CondRet PAR_inicia()
     return PAR_CondRetOk;
 }
 
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &RolaDado
+*	
+*  $ED Descrição da função	
+*     Gera um número aleatório entre MIN_DADO e MAX_DADO.
+*	
+*  $FV Valor retornado	
+*     Um inteiro com o valor do dado.
+*	
+***********************************************************************/	
 int PAR_RolaDado()
 {
     return rand()%(MAX_DADO-MIN_DADO+1)+MIN_DADO; /*Equivale à um número de MIN_DADO até MAX_DADO*/
 }
 
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &obterNumJogadores
+*	
+*  $ED Descrição da função	
+*     Solicita o número de jogadores para a partida que iniciará.
+*	
+*  $FV Valor retornado	
+*     Um inteiro com o número de jogadores que querem participar da partida.
+*
+***********************************************************************/	
 int PAR_obterNumJogadores() {
     int numJogad;
     do {
@@ -75,11 +108,27 @@ int PAR_obterNumJogadores() {
     return numJogad;
 }
 
-PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca,int *vEscolhidas,int dado) {
-    int i,totalPec;
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &EscolhePeca
+*	
+*  $ED Descrição da função	
+*     Solicita ao jogador a escolha de uma peca.
+*	
+*  $EP Parâmetros	
+*	  P - 
+*  $FV Valor retornado	
+*     R
+*	
+*     C	
+*	
+*   Assertivas:	
+*   A
+*	B
+***********************************************************************/	
+PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca, int totalPec) {
+    int i;
     int pecaEscolhida;
-    void **casas;
-    JOG_ObterPosicoesDasPecas(jog, &totalPec,&casas);
 
     if (totalPec < 1) return PAR_CondRetParametro;
     if (totalPec == 1) {
@@ -90,52 +139,19 @@ PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca,int *vEscolhidas,in
         *indPeca = 0;
         return PAR_CondRetOk;
     }
-
-    /*Checa se há escolhas*/
-    for(i=0;i<totalPec;i++)
-    {
-        if(!vEscolhidas[i]) /*Se houver ao menos uma escolha possível nota esse fato*/
-        {
-            i=-1;/*Seta i como um valor distinto para detectar que existe escolha possível*/
-            break;
-        }
-    }
-    if(i!=-1)
-    {
-        printf("Nao ha escolhas possiveis, passando turno...\n");
-        return PAR_CondRetSemEscolha;
-    }
-
-
-    TAB_DesenhaTabuleiro(casas,totalPec);
     do {
         printf("Escolha a peca a ser jogada (entre 0 e %d): ", totalPec-1);
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 0 || pecaEscolhida >= totalPec);
     *indPeca = pecaEscolhida;
-    vEscolhidas[*indPeca] = 1;
-
-    /*Checa se há alguma casa fora do abrigo*/
-    for(i=0;i<totalPec;i++)
-    {
-        if(casas[i]!=NULL)/*Ao menos uma casa nao nula*/
-        {
-            i = -1;
-            break;
-        }
-    }
-    if(i!=-1 && dado!=6)/*Se todas as pecas estão no abrigo e o dado não é 6 não há escolha.*/
-    {
-        printf("Todas as pecas estao no abrigo e voce nao tirou 6, passando turno...\n");
-        return PAR_CondRetSemEscolha;
-    }
 
     return PAR_CondRetOk;
 }
 
 PAR_CondRet PAR_ExecutaRodada(int turno)
 {
-    int indPeca,dado;
+    int indPeca, dado, totalPec;
+    void **casas;
 
     /*Vetor das escolhas feitas até o momento
     * No inicio é zerado pois nenhuma escolha foi feita
@@ -174,9 +190,39 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
         {
             printf("Essa peca nao pode se mover, escolha outra.\n");
         }
-        if(PAR_EscolhePeca(vJogadores[turno],&indPeca,vEscolhas,dado)==PAR_CondRetSemEscolha)
+        JOG_ObterPosicoesDasPecas(jog, &totalPec,&casas);
+        PAR_EscolhePeca(vJogadores[turno],&indPeca, totalPec);
+        /* Checa se há escolhas */
+        for(i=0;i<totalPec;i++)
         {
+            if(!vEscolhas[i]) /*Se houver ao menos uma escolha possível nota esse fato*/
+            {
+                i=-1;/*Seta i como um valor distinto para detectar que existe escolha possível*/
+                break;
+            }
+        }
+        if(i!=-1)
+        {
+            printf("Nao ha escolhas possiveis, passando turno...\n");
             TAB_DesenhaTabuleiro(NULL,0);
+            return PAR_CondRetSemEscolha;
+        }
+        vEscolhas[*indPeca] = 1;
+
+        TAB_DesenhaTabuleiro(casas, totalPec);
+
+        /*Checa se há alguma casa fora do abrigo*/
+        for(i=0;i<totalPec;i++)
+        {
+            if(casas[i]!=NULL)/*Ao menos uma casa nao nula*/
+            {
+                i = -1;
+                break;
+            }
+        }
+        if(i!=-1 && dado!=6)/*Se todas as pecas estão no abrigo e o dado não é 6 não há escolha.*/
+        {
+            printf("Todas as pecas estao no abrigo e voce nao tirou 6, passando turno...\n");
             return PAR_CondRetSemEscolha;
         }
         peca = JOG_ObterPecaNaPosicao(vJogadores[turno],indPeca);
