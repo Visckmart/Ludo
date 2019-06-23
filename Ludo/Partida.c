@@ -31,6 +31,7 @@
 /* Variáveis estáticas do módulo */
 static JOG_tpJogador *vJogadores[NUM_MAX_JOGADORES];
 
+static char *cores[4] = {"Vermelho","Azul","Verde","Amarelo"};
 static int numeroDeJogadores = 0;
 
 /*Funções estáticas encapsuladas pelo módulo*/
@@ -60,7 +61,6 @@ PAR_CondRet PAR_inicia()
 
     for(i=0;i<numJog;i++)
     {
-        
         if(JOG_Cria(vCores[i],&vJogadores[i])==JOG_CondRetMemoria) 
             return PAR_CondRetMemoria;
     }
@@ -68,7 +68,14 @@ PAR_CondRet PAR_inicia()
         return PAR_CondRetMemoria;
 
     srand(time(NULL));
-
+    
+    do {
+        condRet = PAR_ExecutaRodada(turno);
+        turno = (turno + 1)%numeroDeJogadores;
+    } while (condRet != PAR_CondRetTerminou);
+    printf("Jogador %d (%s) venceu!!\n",turno,cores[turno]);
+    PAR_Finaliza();
+    
     return PAR_CondRetOk;
 }
 
@@ -116,15 +123,16 @@ int PAR_obterNumJogadores() {
 *     Solicita ao jogador a escolha de uma peca.
 *	
 *  $EP Parâmetros	
-*	  P - 
+*	  *jog - ponteiro para um jogador
+*     *indPeca - ponteiro que receberá o índice da peça escolhida
+*     totalPec - número total de peças
+*
 *  $FV Valor retornado	
-*     R
-*	
-*     C	
+*     Retorna CIR_CondRetOk caso execute corretamente.
 *	
 *   Assertivas:	
-*   A
-*	B
+*   Caso o total de peças seja menor que 1, retorna PAR_CondRetParametro.
+*
 ***********************************************************************/	
 PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca, int totalPec) {
     int i;
@@ -148,6 +156,25 @@ PAR_CondRet PAR_EscolhePeca(JOG_tpJogador * jog,int *indPeca, int totalPec) {
     return PAR_CondRetOk;
 }
 
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &ExecutaRodada
+*	
+*  $ED Descrição da função	
+*     Executa a rodada. Solicita a escolha de uma peça, checa se a escolha foi válida,
+*     executa o movimento e checa se a partida terminou.
+*	
+*  $EP Parâmetros	
+*	  turno - índo
+*  $FV Valor retornado	
+*     R
+*	
+*     C	
+*	
+*   Assertivas:	
+*   A
+*	B
+***********************************************************************/	
 PAR_CondRet PAR_ExecutaRodada(int turno)
 {
     int indPeca, dado, totalPec;
@@ -160,7 +187,6 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
 
     JOG_tpPeca *peca=NULL;
     TAB_CondRet condRetTab=0;
-    char *cores[4] = {"Vermelho","Azul","Verde","Amarelo"};
     printf("Jogador %d (%s), sua vez.\n",turno,cores[turno]);
 
     dado = PAR_RolaDado();
@@ -174,18 +200,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             printf("Erro nos parâmetros ao tentar andar.\n");
             return JOG_CondRetParametro;
         }
-        if(condRetTab == TAB_CondRetChegouFinal)
-        {
-            JOG_Remove(peca,vJogadores[turno]);
-            if(JOG_TemPecas(vJogadores[turno])==JOG_CondRetNaoTemPecas)
-            {
-                TAB_DesenhaTabuleiro(NULL,0);
-                printf("Jogador %d (%s) venceu!!\n",turno,cores[turno]);
-                PAR_Finaliza();
-                return PAR_CondRetTerminou;
-            }
-            break;
-        }
+        
         if(condRetTab == TAB_CondRetNaoAndou)
         {
             printf("Essa peca nao pode se mover, escolha outra.\n");
@@ -247,7 +262,18 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             condRetTab = TAB_FazJogada(peca,dado);
         }
         
-    }while(condRetTab != TAB_CondRetOk);
+    }while(condRetTab != TAB_CondRetOk || condRetTab != TAB_CondRetChegouFinal);
+    
+    if(condRetTab == TAB_CondRetChegouFinal)
+        {
+            printf("Peca %d do jogador %s chegou no final.\n", indPeca, cores[turno]);
+            JOG_Remove(peca,vJogadores[turno]);
+            if(JOG_TemPecas(vJogadores[turno])==JOG_CondRetNaoTemPecas)
+            {
+                TAB_DesenhaTabuleiro(NULL,0);
+                return PAR_CondRetTerminou;
+            }
+        }
     
     TAB_DesenhaTabuleiro(NULL,0);
     printf("Fim da jogada.\n");
@@ -267,11 +293,6 @@ int main(void)
     int turno = 0;
     PAR_CondRet condRet;
     PAR_inicia();
-    do
-    {
-        condRet = PAR_ExecutaRodada(turno);
-        turno = (turno + 1)%numeroDeJogadores;
-    } while (condRet!=PAR_CondRetTerminou);
     
 
 }
