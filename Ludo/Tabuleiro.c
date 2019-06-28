@@ -84,8 +84,8 @@ static void TAB_ComePecas(TAB_tpCasa *casa);
 static int TAB_ObterNumPecas(TAB_tpCasa *casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
-static void TAB_preparaVetoresDesenho(int v[72][2], int  u[16], TAB_tpCasa **vEspeciais,int numEspeciais);
-static void TAB_exibirTabuleiro(int v[72][2], int u[16]);
+static TAB_CondRet TAB_preparaVetoresDesenho(char v[72][2], char  u[16], TAB_tpCasa **vEspeciais,int numEspeciais);
+static TAB_CondRet TAB_exibirTabuleiro(char v[72][2], char u[16]);
 
 
 /****************************************************************
@@ -471,8 +471,8 @@ TAB_CondRet TAB_DesenhaTabuleiro(void **vEspeciais,int numEspeciais)
 {
 	CIR_CondRetErro condRet;
 
-	int v[72][2];
-	int u[16];
+	char v[72][2];
+	char u[16];
 
 	if (Tabuleiro == NULL) {
 		return TAB_CondRetParametro;
@@ -483,14 +483,42 @@ TAB_CondRet TAB_DesenhaTabuleiro(void **vEspeciais,int numEspeciais)
 		return TAB_CondRetNaoDesenhou;
 	}
 
-	TAB_preparaVetoresDesenho(v,u,(TAB_tpCasa**)vEspeciais,numEspeciais);
+	condRet = TAB_preparaVetoresDesenho(v, u, (TAB_tpCasa**)vEspeciais, numEspeciais);
 
-	TAB_exibirTabuleiro(v,u);
+	if (condRet != CIR_CondRetOk) {
+		return TAB_CondRetNaoDesenhou;
+	}
+
+	condRet = TAB_exibirTabuleiro(v,u);
+	if (condRet != CIR_CondRetOk) {
+		return TAB_CondRetNaoDesenhou;
+	}
 
 	return TAB_CondRetOk;
 }
 
-void TAB_preparaVetoresDesenho(int v[72][2], int  u[16], 
+/***********************************************************************
+*
+*  $FC Função: TAB  &preparaVetoresDesenho
+*
+*  $ED Descrição da função
+*     Monta um vetor com os caractéres representando as peças que serão desenhados a seguir.
+*
+*  $EP Parâmetros
+*	  v - vetor pelo o qual serão retornados os caractéres do tabuleiro.
+*	  u - vetor pelo o qual serão retornados os caractére do abrigo.
+*	  vEspeciais - Ponteiro para um vetor contendo uma lista de casas especiais contendo peças à serem destacadas.
+*	  numEspeciais - Número de peças à serem destacadas, se for 0 nenhuma será destacada independente de vEspeciais.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso os vetores não tenham sido passados corretamente, retorna TAB_CondRetParametro.
+*
+***********************************************************************/
+
+TAB_CondRet TAB_preparaVetoresDesenho(char v[72][2], char u[16], 
 							   TAB_tpCasa **vEspeciais,int numEspeciais) 
 	{
 	int i, j, k, index, indexcoratual, indexpeca;
@@ -500,6 +528,9 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 	JOG_tpCor corAtual;
 	TAB_tpCasa *casaAtual;
 	char cores[] = { 'r','b','g','y' };
+	if (v == NULL || u == NULL) {
+		return TAB_CondRetParametro;
+	}
 
 	/*Marca as casas NULL como inatingíveis*/
 	for(i=0; i < numEspeciais; i++)
@@ -610,9 +641,32 @@ void TAB_preparaVetoresDesenho(int v[72][2], int  u[16],
 		}
 		
 	}
+	return TAB_CondRetOk;
 }
 
-void TAB_exibirTabuleiro(int v[72][2], int u[16]) {
+/***********************************************************************
+*
+*  $FC Função: TAB  &preparaVetoresDesenho
+*
+*  $ED Descrição da função
+*     Desenha o tabuleiro a partir dos vetores recebidos
+*
+*  $EP Parâmetros
+*	  v - vetor com os caractéres que serão desenhados no tabuleiro.
+*	  u - vetor com os caractéres que serão desenhados no abrigo.
+*
+*  $FV Valor retornado
+*     Se executou corretamente retorna TAB_CondRetOk.
+*
+*   Assertivas:
+*      Caso os vetores não tenham sido passados corretamente, retorna TAB_CondRetParametro.
+*
+***********************************************************************/
+
+TAB_CondRet TAB_exibirTabuleiro(char v[72][2], char u[16]) {
+	if (v == NULL || u = NULL) {
+		return TAB_CondRetParametro;
+	}
 	printf(".--------------------------------------------.\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[49][0], v[49][1], v[50][0], v[50][1], v[51][0], v[51][1]);
 	printf("|                 .--.--.--.                 |\n");
@@ -644,4 +698,5 @@ void TAB_exibirTabuleiro(int v[72][2], int u[16]) {
 	printf("|                 .--.--.--.                 |\n");
 	printf("|                 |%c%c|%c%c|%c%c|                 |\n", v[25][0], v[25][1], v[24][0], v[24][1], v[23][0], v[23][1]);
 	printf(".-----------------.--.--.--.-----------------.\n");
+	return TAB_CondRetOk;
 }

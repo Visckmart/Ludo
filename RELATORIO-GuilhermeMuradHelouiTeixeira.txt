@@ -15,3 +15,6 @@ Data	Horas Trabalhadas	Tipo Tarefa					Descrição da Tarefa Realizada
 13/05	1h					ajustar código				Ajustes finais no código antes da entrega do T2
 30/05	2h					ajustar código				Correções de vários aspectos do código após o feedback do T2
 01/06	3h					codificar módulo			Preparações,planejamentos e experimentos para a implementação do módulo Desenho
+14/06	2h					codificar módulo			Início da função de Desenho no módulo Tabuleiro
+15/06	9h					codificar módulo			Desenvolvimento completo da função de desenho tal como correção de códigos
+28/06	1h					codificar modulo			Documentação e ajustes das funções de desenho		
