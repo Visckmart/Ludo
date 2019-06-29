@@ -253,10 +253,10 @@ TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca)
  * 	   
  *
  *  $FV Valor retornado
- *     
+ *     TAB_CondRetOk se executou corretamente.
  *     
  *   Assertivas:
- *    
+ *    Retorna TAB_CondRetParametro se *casa é nulo.
  ***********************************************************************/
 TAB_CondRet TAB_ComePecas(TAB_tpCasa *casa)
 {
