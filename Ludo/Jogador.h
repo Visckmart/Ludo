@@ -112,6 +112,19 @@ JOG_CondRetErro JOG_Cria(JOG_tpCor,JOG_tpJogador **);
  ***********************************************************************/
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
 
+/***********************************************************************
+ *
+ *  $FC Função: JOG  &RemovePeca
+ *
+ *  $ED Descrição da função
+ *     Remove uma peça do jogador.
+ *
+ *  $EP Parâmetros
+ *     Um ponteiro para uma peça (a ser removida) e um ponteiro para um jogador.
+ *
+ *   Assertivas:
+ *     Checa se os ponteiros recebidos são válidos.
+ ***********************************************************************/
 JOG_CondRetErro JOG_RemovePeca(JOG_tpPeca *,JOG_tpJogador *);
 
 /***********************************************************************
