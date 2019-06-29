@@ -112,7 +112,7 @@ JOG_CondRetErro JOG_Cria(JOG_tpCor,JOG_tpJogador **);
  ***********************************************************************/
 JOG_CondRetErro JOG_Deleta(JOG_tpJogador *);
 
-JOG_CondRetErro JOG_Remove(JOG_tpPeca *,JOG_tpJogador *);
+JOG_CondRetErro JOG_RemovePeca(JOG_tpPeca *,JOG_tpJogador *);
 
 /***********************************************************************
  *

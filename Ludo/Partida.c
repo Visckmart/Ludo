@@ -38,6 +38,8 @@ static int numeroDeJogadores = 0;
 static int PAR_RolaDado(void);
 static PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec);
 static int PAR_obterNumJogadores();
+static PAR_CondRet PAR_ExecutaRodada(int turno);
+static void PAR_Finaliza();
 
 	
 PAR_CondRet PAR_Inicia()
@@ -254,7 +256,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
     if(condRetTab == TAB_CondRetChegouFinal)
         {
             printf("Peca %d do jogador %s chegou no final.\n", indPeca, cores[turno]);
-            JOG_Remove(peca,vJogadores[turno]);
+            JOG_RemovePeca(peca,vJogadores[turno]);
             if(JOG_TemPecas(vJogadores[turno])==JOG_CondRetNaoTemPecas)
             {
                 TAB_DesenhaTabuleiro(NULL,0);

@@ -99,7 +99,6 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
 *
 ***********************************************************************/	
 static void JOG_LiberaPeca(void * pontPeca) {
-	if (pontPeca == NULL) { return NULL; }
 	JOG_tpPeca * peca = (JOG_tpPeca *)pontPeca;
     free(peca);
 }
