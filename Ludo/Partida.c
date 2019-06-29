@@ -113,7 +113,6 @@ int PAR_obterNumJogadores() {
 *     Solicita ao jogador a escolha de uma peca.
 *	
 *  $EP Parâmetros	
-*	  *jog - ponteiro para um jogador
 *     *indPeca - ponteiro que receberá o índice da peça escolhida
 *     totalPec - número total de peças
 *
@@ -121,7 +120,7 @@ int PAR_obterNumJogadores() {
 *     Retorna PAR_CondRetOk caso execute corretamente.
 *	
 *   Assertivas:	
-*   Caso o total de peças seja menor que 1, retorna PAR_CondRetParametro.
+*     Caso o total de peças seja menor que 1, retorna PAR_CondRetParametro.
 *
 ***********************************************************************/	
 PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
@@ -155,6 +154,7 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
 *	
 *  $EP Parâmetros	
 *	  turno - índice do jogador que da rodada atual
+*
 *  $FV Valor retornado
 *     Retorna PAR_CondRetOk caso execute corretamente.
 *     PAR_CondRetSemEscolha caso não haja escolha para o jogador atual.
