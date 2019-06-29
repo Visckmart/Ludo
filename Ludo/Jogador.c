@@ -103,26 +103,6 @@ static void JOG_LiberaPeca(void * pontPeca) {
     free(peca);
 }
 
-/***********************************************************************	
-*	
-*  $FC Função: JOG  &RemovePeca
-*	
-*  $ED Descrição da função	
-*     Remove uma peça da lista de peças do jogador.
-*
-*  $EP Parâmetros	
-*	  *peca - ponteiro para uma peça
-*	  *jog - ponteiro para um jogador
-*	
-*  $FV Valor retornado	
-*     Retorna JOG_CondRetOk caso execute corretamente.
-*     Retorna JOG_CondRetParametro caso um dos ponteiros recebidos
-*     não seja válido ou se a peça não foi encontrada.
-*
-*   Assertivas:	
-*     Checa se os ponteiros recebidos são válidos.
-*
-***********************************************************************/
 JOG_CondRetErro JOG_RemovePeca(JOG_tpPeca *peca,JOG_tpJogador *jog)
 {
     if(peca==NULL || jog==NULL) return JOG_CondRetParametro;
