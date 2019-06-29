@@ -26,5 +26,16 @@ typedef enum{
 
 }PAR_CondRet;
 
-void PAR_Finaliza();
-PAR_CondRet PAR_ExecutaRodada(int turno);
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &PAR_Inicia
+*	
+*  $ED Descrição da função	
+*     Inicia
+*
+*  $FV Valor retornado	
+*     Se executou corretamente retorna PAR_CondRetOk.
+*     Pode retornar PAR_CondRetMemoria, caso não alguma alocação não pôde ser concluída.
+*
+***********************************************************************/	
+PAR_CondRet PAR_Inicia();

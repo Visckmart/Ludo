@@ -39,19 +39,8 @@ static int PAR_RolaDado(void);
 static PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec);
 static int PAR_obterNumJogadores();
 
-/***********************************************************************	
-*	
-*  $FC Função: PAR  &PAR_inicia
-*	
-*  $ED Descrição da função	
-*     Inicia uma partida.
-*
-*  $FV Valor retornado	
-*     Se executou corretamente retorna PAR_CondRetOk.
-*     Pode retornar PAR_CondRetMemoria, caso não alguma alocação não pôde ser concluída.
-*
-***********************************************************************/	
-PAR_CondRet PAR_inicia()
+	
+PAR_CondRet PAR_Inicia()
 {
     int i,turno=0;
     int numJog = PAR_obterNumJogadores();
@@ -261,7 +250,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             condRetTab = TAB_FazJogada(peca,dado);
         }
         
-    }while(condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal);
+    }while(condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal && dado!=6);
     if(condRetTab == TAB_CondRetChegouFinal)
         {
             printf("Peca %d do jogador %s chegou no final.\n", indPeca, cores[turno]);
@@ -296,5 +285,5 @@ void PAR_Finaliza() {
 
 int main(void)
 {
-    PAR_inicia();
+    PAR_Inicia();
 }
