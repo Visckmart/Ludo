@@ -102,6 +102,9 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
    		#endif
 		corrente->anterior->proximo = NULL; //Define o final da lista circular
 		while(corrente->proximo!=NULL){ //Deleta tudo ate chegar nesse final
+			#ifdef _DEBUG
+        		CNT_CONTAR( "CIR_DESTROI_LOOP" );
+   			#endif
 			proximo = corrente->proximo;
 			RemoveDado(corrente->pCont);
 			free(corrente);

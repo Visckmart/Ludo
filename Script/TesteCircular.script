@@ -31,7 +31,8 @@
 =crialista		1   CondRetOk
 
 ==Cria lista 2
-=crialista		2   CondRetOk
+=crialista		2   CondRetOk 
+
 
 ==Testes com erro no parametro
 =crialista  4 CondRetParametro
@@ -95,10 +96,27 @@
 =conteudo		2	""	pNulo
 
 ==Testando destroi
-=destroi    0   CondRetParametro
+==Destroi lista vazia
+=crialista      3   CondRetOk
+=destroi        3   CondRetOk
+
+==Destroi lista com 1 elemento
+=crialista      3   CondRetOk
+=insere         str0    3   CondRetOk
+=destroi        3   CondRetOk    
+
+==Destroi lista com varios elementos
+=crialista      3   CondRetOk
+=insere         str0    3   CondRetOk
+=insere         str1    3   CondRetOk
+=insere         str2    3   CondRetOk
+=insere         str3    3   CondRetOk
+=destroi        3   CondRetOk    
+
+
+==Destroi lista inexistente
 =destroi    0   CondRetOk
-=crialista  3   CondRetOk
-=destroi    3   CondRetOk
+=destroi    0   CondRetParametro
 
 
 ==Terminar e ler contadores

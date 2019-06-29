@@ -192,6 +192,7 @@ void * JOG_ObterLocalPeca(JOG_tpPeca *);
  ***********************************************************************/
 JOG_tpCor JOG_ObterCorPeca(JOG_tpPeca *);
 
+
 /***********************************************************************
  *
  *  $FC Função: JOG  &PecaNaPosicao

@@ -88,12 +88,25 @@ static TAB_CondRet TAB_preparaVetoresDesenho(char v[72][2], char  u[16], TAB_tpC
 static TAB_CondRet TAB_exibirTabuleiro(char v[72][2], char u[16]);
 
 
-/****************************************************************
-
-Função: TAB  &CriaCasa
-
-****************************************************************/
-
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &CriaCasa
+ *
+ *  $ED Descrição da função
+ *     Cria e retorna por referência um elemento da struct casa.
+ *
+ *  $EP Parâmetros
+ *     bifurcacao - Ponteiro para a cabeça de uma lista encadeada a ser usada como bifurcacao
+ * 	   cor - Cor da casa, usada para especificar a cor de uma bifurcacao
+ *     **novaCasa - Ponteiro para o local onde será retornado o ponteiro para a casa criada
+ *
+ *  $FV Valor retornado
+ *     TAB_COndRetOk se executou corretamente.
+ *     
+ *   Assertivas:
+ *    Retorna TAB_CondRetParametro se **novaCasa é nulo
+ * 	  Retorna TAB_CondRetMemoria caso haja erro de memoria
+ ***********************************************************************/
 TAB_CondRet TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor,TAB_tpCasa **novaCasa)
 {
 	if(novaCasa==NULL) return TAB_CondRetParametro;
@@ -167,11 +180,24 @@ TAB_CondRet TAB_IniciaTabuleiro() {
 }
 
 
-/****************************************************************
-
-Função: TAB  &InserePeca
-
-****************************************************************/
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &InserePeca
+ *
+ *  $ED Descrição da função
+ *     Insere uma peça em uma casa
+ *
+ *  $EP Parâmetros
+ *     *casa - Ponteiro para casa onde a peça será colocada
+ * 	   *peca - Ponteiro para a peça que será colocada
+ *
+ *  $FV Valor retornado
+ *     TAB_COndRetOk se executou corretamente.
+ *     
+ *   Assertivas:
+ *    Retorna TAB_CondRetParametro se **novaCasa é nulo
+ * 	  Retorna TAB_CondRetMemoria caso haja erro de memoria
+ ***********************************************************************/
 
 TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca)
 {
@@ -632,11 +658,11 @@ TAB_CondRet TAB_preparaVetoresDesenho(char v[72][2], char u[16],
 		{
 			if(v[index][0] >= '0' && v[index][0] <= '3') /*Se a primeira casa já contém uma peça especial preenche a segunda*/
 			{
-				v[index][1] = '0' + i; /* Caracter equivalente à i */
+				v[index][1] = '0' + (char)i; /* Caracter equivalente à i */
 			}
 			else
 			{
-				v[index][0] = '0' + i; /* Caracter equivalente à i */
+				v[index][0] = '0' + (char)i; /* Caracter equivalente à i */
 			}
 		}
 		
@@ -664,7 +690,7 @@ TAB_CondRet TAB_preparaVetoresDesenho(char v[72][2], char u[16],
 ***********************************************************************/
 
 TAB_CondRet TAB_exibirTabuleiro(char v[72][2], char u[16]) {
-	if (v == NULL || u = NULL) {
+	if (v == NULL || u == NULL) {
 		return TAB_CondRetParametro;
 	}
 	printf(".--------------------------------------------.\n");

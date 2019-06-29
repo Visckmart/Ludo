@@ -200,11 +200,3 @@ JOG_CondRetErro JOG_ObterPosicoesDasPecas(JOG_tpJogador * jog, int * totalDePeca
     }
     return JOG_CondRetOk;
 }
-
-int JOG_NumPecas(JOG_tpJogador * jog) {
-	int total = 0;
-    if (jog == NULL) return -1;
-    LIS_IrInicioLista(jog->pecas);
-	while (LIS_AvancarElementoCorrente(jog->pecas, 1) != LIS_CondRetFimLista) total++;
-	return total;
-}
