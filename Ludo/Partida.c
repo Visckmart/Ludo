@@ -165,9 +165,10 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
 *     executa o movimento e checa se a partida terminou.
 *	
 *  $EP Parâmetros	
-*	  turno - índo
-*  $FV Valor retornado	
-*     R
+*	  turno - índice do jogador que da rodada atual
+*  $FV Valor retornado
+*     Retorna CIR_CondRetOk caso execute corretamente.
+*     PAR_CondRetSemEscolha caso não haja escolha para o jogador atual.
 *	
 *     C	
 *	
@@ -278,6 +279,14 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
     return PAR_CondRetOk;
 }
 
+/***********************************************************************	
+*	
+*  $FC Função: PAR  &Finaliza
+*	
+*  $ED Descrição da função	
+*     Finaliza a rodada. Chama a finalização do tabuleiro e deleta os jogadores.
+*	
+***********************************************************************/	
 void PAR_Finaliza() {
     int i;
     TAB_FinalizaTabuleiro();
