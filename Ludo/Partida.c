@@ -129,7 +129,7 @@ int PAR_obterNumJogadores() {
 *     totalPec - número total de peças
 *
 *  $FV Valor retornado	
-*     Retorna CIR_CondRetOk caso execute corretamente.
+*     Retorna PAR_CondRetOk caso execute corretamente.
 *	
 *   Assertivas:	
 *   Caso o total de peças seja menor que 1, retorna PAR_CondRetParametro.
@@ -167,14 +167,13 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
 *  $EP Parâmetros	
 *	  turno - índice do jogador que da rodada atual
 *  $FV Valor retornado
-*     Retorna CIR_CondRetOk caso execute corretamente.
+*     Retorna PAR_CondRetOk caso execute corretamente.
 *     PAR_CondRetSemEscolha caso não haja escolha para o jogador atual.
-*	
-*     C	
+*	  PAR_CondRetParametro houve um problema ao localizar a peça do jogador.
 *	
 *   Assertivas:	
-*   A
-*	B
+*   Checa se o tabuleiro retornou corretamente, checa se a peça andou,
+*	checa se a peça do jogador foi obtida corretamente.
 ***********************************************************************/	
 PAR_CondRet PAR_ExecutaRodada(int turno)
 {
@@ -199,7 +198,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
         if(condRetTab == TAB_CondRetParametro)
         {
             printf("Erro nos parâmetros ao tentar andar.\n");
-            return JOG_CondRetParametro;
+            return PAR_CondRetParametro;
         }
         
         if(condRetTab == TAB_CondRetNaoAndou)
@@ -241,7 +240,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             return PAR_CondRetSemEscolha;
         }
         peca = JOG_ObterPecaNaPosicao(vJogadores[turno],indPeca);
-        if(peca==NULL) return PAR_CondRetParametro; 
+        if(peca==NULL) return PAR_CondRetParametro;
         /*Retorna CondRetParametro quando a peça não é encontrada*/
 
         if(JOG_ObterLocalPeca(peca)==NULL)
