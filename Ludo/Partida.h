@@ -31,11 +31,13 @@ typedef enum{
 *  $FC Função: PAR  &PAR_Inicia
 *	
 *  $ED Descrição da função	
-*     Inicia
+*     Inicia e executa uma partida.
+*     Essa é a única função exportada pelo módulo controlador, ela é capaz de iniciar, executar e finalizar uma partida inteira.
 *
 *  $FV Valor retornado	
 *     Se executou corretamente retorna PAR_CondRetOk.
-*     Pode retornar PAR_CondRetMemoria, caso não alguma alocação não pôde ser concluída.
-*
+
+*   Assertivas:	
+*   Retorna PAR_CondRetMemoria se houve um erro de memória na execução.
 ***********************************************************************/	
 PAR_CondRet PAR_Inicia();
