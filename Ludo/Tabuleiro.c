@@ -80,7 +80,7 @@ static TAB_CondRet TAB_CriaCasa(LIS_tppLista bifurcacao,JOG_tpCor cor,TAB_tpCasa
 static TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca);
 static TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca);
 static void TAB_DestroiCasa(void *casa);
-static void TAB_ComePecas(TAB_tpCasa *casa);
+static TAB_CondRet TAB_ComePecas(TAB_tpCasa *casa);
 static int TAB_ObterNumPecas(TAB_tpCasa *casa);
 static TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas);
 static TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas);
@@ -192,11 +192,10 @@ TAB_CondRet TAB_IniciaTabuleiro() {
  * 	   *peca - Ponteiro para a peça que será colocada
  *
  *  $FV Valor retornado
- *     TAB_COndRetOk se executou corretamente.
+ *     TAB_CondRetOk se executou corretamente.
  *     
  *   Assertivas:
- *    Retorna TAB_CondRetParametro se **novaCasa é nulo
- * 	  Retorna TAB_CondRetMemoria caso haja erro de memoria
+ *    Retorna TAB_CondRetSemEspaco caso a casa esteja cheia
  ***********************************************************************/
 
 TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca)
@@ -208,13 +207,27 @@ TAB_CondRet TAB_InserePeca(TAB_tpCasa *casa,JOG_tpPeca *peca)
 }
 
 
-/****************************************************************
-
-Função: TAB  &RemovePeca
-
-****************************************************************/
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &RemovePeca
+ *
+ *  $ED Descrição da função
+ *     Remove uma peca de uma casa.
+ *
+ *  $EP Parâmetros
+ *     *casa - Ponteiro para a casa contendo a peça.
+ * 	   peca - Indice da peça dentro da casa.
+ * 	   
+ *
+ *  $FV Valor retornado
+ *     TAB_CondRetOk se executou corretamente.
+ *     
+ *   Assertivas:
+ *    Retorna TAB_CondRetParametro se a casa está vazia ou o ponteiro para ela é nulo.
+ ***********************************************************************/
 TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca)
 {
+	if(casa==NULL) return TAB_CondRetParametro;
 	if(casa->pecas[0]==NULL) return TAB_CondRetParametro;
 	if(peca==0)
 	{
@@ -228,13 +241,26 @@ TAB_CondRet TAB_RemovePeca(TAB_tpCasa *casa,int peca)
 	return TAB_CondRetOk;
 }
 
-/****************************************************************
-
-Função: TAB  &ComePecas
-
-****************************************************************/
-void TAB_ComePecas(TAB_tpCasa *casa)
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &ComePecas
+ *
+ *  $ED Descrição da função
+ *     "Come" todas as pecas em uma casa
+ *
+ *  $EP Parâmetros
+ *     *casa - Ponteiro para a casa contendo as pecas
+ * 	   
+ *
+ *  $FV Valor retornado
+ *     
+ *     
+ *   Assertivas:
+ *    
+ ***********************************************************************/
+TAB_CondRet TAB_ComePecas(TAB_tpCasa *casa)
 {
+	if(casa==NULL) return TAB_CondRetParametro;
 	if(casa->pecas[0]!=NULL)
 	{
 		vNumPecasAbrigo[JOG_ObterCorPeca(casa->pecas[0])-1] += 1; /*Coloca mais uma peça no abrigo do jogador */
@@ -249,25 +275,44 @@ void TAB_ComePecas(TAB_tpCasa *casa)
 		JOG_AtualizaPeca(casa->pecas[1],NULL);
 		casa->pecas[1]=NULL;
 	}
+	return TAB_CondRetOk;
 }
 
 
-/****************************************************************
-
-Função: TAB  &DestroiCasa
-
-****************************************************************/
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &DestroiCasa
+ *
+ *  $ED Descrição da função
+ *     Libera uma casa.
+ *
+ *  $EP Parâmetros
+ *     *casa - Ponteiro para a casa a ser liberada
+ * 
+ ***********************************************************************/
 void TAB_DestroiCasa(void *casa)
 {
     free(casa);
 }
 
 
-/****************************************************************
-
-Função: TAB  &NumPecas
-
-****************************************************************/
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &ObterNumPecas
+ *
+ *  $ED Descrição da função
+ *     Obtem o numero de peças em uma casa.
+ *
+ *  $EP Parâmetros
+ *     *casa - Ponteiro para a casa a ser analisada
+ * 	   
+ *
+ *  $FV Valor retornado
+ *     Numero de peças presentes na casa.
+ *     
+ *   Assertivas:
+ *    Retorna -1 se *casa for nulo.
+ ***********************************************************************/
 int TAB_ObterNumPecas(TAB_tpCasa *casa)
 {
 	if(casa==NULL) return -1;
@@ -367,13 +412,41 @@ TAB_CondRet TAB_FinalizaTabuleiro()
 	return TAB_CondRetOk;
 }
 
-/****************************************************************
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &AvancaPecaLDupla
+ *
+ *  $ED Descrição da função
+ *     Avança uma peça em uma lista duplamente encadeada contendo casas.
+ *     Essa lista equivale à uma das retas finais do tabuleiro.
+ * 
+ *     A função implementa uma mecânica de "bounce" quando o número de casa à andar é maior 
+ *     que o número de casas para o final do tabuleiro.
+ * 
+ *     Não move a peça se a jogada é inválida ou se um erro aconteça.    
+ * 
+ *	   Assume que a peça está na casa no elemento corrente da lista.
 
-Função: TAB  &Avanca Peca Lista Dupla
-
-CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
-
-****************************************************************/
+ *  $EP Parâmetros
+ *     Lista - Ponteiro para a lista contendo a peça desejada no elemento corrente.
+ * 	   indPeca - Indice da peça a ser movida na casa que a contém.
+ * 	   numCasas - Número de casas que a peça vai mexer.
+ * 	   
+ *
+ *  $FV Valor retornado
+ *     TAB_CondRetOk se a peça foi movida corretamente.
+ *     
+ *   Assertivas:
+ *     Retorna TAB_CondRetParametro se o ponteiro para a lista passado é nulo.
+ *     Retorna TAB_CondRetParametro se indPeca é inválido(menor que 0 ou maior que 1).
+ *     Retorna TAB_CondRetParametro se numCasas é inválido(menor que 0).
+ *     Retorna TAB_CondRetParametro se o elemento atual da lista é nulo
+ *     Retorna TAB_CondRetParametro se a casa da lista não contém uma peça no indPeca dado.
+ * 
+ *     Retorna TAB_CondRetNaoAndou se a jogada é inválida (obstrução no caminho ou casa destino cheia ou inválida)
+ * 
+ *     Retorna TAB_CondRetChegouFinal se a peça chegou no final do tabuleiro
+ ***********************************************************************/
 TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
 {
 	int res = numCasas;
@@ -424,13 +497,40 @@ TAB_CondRet TAB_AvancaPecaLDupla(LIS_tppLista Lista,int indPeca,int numCasas)
     return TAB_CondRetOk;
 }
 
-/****************************************************************
+/***********************************************************************
+ *
+ *  $FC Função: TAB  &AvancaPecaLDupla
+ *
+ *  $ED Descrição da função
+ *     Avança uma peça em uma lista circular contendo casas.
+ *     Essa lista equivale a parte principal do tabuleiro.
+ * 
+ *     Não move a peça se a jogada é inválida ou se um erro aconteça.    
+ * 
+ * 	   Caso a peça chegue em uma reta final no meio de seu caminho, a função insere a peça na reta final e passa 
+ *     a responsabilidade do movimento para TAB_AvancaPecaLDupla e retorna qualquer coisa que essa função retorne.
+ * 
+ *	   Assume que a peça está na casa no elemento corrente da lista.
 
-Função: TAB  &Avanca Peca Lista Circular
-
-CUIDADO: Pressupoe que o elemento atual da lista contém a peca desejada.
-
-****************************************************************/
+ *  $EP Parâmetros
+ *     Lista - Ponteiro para a lista contendo a peça desejada no elemento corrente.
+ * 	   indPeca - Indice da peça a ser movida na casa que a contém.
+ * 	   numCasas - Número de casas que a peça vai mexer.
+ * 	   
+ *
+ *  $FV Valor retornado
+ *     TAB_CondRetOk se a peça foi movida corretamente.
+ *     
+ *   Assertivas:
+*      Retorna TAB_CondRetParametro se o ponteiro para a lista passado é nulo.
+ *     Retorna TAB_CondRetParametro se indPeca é inválido(menor que 0 ou maior que 1).
+ *     Retorna TAB_CondRetParametro se numCasas é inválido(menor que 0).
+ *     Retorna TAB_CondRetParametro se o elemento atual da lista é nulo
+ *     Retorna TAB_CondRetParametro se a casa da lista não contém uma peça no indPeca dado.
+ * 
+ *     Retorna TAB_CondRetNaoAndou se a jogada é inválida (obstrução no caminho ou casa destino cheia ou inválida)
+ * 
+ ***********************************************************************/
 TAB_CondRet TAB_AvancaPecaCircular(CIR_lstCircular *Lista,int indPeca,int numCasas)
 {
 	int res=numCasas;
