@@ -6,7 +6,7 @@
 *
 *
 *  Projeto: INF 1301 / Ludo
-*  Autores: 
+*  Autores: Victor Martins,Thiago Lamenza, Guilherme Murad
 *
 *  $HA Hist�rico de evolu��o:
 *     Vers�o  Autor            Data        Observa��es
@@ -281,9 +281,4 @@ void PAR_Finaliza() {
     for (i = 0; i < numeroDeJogadores; i++) {
         JOG_Deleta(vJogadores[i]);
     }
-}
-
-int main(void)
-{
-    PAR_Inicia();
 }

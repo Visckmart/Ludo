@@ -1,3 +1,29 @@
+#if ! defined( PARTIDA_ )
+    #define PARTIDA_
+
+/***************************************************************************
+ *
+ *  $MCD Módulo de definição: PAR  Partida
+ *
+ *  Arquivo gerado:              Partida.h
+ *  Letras identificadoras:      PAR
+ *
+ *
+ *  Projeto: INF1301 / Ludo
+ *  Autores: Victor Martins,Thiago Lamenza, Guilherme Murad
+ *
+ *  $HA Histórico de evolução:
+ *     Versão  Autor             Data         Observações
+ *     1       Thiago Lamenza    14/jun/2019  Desenvolvimento inicial
+ *
+ *
+ *  $ED Descrição do módulo
+ *     Implementa o módulo controlador da partidaz de Ludo.
+ *
+ *     O módulo é responsável por iniciar, executar e finalizar uma partida de Ludo.
+ *
+ ***************************************************************************/
+
 /***********************************************************************
 *
 *  $TC Tipo de dados: PAR Condições de retorno
@@ -41,3 +67,5 @@ typedef enum{
 *   Retorna PAR_CondRetMemoria se houve um erro de memória na execução.
 ***********************************************************************/	
 PAR_CondRet PAR_Inicia();
+
+#endif /* PARTIDA_ */
