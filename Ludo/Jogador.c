@@ -39,7 +39,7 @@ struct Jogador {
     JOG_tpCor cor;
 };
 
-static void JOG_RemovePeca(void *);
+static void JOG_LiberaPeca(void *);
 
 /* * * * * * * * * *
  *
@@ -54,7 +54,7 @@ JOG_CondRetErro JOG_Cria(JOG_tpCor corDasPecas,JOG_tpJogador **pResultado) {
     if ((*pResultado) == NULL) return JOG_CondRetMemoria;
     
     // Cria a primeira peça
-    (*pResultado)->pecas = LIS_CriarLista(JOG_RemovePeca);
+    (*pResultado)->pecas = LIS_CriarLista(JOG_LiberaPeca);
     if ((*pResultado)->pecas == NULL) { free((*pResultado)); return JOG_CondRetMemoria; }
     // Cria elementos de uma lista encadeada que guarda peças
     for (i = 0; i < num_jogadores; i++) {
@@ -84,17 +84,47 @@ JOG_CondRetErro JOG_Deleta(JOG_tpJogador * jog) {
     return JOG_CondRetOk;
 }
 
-/* * * * * * * * * *
- *
- *  Função: Remove a peça recebida
- *
- * * * * * * * * * */
-static void JOG_RemovePeca(void * peca) {
-    if (peca != NULL) free(peca);
+/***********************************************************************	
+*	
+*  $FC Função: JOG  &LiberaPeca
+*	
+*  $ED Descrição da função	
+*     Libera a memória usada por uma determinada peça.
+*
+*  $EP Parâmetros	
+*	  *peca - ponteiro para uma peça (do tipo void*)
+*	
+*   Assertivas:	
+*     Checa se o ponteiro é válido.
+*
+***********************************************************************/	
+static void JOG_LiberaPeca(void * pontPeca) {
+	if (peca == NULL) { return NULL; }
+	JOG_tpPeca * peca = (JOG_tpPeca *)pontPeca;
+    free(peca);
 }
 
-
-JOG_CondRetErro JOG_Remove(JOG_tpPeca *peca,JOG_tpJogador *jog)
+/***********************************************************************	
+*	
+*  $FC Função: JOG  &RemovePeca
+*	
+*  $ED Descrição da função	
+*     Remove uma peça da lista de peças do jogador.
+*
+*  $EP Parâmetros	
+*	  *peca - ponteiro para uma peça
+*	  *jog - ponteiro para um jogador
+*	
+*  $FV Valor retornado	
+*     Retorna JOG_CondRetOk caso execute corretamente.
+*     Retorna JOG_CondRetParametro caso um dos ponteiros recebidos
+*     não seja válido ou se a peça não foi encontrada.
+*
+*   Assertivas:	
+*     Checa se os ponteiros recebidos são válidos.
+*
+***********************************************************************/
+JOG_CondRetErro JOG_RemovePeca(JOG_tpPeca *peca,JOG_tpJogador *jog)
 {
     if(peca==NULL || jog==NULL) return JOG_CondRetParametro;
     LIS_IrInicioLista(jog->pecas);
