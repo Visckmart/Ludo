@@ -252,7 +252,7 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
             condRetTab = TAB_FazJogada(peca,dado);
         }
         
-    }while(condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal && dado!=6);
+    }while(condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal && dado==6);
     if(condRetTab == TAB_CondRetChegouFinal)
         {
             printf("Peca %d do jogador %s chegou no final.\n", indPeca, cores[turno]);
