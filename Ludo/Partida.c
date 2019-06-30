@@ -262,6 +262,8 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
                 TAB_DesenhaTabuleiro(NULL,0);
                 return PAR_CondRetTerminou;
             }
+            printf("Fim da jogada.\n");
+            return PAR_CondRetOk;
         }
     
     TAB_DesenhaTabuleiro(NULL,0);
