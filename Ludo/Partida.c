@@ -65,6 +65,7 @@ PAR_CondRet PAR_Inicia()
         condRet = PAR_ExecutaRodada(turno);
         turno = (turno + 1)%numeroDeJogadores;
     } while (condRet != PAR_CondRetTerminou);
+    turno = (turno - 1)%numeroDeJogadores; /*Retorna o turno pois o jogador que ganhou é o anterior*/
     printf("Jogador %d (%s) venceu!!\n",turno,cores[turno]);
     PAR_Finaliza();
     
