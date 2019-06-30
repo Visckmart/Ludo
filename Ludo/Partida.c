@@ -132,7 +132,7 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
     if (totalPec == 1) {
         printf("Somente uma peca poderia ser escolhida, jogada feita automaticamente.\n");
         printf("Pressione enter para continuar:\n ");
-        scanf("[ \n]");
+        scanf("%d");
 
         *indPeca = 0;
         return PAR_CondRetOk;
