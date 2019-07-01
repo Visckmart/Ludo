@@ -1,5 +1,5 @@
 /***************************************************************************
-*  $MCI MÃ³dulo de implementação: LIS  Lista Circular
+*  $MCI MÃ³dulo de implementação: CIR  Lista Circular
 *
 *  Arquivo gerado:              Circular.c
 *  Letras identificadoras:      CIR
@@ -15,18 +15,19 @@
 ***************************************************************************/
 #include <stdlib.h>
 #include <assert.h>
-#include "Circular.h"
 #include <stdio.h>
+#include "Circular.h"
 
 #ifdef _DEBUG
 	#include "Conta.h"
+	#include "CESPDIN.h"
+	//#define malloc CED_malloc
 #endif
 /**************************************
 
 $TC Tipo de dados: Elemento da lista Circular
 
 ***************************************/
-
 typedef struct no{
 	void *pCont;
 	struct no *proximo;
@@ -59,11 +60,14 @@ CIR_CondRetErro CIR_CriaLista(CIR_lstCircular **pResultado) //Cria uma nova list
 		return CIR_CondRetParametro;
 	}
 		#ifdef _DEBUG
-        	CNT_CONTAR( "CIR_CRIA_MALLOC" );
+        	CNT_CONTAR( "CIR_CRIA_MEIO" );
     	#endif
 	*pResultado = (CIR_lstCircular*) malloc(sizeof(CIR_lstCircular));
 	if(*pResultado == NULL) 
 	{
+		#ifdef _DEBUG
+        	CNT_CONTAR( "CIR_CRIA_MALLOC" );
+    	#endif
 		return CIR_CondRetMemoria;
 	}
 	(*pResultado)->NoCorrente = NULL;
@@ -135,6 +139,14 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	No *novo,*prox;
 	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
+	if (novo == NULL) 
+	{
+		#ifdef _DEBUG
+        	CNT_CONTAR( "CIR_INSERE_MALLOC" );
+    	#endif
+		return CIR_CondRetMemoria;
+	}
+	
 	if (pLista==NULL || pCont== NULL) 
 	{
 		#ifdef _DEBUG
@@ -143,7 +155,6 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 
 		return CIR_CondRetParametro;
 	}
-	if (novo == NULL) return CIR_CondRetMemoria;
 
 	#ifdef _DEBUG
         CNT_CONTAR( "CIR_INSERE_PARMOK" );

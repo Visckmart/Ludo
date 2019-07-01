@@ -99,7 +99,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 			CondRet = CIR_CriaLista(&Listas[indLista]);
 		}
 		
-		if(CondRet == CIR_CondRetMemoria) return TST_CondRetMemoria;
 		
 		return TST_CompararInt(ValorEsperado,CondRet,"Condicao de retorno nao esperada.");
 	}
@@ -140,7 +139,6 @@ TST_tpCondRet TST_EfetuarComando( char * ComandoTeste )
 		{
 			CondRet = CIR_InsereElemento(Listas[indLista],pDado);
 		}
-		if(CondRet == CIR_CondRetMemoria) return TST_CondRetMemoria;
 		
 		return TST_CompararString((char*)CIR_ObterConteudo(Listas[indLista]),StringDados,"Elemento inserido incorretamente");
 	}

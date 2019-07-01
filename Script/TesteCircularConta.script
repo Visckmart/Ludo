@@ -27,6 +27,7 @@
 == Iniciar Teste
 =inicia
 
+
 ==Cria lista 0
 =crialista		0   CondRetOk
 
@@ -142,6 +143,15 @@
 
 ==Procura elemento que nao existe
 =procura        0   4   CondRetNaoAchou
+
+
+==Testa erros de memoria
+=inicializarespacos
+=limitarmemoriadisponivel 1
+=crialista      4       CondRetMemoria
+=inserepont     0   0   CondRetMemoria
+=eliminarlimitesespaco
+
 
 ==Terminar e ler contadores
 =pararcontagem
