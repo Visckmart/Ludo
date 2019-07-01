@@ -138,15 +138,6 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
 CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	No *novo,*prox;
-	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
-	if (novo == NULL) 
-	{
-		#ifdef _DEBUG
-        	CNT_CONTAR( "CIR_INSERE_MALLOC" );
-    	#endif
-		return CIR_CondRetMemoria;
-	}
-	
 	if (pLista==NULL || pCont== NULL) 
 	{
 		#ifdef _DEBUG
@@ -155,6 +146,16 @@ CIR_CondRetErro CIR_InsereElemento(CIR_lstCircular *pLista,void *pCont)
 
 		return CIR_CondRetParametro;
 	}
+
+	novo = (No*) malloc(sizeof(No));//Maloca e insere um elemento ajustando os ponteiros
+	if (novo == NULL) 
+	{
+		#ifdef _DEBUG
+        	CNT_CONTAR( "CIR_INSERE_MALLOC" );
+    	#endif
+		return CIR_CondRetMemoria;
+	}
+
 
 	#ifdef _DEBUG
         CNT_CONTAR( "CIR_INSERE_PARMOK" );

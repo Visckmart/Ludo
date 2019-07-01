@@ -79,7 +79,7 @@ typedef enum {
 *	  A cabeça para a lista é colocada no ponteiro passado por referência.
 *
 *  $EP Parâmetros
-*	  *pResultado - Ponteiro para o resultado passado por referência.
+*	  **pResultado - Ponteiro para o resultado passado por referência.
 *  $FV Valor retornado
 *     Se executou corretamente retorna CIR_CondRetOk.
 *
