@@ -19,6 +19,11 @@
 =declararparm   CondRetListaVazia	int 3
 =declararparm   CondRetNaoAchou		int 4
 
+== Iniciar contagem
+=inicializarcontadores ""
+=lercontadores         "..\\script\\Circular"
+=iniciarcontagem
+
 == Iniciar Teste
 =inicia
 
@@ -137,6 +142,11 @@
 
 ==Procura elemento que nao existe
 =procura        0   4   CondRetNaoAchou
+
+==Terminar e ler contadores
+=pararcontagem
+=verificarcontagens     0
+=terminarcontadores
 
 =reseta
 

@@ -2,7 +2,7 @@
 
 [Diretorios]
 
-Nome        =  TesteCircular
+Nome        =  TesteCircularConta
 PathDefault =  ..\Ludo
 err         =  ..\Produto
 obj         =  ..\Objetos
@@ -10,11 +10,11 @@ c           =  ..\Ludo
 h           =  ..\Ludo
 
 [Modulos]
-Circular
+Circular        /D_DEBUG
 testeCircular
 
 [BuildInicio]
-/OUT:..\Produto\TRAB2-1.exe
+/OUT:..\Produto\TesteCircularConta.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

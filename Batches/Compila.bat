@@ -6,6 +6,7 @@ pushd .
 cd ..\Compilacao\gmake
 gmake /b..\ /cTesteCircular
 gmake /b..\ /cTesteLista
+gmake /b..\ /cTesteCircularConta
 gmake /b..\ /cTesteTabuleiro
 gmake /b..\ /cTesteJogador
 gmake /b..\ /cPartida
@@ -17,6 +18,8 @@ cd..\Compilacao
 nmake /FTesteLista.make
 del ..\Objetos\*.obj
 nmake /FTesteCircular.make
+del ..\Objetos\*.obj
+nmake /FTesteCircularConta.make
 del ..\Objetos\*.obj
 nmake /FTesteJogador.make
 del ..\Objetos\*.obj
