@@ -122,6 +122,7 @@ CIR_CondRetErro CIR_DestroiLista(CIR_lstCircular *pLista,void (*RemoveDado)(void
         CNT_CONTAR( "CIR_DESTROI_FIM" );
     #endif
 	free(pLista);
+	pLista=NULL;
 	return CIR_CondRetOk;
 }
 
@@ -334,8 +335,16 @@ CIR_CondRetErro CIR_ObterPrecedenteElemento(CIR_lstCircular *pLista)
 *  *************************************************/
 void *CIR_ObterConteudo(CIR_lstCircular *pLista)
 {
-	if(pLista == NULL || pLista->NoCorrente==NULL) return NULL;
-	
+	if(pLista == NULL || pLista->NoCorrente==NULL) 
+	{
+		#ifdef _DEBUG
+			CNT_CONTAR( "CIR_CONTEUDO_PARAMETRO" );
+		#endif
+		return NULL;
+	}
+	#ifdef _DEBUG
+		CNT_CONTAR( "CIR_CONTEUDO_FIM" );
+	#endif
 	return pLista->NoCorrente->pCont;
 }
 
@@ -348,14 +357,31 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 {
 	No *noCorrente,*inicio;
     
-	if(pLista==NULL || pCont==NULL) return CIR_CondRetParametro;
-	if(pLista->NoCorrente == NULL) return CIR_CondRetListaVazia;
-
+	if(pLista==NULL || pCont==NULL) 
+	{
+		#ifdef _DEBUG
+		CNT_CONTAR( "CIR_PROCURA_PARAMETRO" );
+		#endif		
+		return CIR_CondRetParametro;
+	}
+	if(pLista->NoCorrente == NULL) 
+	{
+		#ifdef _DEBUG
+			CNT_CONTAR( "CIR_PROCURA_LISTA_VAZIA" );
+		#endif		
+		return CIR_CondRetListaVazia;
+	}
+	#ifdef _DEBUG
+		CNT_CONTAR( "CIR_PROCURA" );
+	#endif
 	noCorrente = pLista->NoCorrente;
     inicio = pLista->NoCorrente;
 
 	do
 	{
+		#ifdef _DEBUG
+			CNT_CONTAR( "CIR_PROCURA_LOOP" );
+		#endif
 		if(noCorrente->pCont == pCont)
 		{
 			pLista->NoCorrente = noCorrente;
@@ -364,9 +390,8 @@ CIR_CondRetErro CIR_ProcuraElemento(CIR_lstCircular *pLista,void *pCont)
 
 		noCorrente = noCorrente->proximo;
 	}while(noCorrente!=inicio);
+	#ifdef _DEBUG
+		CNT_CONTAR( "CIR_PROCURA_FIM" );
+	#endif
 	return CIR_CondRetNaoAchou;
 }
-
-#ifdef _DEBUG
-	#undef _DEBUG
-#endif

@@ -45,3 +45,4 @@
 19/06     1h                   revisar código do módulo                             Revisão em partida
 20/06     4h                   codificar módulo                                     Codificando módulo partida
 29/06     2h                   revisar código do módulo                             Revisão de diversos módulos
+30/06     2h                   revisar código do módulo                             Revisar testes de circular

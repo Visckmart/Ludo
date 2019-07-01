@@ -24,6 +24,9 @@
 =lercontadores         "..\\script\\Circular"
 =iniciarcontagem
 
+== Iniciar Teste
+=inicia
+
 ==Cria lista 0
 =crialista		0   CondRetOk
 
@@ -95,7 +98,6 @@
 =remove			2		CondRetListaVazia
 =conteudo		2	""	pNulo
 
-==Testando destroi
 ==Destroi lista vazia
 =crialista      3   CondRetOk
 =destroi        3   CondRetOk
@@ -116,8 +118,30 @@
 
 ==Destroi lista inexistente
 =destroi    0   CondRetOk
+=crialista  0   CondRetOk
 =destroi    0   CondRetParametro
+=destroi    0   CondRetOk
 
+==Cria lista especial para a procura
+=crialista  0   CondRetOk
+
+==Procura em lista vazia
+=procura    0   0   CondRetListaVazia
+
+==Procura com parametro errado
+=procura        0   0   CondRetParametro
+
+==Procura lista com 1 elemento
+=inserepont     0   0   CondRetOk
+=procura        0   0   CondRetOk
+
+==Procura em lista com mais de 1 elemento
+=inserepont     0   1   CondRetOk
+=inserepont     0   2   CondRetOk
+=procura        0   1   CondRetOk
+
+==Procura elemento que nao existe
+=procura        0   4   CondRetNaoAchou
 
 ==Terminar e ler contadores
 =pararcontagem
