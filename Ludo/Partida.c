@@ -145,7 +145,7 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
         return PAR_CondRetOk;
     }
     do {
-        printf("Escolha a peca a ser jogada (entre 0 e %d):\n ", totalPec-1);
+        printf("Escolha a peca a ser jogada (entre 0 e %d): ", totalPec-1);
         fflush(stdin);
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 0 || pecaEscolhida >= totalPec);
@@ -176,7 +176,7 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
 ***********************************************************************/	
 PAR_CondRet PAR_ExecutaRodada(int turno)
 {
-    int i,indPeca, dado, totalPec;
+    int i,indPeca, dado=0, totalPec;
     void **casas;
 
     /*Vetor das escolhas feitas até o momento
@@ -185,15 +185,18 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
     int vEscolhas[4] = {0,0,0,0}; 
 
     JOG_tpPeca *peca=NULL;
-    TAB_CondRet condRetTab=0;
+    TAB_CondRet condRetTab=TAB_CondRetOk;
     printf("Jogador %d (%s), sua vez.\n",turno,cores[turno]);
-
-    dado = PAR_RolaDado();
-    printf("Voce rodou %d no dado.\n",dado);
 
 
     do
     {
+        if(condRetTab == TAB_CondRetOk)
+        {
+            dado = PAR_RolaDado();
+            printf("Voce rodou %d no dado.\n",dado);
+        }
+
         if(condRetTab == TAB_CondRetParametro)
         {
             printf("Erro nos parâmetros ao tentar andar.\n");
@@ -236,6 +239,9 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
         if(i!=-1 && dado!=6)/*Se todas as pecas estão no abrigo e o dado não é 6 não há escolha.*/
         {
             printf("Todas as pecas estao no abrigo e voce nao tirou 6, passando turno...\n");
+            printf("Pressione enter para continuar:\n");
+            fflush(stdin);
+            getchar();
             return PAR_CondRetSemEscolha;
         }
         peca = JOG_ObterPecaNaPosicao(vJogadores[turno],indPeca);
@@ -259,8 +265,12 @@ PAR_CondRet PAR_ExecutaRodada(int turno)
         {
             condRetTab = TAB_FazJogada(peca,dado);
         }
+        if(dado==6)
+        {
+            printf("Tirou 6 e jogara novamente.\n");
+        }
         
-    }while(condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal && dado==6);
+    }while((condRetTab != TAB_CondRetOk && condRetTab != TAB_CondRetChegouFinal) || dado==6);
     if(condRetTab == TAB_CondRetChegouFinal)
         {
             printf("Peca %d do jogador %s chegou no final.\n", indPeca, cores[turno]);
