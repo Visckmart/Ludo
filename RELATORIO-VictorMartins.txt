@@ -14,7 +14,7 @@ Data	Horas Trabalhadas	Tipo Tarefa					Descrição da Tarefa Realizada
 13/05	0.5h		Diagnosticar e Corrigir problemas encontrados	Correções de problemas na implementação do módulo Jogador
 31/05	1.5h	  Correcoes de problemas                        Correções do código após o feedback do T2
 15/06 1h      Codificar Módulo                              Codificando Módulo Partida	
-23/06 4h      Codificar Módulo                              Codificando Módulo Partida
-23/06 1h      Revisar Código do Módulo                      Revisão no Módulo Partida
+23/06 5h      Codificar Módulo                              Codificando Módulo Partida
+23/06 2h      Revisar Código do Módulo                      Revisão no Módulo Partida
 29/06 1.5h    Revisar e Corrigir Problemas                  Revisão de Módulos Variados
 01/07 0.5h    Revisar Código do Módulo                      Revisão Geral do Trabalho Antes da Entrega
