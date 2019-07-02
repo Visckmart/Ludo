@@ -1,7 +1,7 @@
 //Prop�sito: Testa o modulo Circular.h
 //Script: TesteCircular.script
-//Autor: Guilherme Murad
-//Data: 10/05/2019
+//Autor: Thiago Lamenza
+//Data: 25/06/2019
 
 ==Declarando Parametros
 =declararparm   str0    string	"abcdefg"
@@ -156,6 +156,7 @@
 ==Terminar e ler contadores
 =pararcontagem
 =verificarcontagens     0
+=gravarcontadores      "..\\Produto\\ContadoresCircular.txt"
 =terminarcontadores
 
 =reseta

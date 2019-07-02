@@ -19,7 +19,7 @@ Jogador
 
 
 [BuildInicio]
-/OUT:..\Produto\Ludo.exe
+/OUT:..\Produto\TRAB4-6.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

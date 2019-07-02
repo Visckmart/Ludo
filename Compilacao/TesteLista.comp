@@ -1,5 +1,5 @@
-# Composicao do programa de teste de uma lista genérica duplamente encadeada
-# Este exemplo utiliza o arcabouço completo 
+# Composicao do programa de teste de uma lista genï¿½rica duplamente encadeada
+# Este exemplo utiliza o arcabouï¿½o completo 
 
 [Diretorios]
 
@@ -15,7 +15,7 @@ TestLis
 Lista
 
 [BuildInicio]
-/OUT:..\Produto\TRAB2-3.exe
+/OUT:..\Produto\TRAB4-3.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

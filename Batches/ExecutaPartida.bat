@@ -1,5 +1,5 @@
 ECHO Executando partida de ludo
 pushd .
 cd..\Produto
-Ludo.exe
+TRAB4-6.exe
 popd

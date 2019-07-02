@@ -14,7 +14,7 @@ Circular        /D_DEBUG
 testeCircular
 
 [BuildInicio]
-/OUT:..\Produto\TesteCircularConta.exe
+/OUT:..\Produto\TRAB4-5.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 

@@ -14,7 +14,7 @@ Circular
 testeCircular
 
 [BuildInicio]
-/OUT:..\Produto\TRAB2-1.exe
+/OUT:..\Produto\TRAB4-1.exe
 /INCREMENTAL:NO
 /MACHINE:IX86
 
