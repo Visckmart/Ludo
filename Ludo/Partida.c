@@ -41,7 +41,11 @@ static int PAR_obterNumJogadores();
 static PAR_CondRet PAR_ExecutaRodada(int turno);
 static void PAR_Finaliza();
 
-	
+/****************************************************************
+
+Função: PAR  &Inicia
+
+****************************************************************/
 PAR_CondRet PAR_Inicia()
 {
     int i,turno=0;
@@ -103,6 +107,7 @@ int PAR_obterNumJogadores() {
     int numJogad;
     do {
         printf("Digite o numero de jogadores (de 2 a 4): ");
+        fflush(stdin);
         scanf("%d", &numJogad);
     } while (numJogad < 2 || numJogad > 4);
     return numJogad;
@@ -133,13 +138,15 @@ PAR_CondRet PAR_EscolhePeca(int *indPeca, int totalPec) {
     if (totalPec == 1) {
         printf("Somente uma peca poderia ser escolhida, jogada feita automaticamente.\n");
         printf("Pressione enter para continuar:\n ");
-        scanf("%d");
+        fflush(stdin);
+        getchar();
 
         *indPeca = 0;
         return PAR_CondRetOk;
     }
     do {
-        printf("Escolha a peca a ser jogada (entre 0 e %d): ", totalPec-1);
+        printf("Escolha a peca a ser jogada (entre 0 e %d):\n ", totalPec-1);
+        fflush(stdin);
         scanf("%d", &pecaEscolhida);
     } while (pecaEscolhida < 0 || pecaEscolhida >= totalPec);
     *indPeca = pecaEscolhida;
